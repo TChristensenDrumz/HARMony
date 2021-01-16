@@ -4,7 +4,7 @@ const app = express();
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + './client/publix/index.html');
+  res.sendFile(__dirname + './client/public/index.html');
 });
 
 app.listen(8080, () => {
