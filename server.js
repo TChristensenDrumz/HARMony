@@ -1,12 +1,28 @@
 const express = require('express');
+
+const mongoose = require("mongoose");
+const routes = require("./routes");
 const app = express();
+const PORT = process.env.PORT || 8080;
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+// Serve up static assets
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + './client/public/index.html');
-});
+app.use(routes);
 
-app.listen(8080, () => {
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/HarmonyDB",
+  {
+    useCreateIndex: true,
+    useNewUrlParser: true
+  }
+);
+
+
+app.listen(PORT, () => {
   console.log('Server listening on http://localhost:8080');
 });
