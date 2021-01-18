@@ -17,7 +17,7 @@ function Header() {
                     <Navbar.Brand href="/" className="p-0 m-0"><span style={{color:"red"}}>HARM</span>øny</Navbar.Brand>
                 </div>
                 <div className="col-4 text-right">
-                    <Button variant = "link" className="sm text-decoration-none p-0 m-0">Login</Button>
+                    <Button variant = "link" className="nes-text is-error sm text-decoration-none p-0 m-0" href="/login">Login</Button>
                 </div>
             </Navbar>
         </div>
