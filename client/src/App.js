@@ -60,7 +60,9 @@ class App extends Component {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/create" component={CreateAccount} />
-            <ProtectedRoute component={Harmony} />
+            <Route exact path="/harmony">
+              <ProtectedRoute component={Harmony} />
+            </Route>
             <Route component={Landing} />
           </Switch>
           <Footer />
