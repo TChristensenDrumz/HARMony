@@ -5,7 +5,6 @@ import Spawner from "../utils/Spawner"
 
 function Canvas ({ width, height, tileSize }) {
     const canvasRef = useRef();
-    // const [player, setPlayer] = useState(new Player(1, 2, tileSize));
     const [room, setRoom] = useState(new Room(width, height, tileSize));
     let inputManager = new InputManager();
     const handleInput = (action, data) => {

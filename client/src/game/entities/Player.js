@@ -5,8 +5,9 @@ class Player extends Entity{
 
     attributes = {
         name: 'Player',
-        ascii: '@',
-        health: 10
+        ascii: '👨‍🎤',
+        health: 10,
+        offset: {x: -2, y: 3}
     }
 
     move(dx, dy) {
