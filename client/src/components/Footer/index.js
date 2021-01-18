@@ -12,7 +12,7 @@ function Footer() {
         <footer className="row"  style={footerStyle}>
             <div className="container">
                 <div className="text-center align-item-center mt-4 p-2">
-                    <i className="nes-icon github m-0"></i>
+                    <a href="https://github.com/TChristensenDrumz/HARMony" target="_blank"><i className="nes-icon github m-0"></i></a>
                 </div>
             </div>
         </footer> 
