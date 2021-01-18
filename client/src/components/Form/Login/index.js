@@ -25,6 +25,7 @@ function LoginForm() {
                         alert(res.data.message);
                         return;
                     } else {
+                        localStorage.setItem("token", JSON.stringify(res.data.token));
                         setRedirect({ change: true });
                     };
                 });

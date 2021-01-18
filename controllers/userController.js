@@ -34,7 +34,7 @@ module.exports = {
                       }else{ 
                         const token =  jwt.sign({userId : user._id,  
                            username:user.username}, "HARMony",  
-                              {expiresIn: '24h'}) 
+                              {expiresIn: '24h'}); 
                         res.json({success:true, message:"Authentication successful", token: token }); 
                       }; 
                     }); 
