@@ -5,8 +5,8 @@ class Stairs extends Entity {
     attributes = {
         name: 'Stairs',
         color: 'black',
-        ascii: '>',
-        offset: {x:2, y:2}
+        ascii: '🚩',
+        offset: {x:-2, y:2}
     }
 
     action(verb, room) {
