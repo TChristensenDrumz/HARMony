@@ -11,7 +11,7 @@ export default function CreateAccount() {
     const center = {
         margin: "0",
         position: "absolute",
-        top: "33vh",
+        top: "29vh",
         left: "50vw",
         transform: "translate(-50%, -50%)"
     }
