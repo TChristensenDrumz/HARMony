@@ -10,7 +10,7 @@ module.exports = {
             if (err) {
                 res.json({success: false, message: "Your account could not be saved. Error: ", err});
             } else {
-                res.json({success: true, message: "Your account has been saved"});
+                res.json({success: true, message: "Your account has been created"});
             };
         });
     },
@@ -26,7 +26,7 @@ module.exports = {
                    res.json({success: false, message: err}) 
                  } else{ 
                   if (! user) { 
-                    res.json({success: false, message: 'username or password incorrect'}) 
+                    res.json({success: false, message: 'Your username and/or password is incorrect'}) 
                   } else{ 
                     req.login(user, function(err){ 
                       if(err){ 
