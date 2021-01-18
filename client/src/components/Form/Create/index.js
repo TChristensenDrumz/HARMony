@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from "react-router-dom";
 import { Form, Button } from 'react-bootstrap';
 import API from "../../../utils/API";
 
@@ -7,6 +8,10 @@ function CreateForm() {
         email: "",
         username: "",
         password: ""
+    });
+
+    const [redirect, setRedirect] = useState({
+        change: false
     });
 
     const handleSubmit = event => {
@@ -18,9 +23,11 @@ function CreateForm() {
                 .then(res => {
                     console.log(res);
                     alert(res.data.message);
+                    if (res.data.success) {
+                        setRedirect({ change: true });
+                    };
                 });
-        }
-        console.log(loginForm);
+        };
         setLoginForm({
             email: "",
             username: "",
@@ -53,6 +60,7 @@ function CreateForm() {
             </Button>
 
             <small className="form-text"><a href="/login" className="nes-text is-error text-decoration-none mt-4">Already have an account? Login here</a></small>
+            {redirect.change ? <Redirect to="/harmony" /> : <Redirect to="/create" />}
         </Form> 
     );
 };
