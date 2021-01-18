@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import ProtectedRoute from "./components/ProtectedRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "nes.css/css/nes.min.css";
@@ -57,18 +58,10 @@ class App extends Component {
       <Router>
           <Header />
           <Switch>
-            <Route exact path="/">
-              <Landing />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/create">
-              <CreateAccount />
-            </Route>
-            <Route exact path="/harmony">
-              <Harmony />
-            </Route>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/create" component={CreateAccount} />
+            <ProtectedRoute component={Harmony} />
+            <Route component={Landing} />
           </Switch>
           <Footer />
       </Router>

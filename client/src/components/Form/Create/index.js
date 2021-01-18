@@ -55,7 +55,7 @@ function CreateForm() {
             </Button>
 
             <small className="form-text"><a href="/login" className="nes-text is-error text-decoration-none mt-4">Already have an account? Login here</a></small>
-            {redirect.change ? <Redirect to="/harmony" /> : <Redirect to="/create" />}
+            {redirect.change ? <Redirect to="/login" /> : <Redirect to="/create" />}
         </Form> 
     );
 };
