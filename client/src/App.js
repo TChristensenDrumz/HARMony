@@ -6,6 +6,7 @@ import Header from "./components/Header"
 import Footer from "./components/Footer"
 import Landing from "./pages/Landing"
 import Login from "./pages/Login"
+import CreateAccount from "./pages/CreateAccount"
 import Harmony from "./pages/Harmony"
 import Phaser from 'phaser'
 import { IonPhaser } from '@ion-phaser/react'
@@ -61,6 +62,9 @@ class App extends Component {
             </Route>
             <Route exact path="/login">
               <Login />
+            </Route>
+            <Route exact path="/create">
+              <CreateAccount />
             </Route>
             <Route exact path="/harmony">
               <Harmony />
