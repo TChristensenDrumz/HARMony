@@ -17,7 +17,7 @@ function CreateForm() {
     const handleSubmit = event => {
         event.preventDefault();
         if (!loginForm.email || !loginForm.username || !loginForm.password) {
-            alert("Please provide all login information.");
+            alert("Please provide all user information.");
         } else {
             API.createUser(loginForm)
                 .then(res => {
@@ -28,26 +28,21 @@ function CreateForm() {
                     };
                 });
         };
-        setLoginForm({
-            email: "",
-            username: "",
-            password: ""
-        });
     };
 
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group>
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="username" name="username" value={loginForm.email} onChange={e => setLoginForm({ ...loginForm, email: e.target.value })} placeholder="Enter username" />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" name="email" placeholder="Enter email" value={loginForm.username} onChange={e => setLoginForm({ ...loginForm, username: e.target.value })}/>
+                <Form.Control type="email" name="email" value={loginForm.email} onChange={e => setLoginForm({ ...loginForm, email: e.target.value })} placeholder="Enter email" />
                 <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                 </Form.Text>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Username</Form.Label>
+                <Form.Control type="username" name="username" placeholder="Enter username" value={loginForm.username} onChange={e => setLoginForm({ ...loginForm, username: e.target.value })}/>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
