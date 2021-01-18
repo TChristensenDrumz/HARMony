@@ -30,11 +30,12 @@
   "dependencies": {
     "@ion-phaser/react": "^1.2.2",
     "axios": "^0.21.1",
-    "bcryptjs": "^2.4.3",
     "create-react-app": "^4.0.1",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "mongoose": "^5.11.12",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.1.0"
   }
 }
