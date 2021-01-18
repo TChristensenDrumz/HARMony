@@ -14,6 +14,7 @@ class Monster extends Entity {
                 room.player.attributes.health = room.player.attributes.health - 1;
                 if(room.player.attributes.health <= 0) {
                     room.addToHistory('You have died!');
+                    room.player.attributes.ascii = '💀';
                 }
                 else {
                     room.addToHistory(`You have ${room.player.attributes.health} health`);
