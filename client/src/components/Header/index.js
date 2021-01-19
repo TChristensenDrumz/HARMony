@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Authenticate from "../../utils/Authentication";
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
 
 
 
 function Header() {
-    let loggedIn = Authenticate();
+    const [status, setStatus] = useState({loggedIn: false});
+
+    const isLoggedIn = () => {
+        setStatus({loggedIn: Authenticate()});
+    };
+
+    useEffect(() => {
+        isLoggedIn();
+    }, [isLoggedIn]);
 
     const clearStorage = () => {
-        if (loggedIn) {
+        if (status.loggedIn) {
             localStorage.clear();
         };
     };
@@ -27,7 +35,7 @@ function Header() {
                     <Navbar.Brand href="/" className="p-0 m-0"><span style={{color:"red"}}>HARM</span>øny</Navbar.Brand>
                 </div>
                 <div className="col-4 text-right">
-                    <Button variant = "link" className="nes-text is-error sm text-decoration-none p-0 m-0" onClick={clearStorage} href={loggedIn ? "/" : "/login"}>{loggedIn ? "Logout" : "Login"}</Button>
+                    <Button variant = "link" className="nes-text is-error sm text-decoration-none p-0 m-0" onClick={clearStorage} href={status.loggedIn ? "/" : "/login"}>{status.loggedIn ? "Logout" : "Login"}</Button>
                 </div>
             </Navbar>
         </div>
