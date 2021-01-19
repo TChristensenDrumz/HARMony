@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { Form, Button } from 'react-bootstrap';
 import API from '../../../utils/API';
 
-function LoginForm() {
+function LoginForm(props) {
     const [loginForm, setLoginForm] = useState({
         username: "",
         password: ""

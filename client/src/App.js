@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,6 +9,7 @@ import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import CreateAccount from "./pages/CreateAccount"
 import Harmony from "./pages/Harmony"
+import Authenticate from "./utils/Authentication";
 import Phaser from 'phaser'
 import { IonPhaser } from '@ion-phaser/react'
 import Canvas from "./Canvas"
@@ -51,28 +52,24 @@ import Canvas from "./Canvas"
 //   }
 // }
 
-class App extends Component {
-  render() {
+const App = () => {
+  
+  return (
 
-    return (
+    <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/create" component={CreateAccount} />
+          <Route exact path="/harmony">
+            <ProtectedRoute component={Harmony} />
+          </Route>
+          <Route component={Landing} />
+        </Switch>
+        <Footer />
+    </Router>
 
-      <Router>
-
-      <Header />
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/create" component={CreateAccount} />
-        <Route exact path="/harmony">
-          <ProtectedRoute component={Harmony} />
-        </Route>
-        <Route component={Landing} />
-      </Switch>
-      <Footer />
-  </Router>
-
-
-    )
-  }
+  )
 };
 
 export default App;
