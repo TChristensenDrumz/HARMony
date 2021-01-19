@@ -12,6 +12,7 @@ import Harmony from "./pages/Harmony"
 import Authenticate from "./utils/Authentication";
 import Phaser from 'phaser'
 import { IonPhaser } from '@ion-phaser/react'
+import Canvas from "./Canvas"
 
 // class App extends Component {
 
