@@ -11,6 +11,7 @@ import CreateAccount from "./pages/CreateAccount"
 import Harmony from "./pages/Harmony"
 import Phaser from 'phaser'
 import { IonPhaser } from '@ion-phaser/react'
+import Canvas from "./Canvas"
 
 // class App extends Component {
 
@@ -56,15 +57,17 @@ class App extends Component {
     return (
 
       <Router>
-          <Header />
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/create" component={CreateAccount} />
-            <ProtectedRoute component={Harmony} />
-            <Route component={Landing} />
-          </Switch>
-          <Footer />
-      </Router>
+      <Header />
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/create" component={CreateAccount} />
+        <Route exact path="/harmony">
+          <ProtectedRoute component={Harmony} />
+        </Route>
+        <Route component={Landing} />
+      </Switch>
+      <Footer />
+  </Router>
 
     )
   }
