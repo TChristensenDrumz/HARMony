@@ -57,6 +57,7 @@ class App extends Component {
     return (
 
       <Router>
+
       <Header />
       <Switch>
         <Route exact path="/login" component={Login} />
@@ -68,6 +69,7 @@ class App extends Component {
       </Switch>
       <Footer />
   </Router>
+
 
     )
   }
