@@ -1,17 +1,8 @@
 import React, { Component, PropTypes, useState } from 'react';
 import Dino from "./public/assets/DinoSprites-doux.png"
 export default class Canvas extends Component {
-
-
     
      //ANIMATION=========================================
-    
-  
-    
-    
-    
-    
-    
 componentDidMount() {
     this.updateCanvas();
 }
@@ -19,13 +10,20 @@ componentDidMount() {
 updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
 
+
     let imageObj1 = new Image();
     imageObj1.src = Dino 
 
 
 
+    var imageObj2 = new Image();
+    imageObj2.src = Dino 
+
+
+    //key commands================================================
     document.addEventListener('keydown', keyDownHandler, false);
     document.addEventListener('keyup', keyUpHandler, false);
+
     let rightPressed = false;
     let leftPressed = false;
     let upPressed = false;
@@ -63,6 +61,7 @@ updateCanvas() {
             break;
         }
     }
+
     const scale = 1.5;
     const width = 24;
     const height = 24;
@@ -72,24 +71,32 @@ updateCanvas() {
     let canvasY = 200;
     let enemyX = 200
     let enemyY = 300
-    let lastMove = 0//<<====numbers to be passed as identifiers for conditionals or switches
+
+    let currentLoopIndex = 0;
+    let frameCount = 0;
+    let lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
+
     
 
 
 
+
+    //draws main character (player)==================
 
     function drawFrame(img, frameX, frameY) {
         ctx.drawImage(img,
                       frameX * width, frameY * height, width, height,
                       canvasX, canvasY, scaledWidth, scaledHeight);
     }
+
+    //potetntially will draw all other entities===================
     function drawFrame2(img,frameX, frameY) {
         ctx.drawImage(img,
                       frameX * 24, frameY * 24, 24, 24,
                       enemyX, enemyY, 24, 24);
     }
-    let currentLoopIndex = 0;
-    let frameCount = 0;
+
+    //spoofs cycleloops for better framerate============ << needs tuning for different monitors
     function frameRateSpoof(nums){
         const frameOutput = []
         nums.forEach(element => {
@@ -102,15 +109,23 @@ updateCanvas() {
         return frameOutput
     
     };
+
+
+    //stored framecycles for specific animations===================
+
         const rightAnimate = frameRateSpoof([4,5,6,7,8,9])
         const leftAnimate =  frameRateSpoof([43,42,41,40,39,38])
         const baseRightAnimate = frameRateSpoof([0,1,2,3])
         const baseLeftAnimate = frameRateSpoof([47,46,45,44])
         const attackRight = frameRateSpoof([9,10,11,12])
         const attackLeft = frameRateSpoof([37,36.35,34])
+
+    //basic animation function===================================
         function move(cycleLoop){
-            drawFrame2(imageObj1,frameRateSpoof([0,1,2,3])[currentLoopIndex],0,0,0)
-            drawFrame(imageObj1,cycleLoop[currentLoopIndex], 0, 0, 0);
+            drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0);
+            drawFrame2(imageObj2,frameRateSpoof([0,1,2,3])[currentLoopIndex],0,0,0)
+            
+
             
             currentLoopIndex++;
             if (currentLoopIndex >= cycleLoop.length) {
@@ -123,6 +138,7 @@ updateCanvas() {
         //move right function
         function right(){
             move(rightAnimate)
+
             lastMove=0
             canvasX += 2;
             if(upPressed){
@@ -130,6 +146,7 @@ updateCanvas() {
             }
             else if(downPressed){
                 canvasY += 2;
+
             }
             else if(spacePressed){
             }
@@ -145,6 +162,7 @@ updateCanvas() {
             else if(downPressed){
                 canvasY += 2;
             }
+
         }
         //move down function
         function down(){
@@ -165,6 +183,85 @@ updateCanvas() {
             }
             canvasY -= 2;
             
+
+        }
+        
+
+
+    //function for directing rendering by keypress======(character movement/collision/behavior)
+    function step() {
+        frameCount++;
+             if (frameCount <1) {
+             window.requestAnimationFrame(step);
+             return;
+             }
+            frameCount = 0;
+            ctx.clearRect(0, 0, 1650, 590);
+        switch(true){
+            case rightPressed:
+                if(canvasX >=1620 || canvasY <= 0 || canvasY >= 560){
+                    move(rightAnimate)
+                //===================
+                }else{
+                    right()
+                }
+            break;
+            case leftPressed:
+                if(canvasX <=0 || canvasY <= 0 || canvasY >= 560){
+                    move(leftAnimate)
+                //===================
+                }else{
+                    left()
+                }   
+            break;
+            case downPressed:
+                if(canvasY >= 560){
+                    if(lastMove===0){
+                        move(rightAnimate)
+                    }else{
+                        move(leftAnimate)
+                    }
+                }else{
+                down()
+                }
+            break;
+            case upPressed:
+                if(canvasY <=0){
+                    if(lastMove===0){
+                        move(rightAnimate)
+                    }else{
+                        move(leftAnimate)
+                    }
+    
+                }else{
+                    up()
+                }
+            break;
+            default:
+                if(lastMove===0){
+                    move(baseRightAnimate)
+                }else{
+                    move(baseLeftAnimate)
+                }
+
+        }
+        window.requestAnimationFrame(step)
+    }
+
+
+
+
+    //function for enemy behavior====================
+    function step2() {
+        let distanceX = canvasX - enemyX 
+        let distanceY = canvasY - enemyY
+        let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
+        if(Math.abs(unitVector)<=35){
+        
+        }else{
+            enemyY+=(distanceY/(2*unitVector))
+            enemyX+=(distanceX/(2*unitVector))
+
         }
         
 
@@ -178,6 +275,14 @@ updateCanvas() {
              }
             frameCount = 0;
             ctx.clearRect(0, 0, 1800, 800);
+
+    
+            
+            move(baseRightAnimate)
+    
+        window.requestAnimationFrame(step2);
+            
+
 
             switch (true) {
                 case rightPressed:
@@ -252,6 +357,7 @@ updateCanvas() {
         
         
         window.requestAnimationFrame(step);
+
     }
     // function step2() {
         
@@ -283,14 +389,32 @@ updateCanvas() {
             
     // }
     
+
+    //calls first animation loop=================
     function init() {
+
+        requestAnimationFrame(step2)
+        requestAnimationFrame(step);
         
+
+        
+    }
+        
+        
+
+        
+        
+    
+    //calls init(for second onload)
+    imageObj.onload = function() {
+
         // window.requestAnimationFrame(step2)
         window.requestAnimationFrame(step);
         
     }
 
     imageObj1.onload = function() {
+
         init();
     }
 
@@ -298,8 +422,9 @@ updateCanvas() {
 render() {
     return (
 
+        
+        <canvas ref="canvas" width={1650} height={590} style={{backgroundColor:"lightgray"}}></canvas>
 
-        <canvas ref="canvas" width={1650} height={590} style={{backgroundColor:"lightgray"}}> </canvas>
 
     );
  }
@@ -307,11 +432,13 @@ render() {
 //     const ctx = document.querySelector('canvas').getContext('2d');
 //     document.addEventListener('keydown', keyDownHandler, false);
 // document.addEventListener('keyup', keyUpHandler, false);
+
 // let rightPressed = false;
 // let leftPressed = false;
 // let upPressed = false;
 // let downPressed = false;
 // let spacePressed = false
+
 // function keyDownHandler(event) {
 //     if(event.keyCode == 68) {
 //         rightPressed = true;
@@ -343,9 +470,20 @@ render() {
 //     	upPressed = false;
 //     }
 // }
+
 //     let imageObj1 = new Image();
 //     imageObj1.src = Dino 
 
+
+//     const scale = 2;
+//     const width = 24;
+//     const height = 24;
+//     const scaledWidth = scale * width;
+//     const scaledHeight = scale * height;
+
+//     function drawFrame(img, frameX, frameY, canvasX, canvasY) {
+        
+//     }
 
 //     const scale = 2;
 //     const width = 24;
