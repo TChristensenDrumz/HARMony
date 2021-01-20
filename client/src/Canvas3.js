@@ -344,9 +344,15 @@ updateCanvas() {
                     canvasX -= 6;
                 //===================
                 }
-                else if(canvasY <= 0 || canvasY >= 560) {
+                else if(canvasY <= 0) {
                     animation = rightAnimate
-                    canvasX += 6;
+                    canvasY += 6;
+                    canvasX += 2;
+                }
+                else if(canvasY >= 560) {
+                    animation = rightAnimate
+                    canvasY -= 6;
+                    canvasX += 2;
                 }
                 else{
                     right()
@@ -360,9 +366,15 @@ updateCanvas() {
                     canvasX += 6;
                 //===================
                 }
-                else if(canvasY <= 0 || canvasY >= 560) {
+                else if(canvasY <= 0) {
                     animation = leftAnimate
-                    canvasX -= 6;
+                    canvasY += 6;
+                    canvasX -= 2;
+                }
+                else if(canvasY >= 560) {
+                    animation = leftAnimate
+                    canvasY -= 6;
+                    canvasX -= 2;
                 }
                 else{
                     left()
