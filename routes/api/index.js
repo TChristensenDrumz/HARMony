@@ -1,6 +1,7 @@
 const path = require("path");
 const router = require("express").Router();
 const userRoutes = require("./user");
+const gamePlayRoutes = require("./gamePlay");
 
 router.use("/user", userRoutes);
 
