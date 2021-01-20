@@ -1,6 +1,7 @@
 
 import React, { Component, PropTypes, useState } from 'react';
 import Dino from "./public/assets/DinoSprites-doux.png"
+// import keyPressManager from './utils/keyPressManager';
 export default class Canvas extends Component {
 
 
@@ -21,7 +22,8 @@ updateCanvas() {
     imageObj2.src = Dino 
 
 
-    //key commands================================================
+    //KEY COMMANDS================================================
+    
     document.addEventListener('keydown', keyDownHandler, false);
     document.addEventListener('keyup', keyUpHandler, false);
     var rightPressed = false;
@@ -29,7 +31,8 @@ updateCanvas() {
     var upPressed = false;
     var downPressed = false;
     var spacePressed = false
-    function keyDownHandler(event) {
+    
+   function keyDownHandler(event) {
         if(event.keyCode == 68) {
             rightPressed = true;
         }
@@ -60,21 +63,84 @@ updateCanvas() {
         	upPressed = false;
         }
     }
-
-
-    //setting variables for rendering==========
+    
+    
+    //SETTING VRIABLES FOR RENDERING==========
+    //scale of character
     const scale = 1.5;
+    //width and height of spritesheet frame
     const width = 24;
     const height = 24;
+    //self explanatory
     const scaledWidth = scale * width;
     const scaledHeight = scale * height;
-    let canvasX = 600;
-    let canvasY = 200;
-    let enemyX = 200
-    let enemyY = 300
+
+    //starting variables for move function
     let currentLoopIndex = 0;
     let frameCount = 0;
+
+    //SETTING "STATES"
+
     var lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
+
+    //position of PLayer(drawframe) on canvas
+    let canvasX = 600;
+    let canvasY = 200;
+    // let enemyX = 100
+    // let enemyY = 200
+    //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
+    //starting position for other entity(entities)
+
+    class Enemy{
+        constructor(enemyX, enemyY, scale){
+            this.enemyX = enemyX;
+            this.enemyY = enemyY;
+            this.img = Dino;
+            this.width = 24;
+            this.height = 24;
+            this.scale = scale
+            this.HP = 100;
+            this.ATK = 1;
+        }
+           
+        drawFrame2(frameX, frameY) {
+            ctx.drawImage(imageObj,
+                          frameX * this.width, frameY * this.height, this.width, this.height,
+                          this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
+        }
+
+        step2 = () => {
+            let distanceX = canvasX - this.enemyX 
+            let distanceY = canvasY - this.enemyY
+            let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
+            if(Math.abs(unitVector)<=35){
+            
+            }else{
+                this.enemyY+=(distanceY/(2*unitVector))
+                this.enemyX+=(distanceX/(2*unitVector))
+            }
+                
+            
+            
+            
+            frameCount++;
+                if (frameCount < 1) {
+                window.requestAnimationFrame(this.step2);
+                return;
+                }
+                frameCount = 0;
+                ctx.clearRect(0, 0, 1800, 800);
+        
+                
+                move(baseRightAnimate)
+        
+            window.requestAnimationFrame(this.step2);
+                
+        }
+    }
+    const enemy = new Enemy(100,200,1)
+    const enemy2 = new Enemy(200,300,1)
+
     
 
 
@@ -87,11 +153,11 @@ updateCanvas() {
     }
 
     //potetntially will draw all other entities===================
-    function drawFrame2(img,frameX, frameY) {
-        ctx.drawImage(img,
-                      frameX * 24, frameY * 24, 24, 24,
-                      enemyX, enemyY, 24, 24);
-    }
+    // function drawFrame2(img, frameX, frameY) {
+    //     ctx.drawImage(img,
+    //                   frameX * 24, frameY * 24, 24, 24,
+    //                   enemyX, enemyY, 24, 24);
+    // }
 
     //spoofs cycleloops for better framerate============ << needs tuning for different monitors
     function frameRateSpoof(nums){
@@ -117,7 +183,8 @@ updateCanvas() {
     //basic animation function===================================
         function move(cycleLoop){
             drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0);
-            drawFrame2(imageObj2,frameRateSpoof([0,1,2,3])[currentLoopIndex],0,0,0)
+            enemy.drawFrame2(frameRateSpoof([0,1,2,3])[currentLoopIndex],0,0,0)
+            enemy2.drawFrame2(frameRateSpoof([47,46,45,44])[currentLoopIndex],0,0,0)
             
             
             currentLoopIndex++;
@@ -131,7 +198,6 @@ updateCanvas() {
         //move right function
         function right(){
             move(rightAnimate)
-
             lastMove=0
             canvasX += 2;
             if(upPressed){
@@ -242,40 +308,13 @@ updateCanvas() {
 
 
     //function for enemy behavior====================
-    function step2() {
-        let distanceX = canvasX - enemyX 
-        let distanceY = canvasY - enemyY
-        let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
-        if(Math.abs(unitVector)<=35){
-        
-        }else{
-            enemyY+=(distanceY/(2*unitVector))
-            enemyX+=(distanceX/(2*unitVector))
-        }
-            
-        
-        
-        
-        frameCount++;
-            if (frameCount < 1) {
-            window.requestAnimationFrame(step2);
-            return;
-            }
-            frameCount = 0;
-            ctx.clearRect(0, 0, 1800, 800);
     
-            
-            move(baseRightAnimate)
-    
-        window.requestAnimationFrame(step2);
-            
-    }
     
 
     //calls first animation loop=================
     function init() {
-
-        requestAnimationFrame(step2)
+        requestAnimationFrame(enemy.step2)
+        requestAnimationFrame(enemy2.step2)
         requestAnimationFrame(step);
         
         
@@ -300,125 +339,3 @@ render() {
     );
  }
 };
-//     const ctx = document.querySelector('canvas').getContext('2d');
-//     document.addEventListener('keydown', keyDownHandler, false);
-// document.addEventListener('keyup', keyUpHandler, false);
-// var rightPressed = false;
-// var leftPressed = false;
-// var upPressed = false;
-// var downPressed = false;
-// var spacePressed = false
-// function keyDownHandler(event) {
-//     if(event.keyCode == 68) {
-//         rightPressed = true;
-//     }
-//     else if(event.keyCode == 65) {
-//         leftPressed = true;
-//     }
-//     else if(event.keyCode == 83) {
-//     	downPressed = true;
-//     }
-//     else if(event.keyCode == 87) {
-//     	upPressed = true;
-//     }
-//     else if(event.keyCode == 32){
-//         spacePressed = true
-//     }
-// }
-// function keyUpHandler(event) {
-//     if(event.keyCode == 68) {
-//         rightPressed = false;
-//     }
-//     else if(event.keyCode == 65) {
-//         leftPressed = false;
-//     }
-//     else if(event.keyCode == 83) {
-//     	downPressed = false;
-//     }
-//     else if(event.keyCode == 87) {
-//     	upPressed = false;
-//     }
-// }
-//     var imageObj1 = new Image();
-//     imageObj1.src = Dino 
-
-
-//     const scale = 2;
-//     const width = 24;
-//     const height = 24;
-//     const scaledWidth = scale * width;
-//     const scaledHeight = scale * height;
-
-//     function drawFrame(img, frameX, frameY, canvasX, canvasY) {
-        
-//     }
-
-
-
-// function Player(){
-//     const [lastMove, setLastMove] = useState(0) //<<====numbers to be passed as identifiers for conditionals or switches
-//     const [animation, setAnimation] = useState(0) //<<====numbers to be passed as identifiers for conditionals or switches
-//     const [positionX, setPositionX]=useState(0)
-//     const [positionY, setPositionY]=useState(0)
-
-
-
-// //=================Keycontrol stuff================
-//     function move(){
-//         if(rightPressed){
-//             setPositionX(positionX+2)
-//             setLastMove(0)
-//         }
-//         if(leftPressed){
-//             setPositionX(positionX-2)
-//             setLastMove(1)
-//         }
-//         if(upPressed){
-//             setPositionY(positionY+2)
-//         }
-//         if(downPressed){
-//             setPositionY(positionY-2)
-//         }
-//     console.log(positionX, positionY)
-// //===============
-//     }
-//     function render(animation, positionX, positionY){
-//         const clear
-        
-
-//         function draw(img, frameX, frameY){
-//             ctx.drawImage(img,
-//                 frameX * width, frameY * height, width, height,
-//                 positionX, positionY, scaledWidth, scaledHeight);
-//         }
-//         if(animation == 0){
-//             draw(attackAnimate, positionX, positionY)
-//         }
-//         if(animation == 1){
-//             draw(rightAnimate, positionX, positionY)
-//         }
-
-//         if(animation == 2){
-//             draw(leftAnimate, positionX, positionY)
-//         }
-//         if(animation == 3){
-//             draw(upAnimate, positionX, positionY)
-//         }
-//         if(animation == 4){
-//             draw(downAnimate, positionX, positionY)
-//         }else{
-//             if(lastMove == 0){
-//                 baseRightAnimate()
-//             }
-//             if(lastMove == 1){
-//                 baseLeftAnimate()
-//             }
-//         }
-
-//     }
-
-    
-// }
-
-
-//possible width and height for render
