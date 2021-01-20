@@ -114,7 +114,7 @@ updateCanvas() {
     //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
     //starting position for other entity(entities)
     let enemyAnimation = []
-    let animation = []
+    let animation = [baseRightAnimate]
 
     class Enemy{
         constructor(enemyX, enemyY, scale){
@@ -141,30 +141,33 @@ updateCanvas() {
             let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
            
             
-            if(Math.abs(unitVector)<=28||Math.abs(unitVector) == 0){
-                // this.enemyX-= 10* (distanceX/200)
-                // this.enemyY-=10* (distanceY/200) 
+            // if(Math.abs(unitVector)<=35){
+            //     this.enemyX-= 10* (distanceX/200)
+            //     this.enemyY-=10* (distanceY/200) 
                 
-                enemyAnimation = baseRightAnimate
-            }else{
-                if(distanceX >= 0 ){
+            //     enemyAnimation = baseRightAnimate
+            // }else{
+                if(distanceX >= 50 ){
                    
                     enemyAnimation = rightAnimate
                 }
-                else if(distanceX < 0){
+                else if(distanceX < -50){
                     
                     enemyAnimation = leftAnimate
                 }
                 this.enemyX+=(distanceX/(2*unitVector))
                 this.enemyY+=(distanceY/(2*unitVector))
                 
-            }
+            
+            
             
                 window.requestAnimationFrame(this.step2);
             }
+            
+        
         
     }
-    const enemy = new Enemy(100, 200, 1)
+    const enemy = new Enemy(0, 0, 1)
     const enemy2 = new Enemy(200, 300, 1)
 
     
@@ -244,6 +247,7 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     function step() {
+        
         frameCount++;
              if (frameCount <1) {
              window.requestAnimationFrame(step);
@@ -297,8 +301,7 @@ updateCanvas() {
                 }else{
                    animation = baseLeftAnimate
                 }
-
-        }
+            }
         move(animation, enemyAnimation)
         window.requestAnimationFrame(step)
     }
