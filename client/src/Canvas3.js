@@ -30,6 +30,7 @@ updateCanvas() {
     
     document.addEventListener('keydown', keyDownHandler, false);
     document.addEventListener('keyup', keyUpHandler, false);
+
     let rightPressed = false;
     let leftPressed = false;
     let upPressed = false;
@@ -49,6 +50,9 @@ updateCanvas() {
                 break;
             case 87:
                 upPressed = true;
+                break;
+            case 32:
+                spacePressed = true;
                 break;
         }
     }
@@ -93,6 +97,14 @@ updateCanvas() {
     let canvasY = 200;
     // let enemyX = 100
     // let enemyY = 200
+    //COMBAT STUFF=======================
+    let hurt = 0
+    let playerHurt = false
+    let playerHurtLength = 0
+    let attackLength = 0
+    let attackBuild = 0
+    let playerHealth = 100
+
     //spoofer =======================
     function frameRateSpoof(nums){
         const frameOutput = []
@@ -110,12 +122,14 @@ updateCanvas() {
         const leftAnimate =  frameRateSpoof([43,42,41,40,39,38])
         const baseRightAnimate = frameRateSpoof([0,1,2,3])
         const baseLeftAnimate = frameRateSpoof([47,46,45,44])
-        const attackRight = frameRateSpoof([9,10,11,12])
-        const attackLeft = frameRateSpoof([37,36.35,34])
+        const attackRight = frameRateSpoof([10,11,12,13])
+        const attackLeft = frameRateSpoof([37,36,35,34])
+        const hurtAnimateRight = frameRateSpoof([14,15,16])
+        const hurtAnimateLeft = frameRateSpoof([33,32,31])
     //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
     //starting position for other entity(entities)
     let enemyAnimation = []
-    let animation = [baseRightAnimate]
+    let animation = []
 
     class Enemy{
         constructor(enemyX, enemyY, scale){
@@ -134,35 +148,38 @@ updateCanvas() {
                           frameX * this.width, frameY * this.height, this.width, this.height,
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
-//this is where a second move function should be ==================================================
         step2 = () => {
             
             let distanceX = canvasX - this.enemyX 
             let distanceY = canvasY - this.enemyY
             let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
-           
-            
-            // if(Math.abs(unitVector)<=35){
-            //     this.enemyX-= 10* (distanceX/200)
-            //     this.enemyY-=10* (distanceY/200) 
-                
-            //     enemyAnimation = baseRightAnimate
-            // }else{
-                if(distanceX >= 50 ){
+            if(Math.abs(unitVector) <= 15){
+                animation = baseRightAnimate
+                attackBuild++
+                if(attackBuild===100){
+                    playerHurt = true
+                    playerHealth-=20
+                    console.log(playerHealth)
+                    attackBuild = 0
+                }
+            }else{
+                if(distanceX > 24 ){
                    
                     enemyAnimation = rightAnimate
                 }
-                else if(distanceX < -50){
+                else if(distanceX < -24){
                     
                     enemyAnimation = leftAnimate
                 }
                 this.enemyX+=(distanceX/(2*unitVector))
                 this.enemyY+=(distanceY/(2*unitVector))
+            }  
+            
                 
-            
-            
-            
-                window.requestAnimationFrame(this.step2);
+                
+            setTimeout(() => {
+                requestAnimationFrame(this.step2)
+            }, 10);
             }
             
         
@@ -209,8 +226,7 @@ updateCanvas() {
             else if(downPressed){
                 canvasY += 2;
             }
-            else if(spacePressed){
-            }
+            
         }
         //move left function
         function left(){
@@ -243,11 +259,48 @@ updateCanvas() {
             }
             canvasY -= 2;
         }
-        
+        function attack(){
+            if(rightPressed){
+                lastMove=0
+                canvasX += 2;
+                if(upPressed){
+                    canvasY -= 2;
+                }
+                else if(downPressed){
+                    canvasY += 2;
+                }
+            }
+            else if(leftPressed){
+                lastMove = 1
+                canvasX -= 2;
+                if(upPressed){
+                    canvasY -= 2;
+                }
+                else if(downPressed){
+                    canvasY += 2;
+                }
+            }
+            else if(upPressed){
+                canvasY -= 2
+            }
+            else if(downPressed){
+                canvasY +=2
+            }
+            attackLength++
+                if(lastMove===0){
+                    animation = attackRight
+                }else{
+                    animation = attackLeft
+                }
+                if(attackLength===60){
+                    spacePressed = false
+                    attackLength = 0
+                }
+        }
 
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
-    function step() {
+    const step = () => {
         
         frameCount++;
              if (frameCount <1) {
@@ -255,10 +308,31 @@ updateCanvas() {
              return;
              }
             frameCount = 0;
-            ctx.clearRect(0, 0, 1650, 590);
+            ctx.clearRect(0, 0, 1050, 590);
+        if(playerHurt == true){
+            playerHurtLength++
+            switch(lastMove){
+                case 0 : animation = hurtAnimateRight
+                break;
+                case 1 : animation =  hurtAnimateLeft
+                break;
+            
+            }
+            if(playerHurtLength == 45){
+                playerHurt = false
+                playerHurtLength = 0
+            }
+        }else{
+
+        
         switch(true){
+            case spacePressed:
+                attack()
+            break
             case rightPressed:
+
                 if(canvasX >=1020) {
+
                     animation = rightAnimate
                     canvasX -= 6;
                 //===================
@@ -272,7 +346,9 @@ updateCanvas() {
                 }
             break;
             case leftPressed:
+
                 if(canvasX <=0){
+
                     animation = leftAnimate
                     canvasX += 6;
                 //===================
@@ -318,9 +394,12 @@ updateCanvas() {
                 }else{
                    animation = baseLeftAnimate
                 }
-            }
+            }}
         move(animation, enemyAnimation)
-        window.requestAnimationFrame(step)
+        setTimeout(() => {
+            window.requestAnimationFrame(step)
+        }, 10);
+        
     }
 
 
