@@ -1,6 +1,10 @@
 
 import React, { Component, PropTypes, useState } from 'react';
 import Dino from "./public/assets/DinoSprites-doux.png"
+import BG from "./assets/images/image.jpg"
+// import BG from "./assets/images/dungeon.png"
+
+
 // import keyPressManager from './utils/keyPressManager';
 export default class Canvas extends Component {
 
@@ -327,9 +331,18 @@ updateCanvas() {
 
 }
 render() {
+
+    const styles = {
+        backgroundImage: "url(" + BG + ")",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat"
+    }
+
     return (
         
-        <canvas ref="canvas" width={1650} height={590} style={{backgroundColor:"lightgray"}}></canvas>
+        <canvas ref="canvas" className="mt-4 mb-4"
+        width={1050} height={590} 
+        style={styles}></canvas>
 
     );
  }
