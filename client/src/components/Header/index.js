@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from "react-router";
-import Authenticate from "../../utils/Authentication";
+import Token from "../../utils/Token";
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
 
 
@@ -9,7 +9,7 @@ function Header() {
     const [status, setStatus] = useState({loggedIn: false});
 
     const isLoggedIn = () => {
-        setStatus({loggedIn: Authenticate()});
+        setStatus({loggedIn: Token.authenticate()});
     };
 
     let current = useLocation();

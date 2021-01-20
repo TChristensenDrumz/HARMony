@@ -1,11 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import Authenticate from "../utils/Authentication";
+import Token from "../utils/Token";
 
 class ProtectedRoute extends React.Component {
     render() {
         const Component = this.props.component;
-        let isAuthenticated = Authenticate();
+        let isAuthenticated = Token.authenticate();
        
         return isAuthenticated ? (
             <Component />

@@ -9,7 +9,6 @@ import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import CreateAccount from "./pages/CreateAccount"
 import Harmony from "./pages/Harmony"
-import Authenticate from "./utils/Authentication";
 import Phaser from 'phaser'
 import { IonPhaser } from '@ion-phaser/react'
 import Canvas from "./Canvas"
