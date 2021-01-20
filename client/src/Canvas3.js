@@ -330,18 +330,34 @@ updateCanvas() {
                 attack()
             break
             case rightPressed:
-                if(canvasX >=1050 || canvasY <= 0 || canvasY >= 560){
+
+                if(canvasX >=1020) {
+
                     animation = rightAnimate
+                    canvasX -= 6;
                 //===================
-                }else{
+                }
+                else if(canvasY <= 0 || canvasY >= 560) {
+                    animation = rightAnimate
+                    canvasX += 6;
+                }
+                else{
                     right()
                 }
             break;
             case leftPressed:
-                if(canvasX <=0  || canvasY <= 0 || canvasY >= 560){
+
+                if(canvasX <=0){
+
                     animation = leftAnimate
+                    canvasX += 6;
                 //===================
-                }else{
+                }
+                else if(canvasY <= 0 || canvasY >= 560) {
+                    animation = leftAnimate
+                    canvasX -= 6;
+                }
+                else{
                     left()
                 }   
             break;
@@ -349,8 +365,10 @@ updateCanvas() {
                 if(canvasY >= 560){
                     if(lastMove===0){
                         animation = rightAnimate
+                        canvasY -= 6;
                     }else{
                         animation = leftAnimate
+                        canvasY -= 6;
                     }
                 }else{
                 down()
@@ -360,8 +378,10 @@ updateCanvas() {
                 if(canvasY <=0){
                     if(lastMove===0){
                         animation = rightAnimate
+                        canvasY += 6;
                     }else{
                         animation = leftAnimate
+                        canvasY += 6;
                     }
     
                 }else{
