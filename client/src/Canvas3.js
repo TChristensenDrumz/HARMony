@@ -265,29 +265,77 @@ updateCanvas() {
         function attack(){
             if(rightPressed){
                 lastMove=0
-                canvasX += 2;
+                if(canvasX >=1020) {
+                    canvasX -= 6;
+                }
                 if(upPressed){
-                    canvasY -= 2;
+                    if(canvasY <= 0) {
+                        canvasY += 6;
+                        canvasX += 2;
+                    }
+                    else {
+                        canvasX += 2;
+                        canvasY -= 2;
+                    }
                 }
                 else if(downPressed){
-                    canvasY += 2;
+                    if(canvasY >= 560) {
+                        canvasY -= 6;
+                        canvasX += 2;
+                    }
+                    else {
+                        canvasX += 2;
+                        canvasY += 2;
+                    }
+                }
+                else {
+                    canvasX += 2;
                 }
             }
             else if(leftPressed){
                 lastMove = 1
-                canvasX -= 2;
+                if(canvasX <= 0) {
+                    canvasX += 6;
+                }
                 if(upPressed){
-                    canvasY -= 2;
+                    if(canvasY <= 0) {
+                        canvasY += 6;
+                        canvasX -= 2;
+                    }
+                    else {
+                        canvasX -= 2;
+                        canvasY -= 2;
+                    }
                 }
                 else if(downPressed){
-                    canvasY += 2;
+                    if(canvasY >= 560) {
+                        canvasY -= 6;
+                        canvasX -= 2;
+                    }
+                    else {
+                        canvasX -= 2;
+                        canvasY += 2;
+                    }
+                }
+                else {
+                    canvasX -= 2;
                 }
             }
             else if(upPressed){
-                canvasY -= 2
+                if(canvasY <= 0) {
+                    canvasY += 6;
+                }
+                else {
+                    canvasY -= 2
+                }
             }
             else if(downPressed){
-                canvasY +=2
+                if(canvasY >= 560) {
+                    canvasY -= 6;
+                }
+                else {
+                    canvasY += 2
+                }
             }
             attackLength++
                 if(lastMove===0){
@@ -334,8 +382,8 @@ updateCanvas() {
         
         switch(true){
             case spacePressed:
-                attack()
-            break
+                attack();
+            break;
             case rightPressed:
 
                 if(canvasX >=1020) {
