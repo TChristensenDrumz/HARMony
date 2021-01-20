@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from "react-router";
 import Authenticate from "../../utils/Authentication";
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
 
@@ -11,9 +12,11 @@ function Header() {
         setStatus({loggedIn: Authenticate()});
     };
 
+    let current = useLocation();
+
     useEffect(() => {
         isLoggedIn();
-    }, [isLoggedIn]);
+    }, [current]);
 
     const clearStorage = () => {
         if (status.loggedIn) {
