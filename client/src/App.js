@@ -60,7 +60,7 @@ const App = () => {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/create" component={CreateAccount} />
-          <Route exact path="/harmony">
+          <Route path="/harmony">
             <ProtectedRoute component={Harmony} />
           </Route>
           <Route component={Landing} />
