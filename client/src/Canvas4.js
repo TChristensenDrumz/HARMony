@@ -1,17 +1,14 @@
+
 import React, { Component, PropTypes, useState } from 'react';
 import Dino from "./public/assets/DinoSprites-doux.png"
-import BG from "./assets/images/image.jpg"
-// import BG from "./assets/images/dungeon.png"
-import { Redirect } from "react-router-dom";
-import { style } from './utils/theme';
+// import BG from "./assets/images/image.jpg"
+import BG from "./assets/images/dungeon.png"
 
 
 // import keyPressManager from './utils/keyPressManager';
 export default class Canvas extends Component {
 
-    state = {
-        changeRoom: false
-    }
+
     
      //ANIMATION=========================================
 componentDidMount() {
@@ -250,11 +247,8 @@ updateCanvas() {
 
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
-    const step = () => {
-        if (canvasX < 10 && canvasY < 10) {
-            this.setState({changeRoom: true});
-        };
-
+    function step() {
+        
         frameCount++;
              if (frameCount <1) {
              window.requestAnimationFrame(step);
@@ -328,6 +322,11 @@ updateCanvas() {
         
         
     }
+        
+        
+
+        
+        
     
     //calls init(for second onload)
     imageObj.onload = function() {
@@ -335,7 +334,6 @@ updateCanvas() {
     }
 
 }
-
 render() {
 
     const styles = {
@@ -345,13 +343,10 @@ render() {
     }
 
     return (
-        <div style={style.body}>
+        
         <canvas ref="canvas" className="mt-4 mb-4"
         width={1050} height={590} 
         style={styles}></canvas>
-        {this.state.changeRoom ? <Redirect to="/harmony/testing"/> : <Redirect to="/harmony" />}
-        </div>
-        
 
     );
  }
