@@ -14,11 +14,11 @@ componentDidMount() {
 updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
 
-    var imageObj = new Image();
+    let imageObj = new Image();
     imageObj.src = Dino 
 
 
-    var imageObj2 = new Image();
+    let imageObj2 = new Image();
     imageObj2.src = Dino 
 
 
@@ -26,41 +26,42 @@ updateCanvas() {
     
     document.addEventListener('keydown', keyDownHandler, false);
     document.addEventListener('keyup', keyUpHandler, false);
-    var rightPressed = false;
-    var leftPressed = false;
-    var upPressed = false;
-    var downPressed = false;
-    var spacePressed = false
+    let rightPressed = false;
+    let leftPressed = false;
+    let upPressed = false;
+    let downPressed = false;
+    let spacePressed = false
     
-   function keyDownHandler(event) {
-        if(event.keyCode == 68) {
-            rightPressed = true;
-        }
-        else if(event.keyCode == 65) {
-            leftPressed = true;
-        }
-        else if(event.keyCode == 83) {
-        	downPressed = true;
-        }
-        else if(event.keyCode == 87) {
-        	upPressed = true;
-        }
-        else if(event.keyCode == 32){
-            spacePressed = true
+    function keyDownHandler(event) {
+        switch (event.keyCode) {
+            case 68:
+                rightPressed = true;
+                break;
+            case 65:
+                leftPressed = true;
+                break;
+            case 83:
+                downPressed = true;
+                break;
+            case 87:
+                upPressed = true;
+                break;
         }
     }
     function keyUpHandler(event) {
-        if(event.keyCode == 68) {
-            rightPressed = false;
-        }
-        else if(event.keyCode == 65) {
-            leftPressed = false;
-        }
-        else if(event.keyCode == 83) {
-        	downPressed = false;
-        }
-        else if(event.keyCode == 87) {
-        	upPressed = false;
+        switch (event.keyCode) {
+            case 68:
+                rightPressed = false;
+                break;
+            case 65:
+                leftPressed = false;
+                break;
+            case 83:
+                downPressed = false;
+                break;
+            case 87:
+                upPressed = false;
+                break;
         }
     }
     
@@ -81,7 +82,7 @@ updateCanvas() {
 
     //SETTING "STATES"
 
-    var lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
+    let lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
 
     //position of PLayer(drawframe) on canvas
     let canvasX = 600;
