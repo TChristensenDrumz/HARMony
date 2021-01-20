@@ -418,7 +418,7 @@ updateCanvas() {
         init();
     }
 
-}
+}}
 render() {
     return (
 
@@ -429,6 +429,7 @@ render() {
     );
  }
 };
+
 //     const ctx = document.querySelector('canvas').getContext('2d');
 //     document.addEventListener('keydown', keyDownHandler, false);
 // document.addEventListener('keyup', keyUpHandler, false);
