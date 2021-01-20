@@ -20,7 +20,6 @@ function LoginForm(props) {
         } else {
             API.login(loginForm)
                 .then(res => {
-                    console.log(res);
                     if (!res.data.success) {
                         alert(res.data.message);
                         return;
