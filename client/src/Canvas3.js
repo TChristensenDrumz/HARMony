@@ -135,32 +135,29 @@ updateCanvas() {
             let distanceX = canvasX - this.enemyX 
             let distanceY = canvasY - this.enemyY
             let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
-
-            frameCount++;
-            if (frameCount < 1) {
-            window.requestAnimationFrame(this.step2);
-            return;
-            }
-            frameCount = 0;
-            ctx.clearRect(0, 0, 1650, 590);
-
-            if(Math.abs(unitVector)<=35){
+           
+            
+            if(Math.abs(unitVector)<=28||Math.abs(unitVector) == 0){
+                // this.enemyX-= 10* (distanceX/200)
+                // this.enemyY-=10* (distanceY/200) 
+                
                 enemyAnimation = baseRightAnimate
             }else{
-                if(distanceX > 0 ){
+                if(distanceX >= 0 ){
+                   
                     enemyAnimation = rightAnimate
                 }
-                else if(distanceY < 0){
+                else if(distanceX < 0){
+                    
                     enemyAnimation = leftAnimate
                 }
-                this.enemyY+=(distanceY/(2*unitVector))
                 this.enemyX+=(distanceX/(2*unitVector))
-
+                this.enemyY+=(distanceY/(2*unitVector))
+                
             }
             
                 window.requestAnimationFrame(this.step2);
-                
-        }
+            }
         
     }
     const enemy = new Enemy(100, 200, 1)
