@@ -88,78 +88,7 @@ updateCanvas() {
     let canvasY = 200;
     // let enemyX = 100
     // let enemyY = 200
-    //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
-    //starting position for other entity(entities)
-
-    class Enemy{
-        constructor(enemyX, enemyY, scale){
-            this.enemyX = enemyX;
-            this.enemyY = enemyY;
-            this.img = Dino;
-            this.width = 24;
-            this.height = 24;
-            this.scale = scale
-            this.HP = 100;
-            this.ATK = 1;
-        }
-           
-        drawFrame2(frameX, frameY) {
-            ctx.drawImage(imageObj,
-                          frameX * this.width, frameY * this.height, this.width, this.height,
-                          this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
-        }
-
-        step2 = () => {
-            let distanceX = canvasX - this.enemyX 
-            let distanceY = canvasY - this.enemyY
-            let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
-            if(Math.abs(unitVector)<=35){
-            
-            }else{
-                this.enemyY+=(distanceY/(2*unitVector))
-                this.enemyX+=(distanceX/(2*unitVector))
-            }
-                
-            
-            
-            
-            frameCount++;
-                if (frameCount < 1) {
-                window.requestAnimationFrame(this.step2);
-                return;
-                }
-                frameCount = 0;
-                ctx.clearRect(0, 0, 1800, 800);
-        
-                
-                move(baseRightAnimate)
-        
-            window.requestAnimationFrame(this.step2);
-                
-        }
-    }
-    const enemy = new Enemy(100,200,1)
-    const enemy2 = new Enemy(200,300,1)
-
-    
-
-
-
-    //draws main character (player)==================
-    function drawFrame(img, frameX, frameY) {
-        ctx.drawImage(img,
-                      frameX * width, frameY * height, width, height,
-                      canvasX, canvasY, scaledWidth, scaledHeight);
-    }
-
-    //potetntially will draw all other entities===================
-    // function drawFrame2(img, frameX, frameY) {
-    //     ctx.drawImage(img,
-    //                   frameX * 24, frameY * 24, 24, 24,
-    //                   enemyX, enemyY, 24, 24);
-    // }
-
-    //spoofs cycleloops for better framerate============ << needs tuning for different monitors
+    //spoofer =======================
     function frameRateSpoof(nums){
         const frameOutput = []
         nums.forEach(element => {
@@ -168,36 +97,105 @@ updateCanvas() {
             }
         });
     
-        
         return frameOutput
     
     };
-
-    //stored framecycles for specific animations===================
+    //animation frames====================================
         const rightAnimate = frameRateSpoof([4,5,6,7,8,9])
         const leftAnimate =  frameRateSpoof([43,42,41,40,39,38])
         const baseRightAnimate = frameRateSpoof([0,1,2,3])
         const baseLeftAnimate = frameRateSpoof([47,46,45,44])
         const attackRight = frameRateSpoof([9,10,11,12])
         const attackLeft = frameRateSpoof([37,36.35,34])
-    //basic animation function===================================
-        function move(cycleLoop){
-            drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0);
-            enemy.drawFrame2(frameRateSpoof([0,1,2,3])[currentLoopIndex],0,0,0)
-            enemy2.drawFrame2(frameRateSpoof([47,46,45,44])[currentLoopIndex],0,0,0)
-            
-            
-            currentLoopIndex++;
-            if (currentLoopIndex >= cycleLoop.length) {
-              currentLoopIndex = 0;
-            }
+    //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
+    //starting position for other entity(entities)
+    let enemyAnimation = []
+    let animation = []
+
+    class Enemy{
+        constructor(enemyX, enemyY, scale){
+            this.enemyX = enemyX;
+            this.enemyY = enemyY;
+            this.img = imageObj2;
+            this.width = 24;
+            this.height = 24;
+            this.scale = scale
+            this.HP = 100;
+            this.ATK = 1;
         }
+           
+        drawFrame2(frameX, frameY) {
+            ctx.drawImage(this.img,
+                          frameX * this.width, frameY * this.height, this.width, this.height,
+                          this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
+        }
+//this is where a second move function should be ==================================================
+        step2 = () => {
+            
+            let distanceX = canvasX - this.enemyX 
+            let distanceY = canvasY - this.enemyY
+            let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
+
+            frameCount++;
+            if (frameCount < 1) {
+            window.requestAnimationFrame(this.step2);
+            return;
+            }
+            frameCount = 0;
+            ctx.clearRect(0, 0, 1650, 590);
+
+            if(Math.abs(unitVector)<=35){
+                enemyAnimation = baseRightAnimate
+            }else{
+                if(distanceX > 0 ){
+                    enemyAnimation = rightAnimate
+                }
+                else if(distanceY < 0){
+                    enemyAnimation = leftAnimate
+                }
+                this.enemyY+=(distanceY/(2*unitVector))
+                this.enemyX+=(distanceX/(2*unitVector))
+
+            }
+            
+                window.requestAnimationFrame(this.step2);
+                
+        }
+        
+    }
+    const enemy = new Enemy(100, 200, 1)
+    const enemy2 = new Enemy(200, 300, 1)
+
+    
+
+
+   
+    //draws main character (player)==================
+    function drawFrame(img, frameX, frameY) {
+        ctx.drawImage(img,
+                      frameX * width, frameY * height, width, height,
+                      canvasX, canvasY, scaledWidth, scaledHeight);
+    }
+        
+
+    //basic animation function===================================
+    function move(cycleLoop, cycleLoop2){
+        drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0); 
+        enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
+        enemy2.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
+        currentLoopIndex++;
+        if (currentLoopIndex >= cycleLoop.length) {
+          currentLoopIndex = 0;
+        }
+    }
+
+        
 
         //============movement functions======================
             
         //move right function
         function right(){
-            move(rightAnimate)
+            animation = rightAnimate
             lastMove=0
             canvasX += 2;
             if(upPressed){
@@ -211,7 +209,7 @@ updateCanvas() {
         }
         //move left function
         function left(){
-            move(leftAnimate)
+            animation = leftAnimate
             lastMove = 1
             canvasX -= 2;
             if(upPressed){
@@ -224,9 +222,9 @@ updateCanvas() {
         //move down function
         function down(){
             if(lastMove===0){
-                move(rightAnimate)
+                animation = rightAnimate
             }else{
-                move(leftAnimate)
+                animation = leftAnimate
             }
         
             canvasY += 2;
@@ -234,12 +232,11 @@ updateCanvas() {
         //move up function
         function up(){
             if(lastMove===0){
-                move(rightAnimate)
+                animation = rightAnimate
             }else{
-                move(leftAnimate)
+               animation = leftAnimate
             }
             canvasY -= 2;
-            
         }
         
 
@@ -256,7 +253,7 @@ updateCanvas() {
         switch(true){
             case rightPressed:
                 if(canvasX >=1620 || canvasY <= 0 || canvasY >= 560){
-                    move(rightAnimate)
+                    animation = rightAnimate
                 //===================
                 }else{
                     right()
@@ -264,7 +261,7 @@ updateCanvas() {
             break;
             case leftPressed:
                 if(canvasX <=0 || canvasY <= 0 || canvasY >= 560){
-                    move(leftAnimate)
+                    animation = leftAnimate
                 //===================
                 }else{
                     left()
@@ -273,9 +270,9 @@ updateCanvas() {
             case downPressed:
                 if(canvasY >= 560){
                     if(lastMove===0){
-                        move(rightAnimate)
+                        animation = rightAnimate
                     }else{
-                        move(leftAnimate)
+                        animation = leftAnimate
                     }
                 }else{
                 down()
@@ -284,9 +281,9 @@ updateCanvas() {
             case upPressed:
                 if(canvasY <=0){
                     if(lastMove===0){
-                        move(rightAnimate)
+                        animation = rightAnimate
                     }else{
-                        move(leftAnimate)
+                        animation = leftAnimate
                     }
     
                 }else{
@@ -295,12 +292,13 @@ updateCanvas() {
             break;
             default:
                 if(lastMove===0){
-                    move(baseRightAnimate)
+                   animation = baseRightAnimate
                 }else{
-                    move(baseLeftAnimate)
+                   animation = baseLeftAnimate
                 }
 
         }
+        move(animation, enemyAnimation)
         window.requestAnimationFrame(step)
     }
 
