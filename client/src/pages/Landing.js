@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Authenticate from "../utils/Authentication";
+import Token from "../utils/Token";
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Background from "../components/assets/DinoSprites_doux.gif";
 
 export default function Landing() {
-    let loggedIn = Authenticate();
+    let loggedIn = Token.authenticate();
 
     const background = {
         height: "80vh",
