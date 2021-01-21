@@ -20,14 +20,12 @@ componentDidMount() {
 
 updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
-
+    //1.import images=====================
     let imageObj = new Image();
     imageObj.src = Dino 
 
-
     let imageObj2 = new Image();
     imageObj2.src = Dino 
-
 
     //KEY COMMANDS================================================
     
@@ -134,16 +132,16 @@ updateCanvas() {
     let animation = []
 
     class Enemy{
-        constructor(enemyX, enemyY, scale, enemyAnimation, HP){
+        constructor(img, enemyX, enemyY, scale, enemyAnimation, HP,ATK){
             this.enemyX = enemyX;
             this.enemyY = enemyY;
-            this.img = imageObj2;
+            this.img = img;
             this.width = 24;
             this.height = 24;
             this.scale = scale
             this.enemyAnimation = enemyAnimation
             this.HP = HP;
-            this.ATK = 1;
+            this.ATK = ATK;
 
         }
            
@@ -167,7 +165,7 @@ updateCanvas() {
                     attackBuild++
                     if(attackBuild===100){
                         playerHurt = true
-                        playerHealth-=20
+                        playerHealth-=this.ATK
 
                         attackBuild = 0
                     }
@@ -204,8 +202,15 @@ updateCanvas() {
         
         
     }
-    const enemy = new Enemy(0, 0, 1, [], 100)
-    const enemy2 = new Enemy(200, 300, 1, [], 100)
+
+    //construct enemies
+    const enemy = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10)
+    const enemy1 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10)
+    const enemy2 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10)
+    const enemy3 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10)
+    const enemy4 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10)
+    const enemy5 = new Enemy(imageObj2, Math.random()*1050, 0, 1, [], 100, 10)
+    const BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000,200)
 
     
 
@@ -220,10 +225,16 @@ updateCanvas() {
         
 
     //basic animation function===================================
-    function move(cycleLoop, cycleLoop2, cycleLoop3){
+    //add in cycleLoop for each entity so they can have seperate animations
+    function move(cycleLoop, cycleLoop2, cycleLoop3, cycleLoop4, cycleLoop5, cycleLoop6, cycleLoop7, cycleLoop8){
         drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0); 
         enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
-        enemy2.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
+        enemy1.drawFrame2(cycleLoop4[currentLoopIndex], 0, 0, 0);
+        enemy2.drawFrame2(cycleLoop5[currentLoopIndex], 0, 0, 0);
+        enemy3.drawFrame2(cycleLoop6[currentLoopIndex], 0, 0, 0);
+        enemy4.drawFrame2(cycleLoop7[currentLoopIndex], 0, 0, 0);
+        enemy5.drawFrame2(cycleLoop8[currentLoopIndex], 0, 0, 0);
+        BOSS.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
         currentLoopIndex++;
         if (currentLoopIndex >= cycleLoop.length) {
           currentLoopIndex = 0;
@@ -278,6 +289,7 @@ updateCanvas() {
             }
             canvasY -= 2;
         }
+        //player attack logic
         function attack(){
             if(rightPressed){
                 lastMove=0
@@ -368,10 +380,13 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
+<<<<<<< HEAD
+=======
 
         if (canvasX < 10 && canvasY < 10) {
            this.setState({changeRoom: true});
         };
+>>>>>>> eac8933da0ba6cb8861db86ff0f175ac0cd32d84
 
         frameCount++;
              if (frameCount <1) {
@@ -478,13 +493,12 @@ updateCanvas() {
                    animation = baseLeftAnimate
                 }
             }}
-        
-        
-            
             if(playerHealth <= 0){
                 animation = []
             }
-            move(animation, enemy.enemyAnimation, enemy2.enemyAnimation)
+
+            //pass each entities animations into this function
+            move(animation, enemy.enemyAnimation, BOSS.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation, enemy3.enemyAnimation, enemy4.enemyAnimation, enemy5.enemyAnimation)
             setTimeout(() => {
                 window.requestAnimationFrame(step)
             }, 10);
@@ -494,18 +508,18 @@ updateCanvas() {
         
         
     }
-
-
-
-
-    //function for enemy behavior====================
-    
     
 
     //calls first animation loop=================
+    //make sure all entities are called in here
     function init() {
         requestAnimationFrame(enemy.step2)
+        requestAnimationFrame(enemy1.step2)
         requestAnimationFrame(enemy2.step2)
+        requestAnimationFrame(enemy3.step2)
+        requestAnimationFrame(enemy4.step2)
+        requestAnimationFrame(enemy5.step2)
+        requestAnimationFrame(BOSS.step2)
         requestAnimationFrame(step);
         
         
