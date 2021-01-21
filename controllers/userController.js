@@ -33,7 +33,7 @@ module.exports = {
                         res.json({success: false, message: err}) 
                       }else{ 
                         const token =  jwt.sign({userId : user._id,  
-                           username:user.username}, "HARMony",  
+                           username:user.username}, process.env.tokenSecret,  
                               {expiresIn: '24h'}); 
                         res.json({success:true, message:"Authentication successful", token: token }); 
                       }; 
