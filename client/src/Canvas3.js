@@ -101,12 +101,12 @@ updateCanvas() {
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
-    let hurt = 0
     let playerHurt = false
     let playerHurtLength = 0
     let attackLength = 0
     let attackBuild = 0
     let playerHealth = 100
+    let beforeRoom = 0
 
     //spoofer =======================
     function frameRateSpoof(nums){
@@ -131,19 +131,20 @@ updateCanvas() {
         const hurtAnimateLeft = frameRateSpoof([33,32,31])
     //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
     //starting position for other entity(entities)
-    let enemyAnimation = []
     let animation = []
 
     class Enemy{
-        constructor(enemyX, enemyY, scale){
+        constructor(enemyX, enemyY, scale, enemyAnimation, HP){
             this.enemyX = enemyX;
             this.enemyY = enemyY;
             this.img = imageObj2;
             this.width = 24;
             this.height = 24;
             this.scale = scale
-            this.HP = 100;
+            this.enemyAnimation = enemyAnimation
+            this.HP = HP;
             this.ATK = 1;
+
         }
            
         drawFrame2(frameX, frameY) {
@@ -156,40 +157,55 @@ updateCanvas() {
             let distanceX = canvasX - this.enemyX 
             let distanceY = canvasY - this.enemyY
             let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
-            if(Math.abs(unitVector) <= 15){
-                animation = baseRightAnimate
-                attackBuild++
-                if(attackBuild===100){
-                    playerHurt = true
-                    playerHealth-=20
-                    console.log(playerHealth)
-                    attackBuild = 0
-                }
+            if(spacePressed && unitVector<=15){
+                this.enemyAnimation = hurtAnimateRight
+                console.log(this.HP)
+                this.HP -= 1
             }else{
-                if(distanceX > 24 ){
-                   
-                    enemyAnimation = rightAnimate
-                }
-                else if(distanceX < -24){
-                    
-                    enemyAnimation = leftAnimate
-                }
-                this.enemyX+=(distanceX/(2*unitVector))
-                this.enemyY+=(distanceY/(2*unitVector))
-            }  
+                if(Math.abs(unitVector) <= 15){
+                    animation = baseRightAnimate
+                    attackBuild++
+                    if(attackBuild===100){
+                        playerHurt = true
+                        playerHealth-=20
+
+                        attackBuild = 0
+                    }
+                }else{
+                    if(distanceX > 24 ){
+                       
+                        this.enemyAnimation = rightAnimate
+                    }
+                    else if(distanceX < -24){
+                        
+                        this.enemyAnimation = leftAnimate
+                    }
+                    this.enemyX+=(distanceX/(2*unitVector))
+                    this.enemyY+=(distanceY/(2*unitVector))
+                }  
+
+            }
+            
             
                 
-                
-            setTimeout(() => {
-                requestAnimationFrame(this.step2)
-            }, 10);
+            if(this.HP <= 0){
+                this.enemyAnimation = []
+                beforeRoom++
+                console.log(beforeRoom)
+            }else{
+                setTimeout(() => {
+                    requestAnimationFrame(this.step2)
+                }, 10);
             }
+
+        }
+            
             
         
         
     }
-    const enemy = new Enemy(0, 0, 1)
-    const enemy2 = new Enemy(200, 300, 1)
+    const enemy = new Enemy(0, 0, 1, [], 100)
+    const enemy2 = new Enemy(200, 300, 1, [], 100)
 
     
 
@@ -204,10 +220,10 @@ updateCanvas() {
         
 
     //basic animation function===================================
-    function move(cycleLoop, cycleLoop2){
+    function move(cycleLoop, cycleLoop2, cycleLoop3){
         drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0); 
         enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
-        enemy2.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
+        enemy2.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
         currentLoopIndex++;
         if (currentLoopIndex >= cycleLoop.length) {
           currentLoopIndex = 0;
@@ -265,29 +281,77 @@ updateCanvas() {
         function attack(){
             if(rightPressed){
                 lastMove=0
-                canvasX += 2;
+                if(canvasX >=1020) {
+                    canvasX -= 6;
+                }
                 if(upPressed){
-                    canvasY -= 2;
+                    if(canvasY <= 0) {
+                        canvasY += 6;
+                        canvasX += 2;
+                    }
+                    else {
+                        canvasX += 2;
+                        canvasY -= 2;
+                    }
                 }
                 else if(downPressed){
-                    canvasY += 2;
+                    if(canvasY >= 560) {
+                        canvasY -= 6;
+                        canvasX += 2;
+                    }
+                    else {
+                        canvasX += 2;
+                        canvasY += 2;
+                    }
+                }
+                else {
+                    canvasX += 2;
                 }
             }
             else if(leftPressed){
                 lastMove = 1
-                canvasX -= 2;
+                if(canvasX <= 0) {
+                    canvasX += 6;
+                }
                 if(upPressed){
-                    canvasY -= 2;
+                    if(canvasY <= 0) {
+                        canvasY += 6;
+                        canvasX -= 2;
+                    }
+                    else {
+                        canvasX -= 2;
+                        canvasY -= 2;
+                    }
                 }
                 else if(downPressed){
-                    canvasY += 2;
+                    if(canvasY >= 560) {
+                        canvasY -= 6;
+                        canvasX -= 2;
+                    }
+                    else {
+                        canvasX -= 2;
+                        canvasY += 2;
+                    }
+                }
+                else {
+                    canvasX -= 2;
                 }
             }
             else if(upPressed){
-                canvasY -= 2
+                if(canvasY <= 0) {
+                    canvasY += 6;
+                }
+                else {
+                    canvasY -= 2
+                }
             }
             else if(downPressed){
-                canvasY +=2
+                if(canvasY >= 560) {
+                    canvasY -= 6;
+                }
+                else {
+                    canvasY += 2
+                }
             }
             attackLength++
                 if(lastMove===0){
@@ -334,8 +398,8 @@ updateCanvas() {
         
         switch(true){
             case spacePressed:
-                attack()
-            break
+                attack();
+            break;
             case rightPressed:
 
                 if(canvasX >= 1040) {
@@ -414,10 +478,20 @@ updateCanvas() {
                    animation = baseLeftAnimate
                 }
             }}
-        move(animation, enemyAnimation)
-        setTimeout(() => {
-            window.requestAnimationFrame(step)
-        }, 10);
+        
+        
+            
+            if(playerHealth <= 0){
+                animation = []
+            }
+            move(animation, enemy.enemyAnimation, enemy2.enemyAnimation)
+            setTimeout(() => {
+                window.requestAnimationFrame(step)
+            }, 10);
+            
+            
+        
+        
         
     }
 
