@@ -90,7 +90,7 @@ updateCanvas() {
 
     //position of PLayer(drawframe) on canvas
     let canvasX = 600;
-    let canvasY = 200;
+    let canvasY = 610;
     // let enemyX = 100
     // let enemyY = 200
     //spoofer =======================
@@ -255,10 +255,10 @@ updateCanvas() {
              return;
              }
             frameCount = 0;
-            ctx.clearRect(0, 0, 1650, 590);
+            ctx.clearRect(0, 0, 1200, 720);
         switch(true){
             case rightPressed:
-                if(canvasX >=1620 || canvasY <= 0 || canvasY >= 560){
+                if(canvasX >=1100 || canvasY <= 80 || canvasY >= 610){
                     animation = rightAnimate
                 //===================
                 }else{
@@ -266,7 +266,7 @@ updateCanvas() {
                 }
             break;
             case leftPressed:
-                if(canvasX <=0 || canvasY <= 0 || canvasY >= 560){
+                if(canvasX <=80 || canvasY <= 80 || canvasY >= 610){
                     animation = leftAnimate
                 //===================
                 }else{
@@ -274,7 +274,7 @@ updateCanvas() {
                 }   
             break;
             case downPressed:
-                if(canvasY >= 560){
+                if(canvasY >= 610){
                     if(lastMove===0){
                         animation = rightAnimate
                     }else{
@@ -285,7 +285,7 @@ updateCanvas() {
                 }
             break;
             case upPressed:
-                if(canvasY <=0){
+                if(canvasY <=80){
                     if(lastMove===0){
                         animation = rightAnimate
                     }else{
@@ -305,6 +305,7 @@ updateCanvas() {
             }
         move(animation, enemyAnimation)
         window.requestAnimationFrame(step)
+        console.log(canvasX, canvasY)
     }
 
 
@@ -338,14 +339,15 @@ render() {
 
     const styles = {
         backgroundImage: "url(" + BG + ")",
-        backgroundSize: "cover",
+        backgroundSize: "1200px 720px",
         backgroundRepeat: "no-repeat"
+        
     }
 
     return (
         
         <canvas ref="canvas" className="mt-4 mb-4"
-        width={1050} height={590} 
+        width={1200} height={720} 
         style={styles}></canvas>
 
     );

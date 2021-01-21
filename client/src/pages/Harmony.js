@@ -1,6 +1,10 @@
 import React from "react";
-import Canvas3 from "../Canvas3";
-import Canvas4 from "../Canvas4";
+// import Homefield from "../game/rooms/Homefield"
+// import Level1 from "../game/rooms/Level1"
+// import Level2 from "../game/rooms/Level2"
+// import Level3 from "../game/rooms/Level3"
+// import Level4 from "../game/rooms/Level4"
+
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 export default function Harmony() {
@@ -12,8 +16,8 @@ export default function Harmony() {
     <div className="text-center" style={bodyStyle}>
       <Router>
         <Switch>
-          <Route exact path="/harmony" component={Canvas3}/>
-          <Route exact path="/harmony/testing" component={Canvas4} />
+          <Route exact path="/harmony" component={Homefield}/>
+          <Route exact path="/harmony/testing" component={Level1} />
         </Switch>
       </Router>
     </div>

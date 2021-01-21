@@ -1,9 +1,11 @@
+
 import React, { Component, PropTypes, useState } from 'react';
-import Dino from "./public/assets/DinoSprites-doux.png"
-import BG from "./assets/images/image.jpg"
-// import BG from "./assets/images/dungeon.png"
+import Dino from "../assets/images/DinoSprites-doux.png"
+// import BG from "../assets/images/image.jpg"
+import BG from "../assets/images/dungeon.png"
 import { Redirect } from "react-router-dom";
-import { style } from './utils/theme';
+import { style } from "../../utils/theme"
+
 
 
 // import keyPressManager from './utils/keyPressManager';
@@ -97,16 +99,16 @@ updateCanvas() {
 
     //position of PLayer(drawframe) on canvas
     let canvasX = 600;
-    let canvasY = 360;
+    let canvasY = 610;
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
+    let hurt = 0
     let playerHurt = false
     let playerHurtLength = 0
     let attackLength = 0
     let attackBuild = 0
     let playerHealth = 100
-    let beforeRoom = 0
 
     //spoofer =======================
     function frameRateSpoof(nums){
@@ -131,20 +133,19 @@ updateCanvas() {
         const hurtAnimateLeft = frameRateSpoof([33,32,31])
     //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
     //starting position for other entity(entities)
+    let enemyAnimation = []
     let animation = []
 
     class Enemy{
-        constructor(enemyX, enemyY, scale, enemyAnimation, HP){
+        constructor(enemyX, enemyY, scale){
             this.enemyX = enemyX;
             this.enemyY = enemyY;
             this.img = imageObj2;
             this.width = 24;
             this.height = 24;
             this.scale = scale
-            this.enemyAnimation = enemyAnimation
-            this.HP = HP;
+            this.HP = 100;
             this.ATK = 1;
-
         }
            
         drawFrame2(frameX, frameY) {
@@ -157,55 +158,40 @@ updateCanvas() {
             let distanceX = canvasX - this.enemyX 
             let distanceY = canvasY - this.enemyY
             let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
-            if(spacePressed && unitVector<=15){
-                this.enemyAnimation = hurtAnimateRight
-                console.log(this.HP)
-                this.HP -= 1
+            if(Math.abs(unitVector) <= 15){
+                animation = baseRightAnimate
+                attackBuild++
+                if(attackBuild===100){
+                    playerHurt = true
+                    playerHealth-=20
+                    console.log(playerHealth)
+                    attackBuild = 0
+                }
             }else{
-                if(Math.abs(unitVector) <= 15){
-                    animation = baseRightAnimate
-                    attackBuild++
-                    if(attackBuild===100){
-                        playerHurt = true
-                        playerHealth-=20
-
-                        attackBuild = 0
-                    }
-                }else{
-                    if(distanceX > 24 ){
-                       
-                        this.enemyAnimation = rightAnimate
-                    }
-                    else if(distanceX < -24){
-                        
-                        this.enemyAnimation = leftAnimate
-                    }
-                    this.enemyX+=(distanceX/(2*unitVector))
-                    this.enemyY+=(distanceY/(2*unitVector))
-                }  
-
-            }
-            
+                if(distanceX > 24 ){
+                   
+                    enemyAnimation = rightAnimate
+                }
+                else if(distanceX < -24){
+                    
+                    enemyAnimation = leftAnimate
+                }
+                this.enemyX+=(distanceX/(2*unitVector))
+                this.enemyY+=(distanceY/(2*unitVector))
+            }  
             
                 
-            if(this.HP <= 0){
-                this.enemyAnimation = []
-                beforeRoom++
-                console.log(beforeRoom)
-            }else{
-                setTimeout(() => {
-                    requestAnimationFrame(this.step2)
-                }, 10);
+                
+            setTimeout(() => {
+                requestAnimationFrame(this.step2)
+            }, 10);
             }
-
-        }
-            
             
         
         
     }
-    const enemy = new Enemy(0, 0, 1, [], 100)
-    const enemy2 = new Enemy(200, 300, 1, [], 100)
+    const enemy = new Enemy(0, 0, 1)
+    const enemy2 = new Enemy(200, 300, 1)
 
     
 
@@ -220,10 +206,10 @@ updateCanvas() {
         
 
     //basic animation function===================================
-    function move(cycleLoop, cycleLoop2, cycleLoop3){
+    function move(cycleLoop, cycleLoop2){
         drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0); 
         enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
-        enemy2.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
+        enemy2.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
         currentLoopIndex++;
         if (currentLoopIndex >= cycleLoop.length) {
           currentLoopIndex = 0;
@@ -281,77 +267,29 @@ updateCanvas() {
         function attack(){
             if(rightPressed){
                 lastMove=0
-                if(canvasX >=1020) {
-                    canvasX -= 6;
-                }
+                canvasX += 2;
                 if(upPressed){
-                    if(canvasY <= 0) {
-                        canvasY += 6;
-                        canvasX += 2;
-                    }
-                    else {
-                        canvasX += 2;
-                        canvasY -= 2;
-                    }
+                    canvasY -= 2;
                 }
                 else if(downPressed){
-                    if(canvasY >= 560) {
-                        canvasY -= 6;
-                        canvasX += 2;
-                    }
-                    else {
-                        canvasX += 2;
-                        canvasY += 2;
-                    }
-                }
-                else {
-                    canvasX += 2;
+                    canvasY += 2;
                 }
             }
             else if(leftPressed){
                 lastMove = 1
-                if(canvasX <= 0) {
-                    canvasX += 6;
-                }
+                canvasX -= 2;
                 if(upPressed){
-                    if(canvasY <= 0) {
-                        canvasY += 6;
-                        canvasX -= 2;
-                    }
-                    else {
-                        canvasX -= 2;
-                        canvasY -= 2;
-                    }
+                    canvasY -= 2;
                 }
                 else if(downPressed){
-                    if(canvasY >= 560) {
-                        canvasY -= 6;
-                        canvasX -= 2;
-                    }
-                    else {
-                        canvasX -= 2;
-                        canvasY += 2;
-                    }
-                }
-                else {
-                    canvasX -= 2;
+                    canvasY += 2;
                 }
             }
             else if(upPressed){
-                if(canvasY <= 0) {
-                    canvasY += 6;
-                }
-                else {
-                    canvasY -= 2
-                }
+                canvasY -= 2
             }
             else if(downPressed){
-                if(canvasY >= 560) {
-                    canvasY -= 6;
-                }
-                else {
-                    canvasY += 2
-                }
+                canvasY +=2
             }
             attackLength++
                 if(lastMove===0){
@@ -366,10 +304,10 @@ updateCanvas() {
         }
 
 
-    //function for directing rendering by keypress======(character movement/collision/behavior)
+    //function for directing rendering by keypress======(character movement/collision/behavior) Step 1 
     const step = () => {
 
-        if (canvasX < 10 && canvasY < 10) {
+        if ((canvasX > 560 && canvasX<720 )&& canvasY < 90) {
            this.setState({changeRoom: true});
         };
 
@@ -398,22 +336,22 @@ updateCanvas() {
         
         switch(true){
             case spacePressed:
-                attack();
-            break;
+                attack()
+            break
             case rightPressed:
 
-                if(canvasX >= 1040) {
+                if(canvasX >= 1100) {
 
                     animation = rightAnimate
                     canvasX -= 6;
                 //===================
                 }
-                else if(canvasY <= 0) {
+                else if(canvasY <= 80) {
                     animation = rightAnimate
                     canvasY += 6;
                     canvasX += 2;
                 }
-                else if(canvasY >= 560) {
+                else if(canvasY >= 610) {
                     animation = rightAnimate
                     canvasY -= 6;
                     canvasX += 2;
@@ -424,18 +362,18 @@ updateCanvas() {
             break;
             case leftPressed:
 
-                if(canvasX <=0){
+                if(canvasX <=80){
 
                     animation = leftAnimate
                     canvasX += 6;
                 //===================
                 }
-                else if(canvasY <= 0) {
+                else if(canvasY <= 80) {
                     animation = leftAnimate
                     canvasY += 6;
                     canvasX -= 2;
                 }
-                else if(canvasY >= 560) {
+                else if(canvasY >= 610) {
                     animation = leftAnimate
                     canvasY -= 6;
                     canvasX -= 2;
@@ -445,7 +383,7 @@ updateCanvas() {
                 }   
             break;
             case downPressed:
-                if(canvasY >= 560){
+                if(canvasY >= 610){
                     if(lastMove===0){
                         animation = rightAnimate
                         canvasY -= 6;
@@ -458,7 +396,7 @@ updateCanvas() {
                 }
             break;
             case upPressed:
-                if(canvasY <=0){
+                if(canvasY <=80){
                     if(lastMove===0){
                         animation = rightAnimate
                         canvasY += 6;
@@ -478,20 +416,10 @@ updateCanvas() {
                    animation = baseLeftAnimate
                 }
             }}
-        
-        
-            
-            if(playerHealth <= 0){
-                animation = []
-            }
-            move(animation, enemy.enemyAnimation, enemy2.enemyAnimation)
-            setTimeout(() => {
-                window.requestAnimationFrame(step)
-            }, 10);
-            
-            
-        
-        
+        move(animation, enemyAnimation)
+        setTimeout(() => {
+            window.requestAnimationFrame(step)
+        }, 10);
         
     }
 
@@ -531,7 +459,7 @@ render() {
         <canvas ref="canvas" className="mt-4 mb-4"
         width={1200} height={720} 
         style={styles}></canvas>
-        {this.state.changeRoom ? <Redirect to="/harmony/testing"/> : <Redirect to="/harmony" />}
+        {this.state.changeRoom ? <Redirect to="/harmony"/> : <Redirect to="/harmony/bossroom" />}
         </div>
         
 
