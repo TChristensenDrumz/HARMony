@@ -559,11 +559,11 @@ render() {
     }
 
     return (
-        <div style={style.body}>
+        <div style={style.body} className="d-flex justify-content-center">
         <canvas ref="canvas" className="mt-4 mb-4"
         width={1200} height={720} 
         style={styles}></canvas>
-        {this.state.changeRoom ? <Redirect to="/harmony/testing"/> : <Redirect to="/harmony" />}
+        {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony" />}
         </div>
         
 
