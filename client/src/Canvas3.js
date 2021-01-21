@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, useState } from 'react';
 import Dino from "./public/assets/DinoSprites-doux.png"
-import BG from "./assets/images/image.jpg"
+import BG from "./game/assets/maps/pop/popLevel2.png"
 // import BG from "./assets/images/dungeon.png"
 import { Redirect } from "react-router-dom";
 import { style } from './utils/theme';
@@ -380,13 +380,10 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
-<<<<<<< HEAD
-=======
 
         if (canvasX < 10 && canvasY < 10) {
            this.setState({changeRoom: true});
         };
->>>>>>> eac8933da0ba6cb8861db86ff0f175ac0cd32d84
 
         frameCount++;
              if (frameCount <1) {
