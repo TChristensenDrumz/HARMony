@@ -108,7 +108,7 @@ updateCanvas() {
     function frameRateSpoof(nums){
         const frameOutput = []
         nums.forEach(element => {
-            for(let i = 0; i < 10; i++){
+            for(let i = 0; i < 5; i++){
                 frameOutput.push(element)
             }
         });
@@ -121,8 +121,8 @@ updateCanvas() {
         const leftAnimate =  frameRateSpoof([43,42,41,40,39,38])
         const baseRightAnimate = frameRateSpoof([0,0,1,2,3,3])
         const baseLeftAnimate = frameRateSpoof([47,47,46,45,44,44])
-        const attackRight = frameRateSpoof([10,10,11,12,13,13])
-        const attackLeft = frameRateSpoof([37,37,36,35,34,34])
+        const attackRight = frameRateSpoof([10,11,11,11,12,13])
+        const attackLeft = frameRateSpoof([37,36,36,36,35,34])
         const hurtAnimateRight = frameRateSpoof([14,14,15,15,16,16])
         const hurtAnimateLeft = frameRateSpoof([33,33,32,32,31,31])
     //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
@@ -283,7 +283,7 @@ updateCanvas() {
                 }else{
                     animation = attackLeft
                 }
-                if(attackLength===60){
+                if(attackLength===30){
                     spacePressed = false
                     attackLength = 0
                 }
@@ -411,7 +411,7 @@ updateCanvas() {
             //pass each entities animations into this function
             setTimeout(() => {
                 window.requestAnimationFrame(step)
-            }, 10);
+            }, 15);
             
             
         
@@ -448,7 +448,7 @@ render() {
     }
 
     return (
-        <div style={style.body}>
+        <div style={style.body} className="d-flex justify-content-center">
         <canvas ref="canvas" className="mt-4 mb-4"
         width={1200} height={720} 
         style={styles}></canvas>
