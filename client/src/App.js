@@ -31,7 +31,7 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/create" component={CreateAccount} />
           <Route exact path="/harmony">
-            <ProtectedRoute component={Canvas} />
+            <ProtectedRoute component={Homefield} />
           </Route>
           <Route exact path="/harmony/level1">
             <ProtectedRoute component={Level1} />
