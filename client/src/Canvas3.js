@@ -97,7 +97,7 @@ updateCanvas() {
 
     //position of PLayer(drawframe) on canvas
     let canvasX = 600;
-    let canvasY = 200;
+    let canvasY = 360;
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
@@ -305,9 +305,9 @@ updateCanvas() {
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
 
-        //if (canvasX < 10 && canvasY < 10) {
-        //    this.setState({changeRoom: true});
-        //};
+        if (canvasX < 10 && canvasY < 10) {
+           this.setState({changeRoom: true});
+        };
 
         frameCount++;
              if (frameCount <1) {
@@ -315,7 +315,7 @@ updateCanvas() {
              return;
              }
             frameCount = 0;
-            ctx.clearRect(0, 0, 1050, 590);
+            ctx.clearRect(0, 0, 1200, 720);
         if(playerHurt == true){
             playerHurtLength++
             switch(lastMove){
@@ -338,7 +338,7 @@ updateCanvas() {
             break
             case rightPressed:
 
-                if(canvasX >=1020) {
+                if(canvasX >= 1040) {
 
                     animation = rightAnimate
                     canvasX -= 6;
@@ -455,7 +455,7 @@ render() {
     return (
         <div style={style.body}>
         <canvas ref="canvas" className="mt-4 mb-4"
-        width={1050} height={590} 
+        width={1200} height={720} 
         style={styles}></canvas>
         {this.state.changeRoom ? <Redirect to="/harmony/testing"/> : <Redirect to="/harmony" />}
         </div>
