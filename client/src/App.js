@@ -18,6 +18,7 @@ import Level1 from "./game/rooms/Level1"
 import Level2 from "./game/rooms/Level2"
 import Level3 from "./game/rooms/Level3"
 import Bossroom from "./game/rooms/Bossroom"
+import Canvas from './Canvas3';
 // import Harmony from "./pages/Harmony"
 
 const App = () => {

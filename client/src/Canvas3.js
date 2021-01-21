@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, useState } from 'react';
 import Dino from "./public/assets/DinoSprites-doux.png"
-import BG from "./assets/images/image.jpg"
+import BG from "./game/assets/maps/pop/popLevel2.png"
 // import BG from "./assets/images/dungeon.png"
 import { Redirect } from "react-router-dom";
 import { style } from './utils/theme';
