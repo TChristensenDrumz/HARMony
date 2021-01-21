@@ -77,6 +77,7 @@ updateCanvas() {
     }
     
     
+    
     //SETTING VRIABLES FOR RENDERING==========
     //scale of character
     const scale = 1.5;
@@ -160,7 +161,7 @@ updateCanvas() {
 
             if(spacePressed && unitVector<=15){
                 console.log(this.attackBuild)
-                this.attackBuild++
+                this.attackBuild+=10
                 if(lastMove === 0 && distanceX < 0){
                     this.enemyAnimation = hurtAnimateLeft
                     this.HP -= 1
@@ -172,7 +173,7 @@ updateCanvas() {
             }else{
                 if(unitVector <= 15){
                     console.log(this.attackBuild)
-                    if(distanceX < 10){
+                    if(distanceX < 0){
                         this.enemyAnimation = attackLeft
                     }else{
                         this.enemyAnimation = attackRight
@@ -208,7 +209,7 @@ updateCanvas() {
                 console.log(beforeRoom)
             }else{
                 setTimeout(() => {
-                    requestAnimationFrame(this.step2)
+                    window.requestAnimationFrame(this.step2)
                 }, 15);
             }
 
@@ -509,13 +510,12 @@ updateCanvas() {
                 animation = []
                 return
             }
-
             move(animation, enemy.enemyAnimation, BOSS.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation, enemy3.enemyAnimation, enemy4.enemyAnimation, enemy5.enemyAnimation)
-
             //pass each entities animations into this function
             setTimeout(() => {
                 window.requestAnimationFrame(step)
             }, 15);
+           
             
             
         
@@ -530,14 +530,14 @@ updateCanvas() {
     //calls first animation loop=================
     //make sure all entities are called in here
     function init() {
-        requestAnimationFrame(enemy.step2)
-        requestAnimationFrame(enemy1.step2)
-        requestAnimationFrame(enemy2.step2)
-        requestAnimationFrame(enemy3.step2)
-        requestAnimationFrame(enemy4.step2)
-        requestAnimationFrame(enemy5.step2)
-        requestAnimationFrame(BOSS.step2)
-        requestAnimationFrame(step);
+        window.requestAnimationFrame(enemy.step2)
+        window.requestAnimationFrame(enemy1.step2)
+        window.requestAnimationFrame(enemy2.step2)
+        window.requestAnimationFrame(enemy3.step2)
+        window.requestAnimationFrame(enemy4.step2)
+        window.requestAnimationFrame(enemy5.step2)
+        window.requestAnimationFrame(BOSS.step2)
+        window.requestAnimationFrame(step);
         
         
         
