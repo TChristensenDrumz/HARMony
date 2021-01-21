@@ -380,13 +380,10 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
-<<<<<<< HEAD
-=======
 
         if (canvasX < 10 && canvasY < 10) {
            this.setState({changeRoom: true});
         };
->>>>>>> eac8933da0ba6cb8861db86ff0f175ac0cd32d84
 
         frameCount++;
              if (frameCount <1) {
