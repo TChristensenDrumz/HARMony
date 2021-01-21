@@ -159,6 +159,7 @@ updateCanvas() {
             let unitVector =(Math.sqrt((Math.pow(distanceX,2)+Math.pow(distanceY,2))))
             if(spacePressed && unitVector<=15){
                 this.enemyAnimation = hurtAnimateRight
+                console.log(this.HP)
                 this.HP -= 1
             }else{
                 if(Math.abs(unitVector) <= 15){
@@ -167,7 +168,7 @@ updateCanvas() {
                     if(attackBuild===100){
                         playerHurt = true
                         playerHealth-=20
-                        console.log(playerHealth)
+
                         attackBuild = 0
                     }
                 }else{
