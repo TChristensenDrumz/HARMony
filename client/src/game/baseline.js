@@ -3,15 +3,11 @@ import Stats from "../components/Stats/Stats";
 import Pause from "../components/Pause/Pause";
 import Dino from "./assets/sprites/DinoSprites-doux.png"
 import RapRight from "./assets/sprites/rapRight.png"
-
-// import BG from "../assets/images/image.jpg"
-import BG from "./assets/maps/pop/popLevel1.png"
+import BG from "./assets/maps/country/countryLevel2.png"
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme"
 
-
-
-// import keyPressManager from './utils/keyPressManager';
+let playerHealth = 100;
 export default class Canvas extends Component {
 
     state = {
@@ -113,7 +109,6 @@ updateCanvas() {
     let playerHurt = false
     let playerHurtLength = 0
     let attackLength = 0
-    let playerHealth = 100
     let beforeRoom = 0
 
     //spoofer =======================
@@ -584,11 +579,11 @@ render() {
     return (
         <div style={style.body} className="d-flex justify-content-center">
             {this.state.isPaused ? <Pause /> : <div/>}
-            <Stats score="100" health="60" />
+            <Stats score="100" health={playerHealth} />
             <canvas ref="canvas" className="mt-4 mb-4"
             width={1200} height={720} 
             style={styles}></canvas>
-            {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony/testing" />}
+            {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony/refactor" />}
         </div>
         
 
