@@ -1,12 +1,13 @@
 import React, { Component, PropTypes, useState } from 'react';
+import Stats from "../Stats/Stats";
 import Pause from "../Pause/Pause";
 import Dino from "../../game/assets/sprites/DinoSprites-doux.png"
+import RapRight from "../../game/assets/sprites/rapRight.png"
 import BG from "../../game/assets/maps/country/countryLevel2.png"
 import { Redirect } from "react-router-dom";
 import { style } from "../../utils/theme"
 
-
-
+let playerHealth = 100;
 export default class Canvas extends Component {
 
     state = {
@@ -22,8 +23,8 @@ componentDidMount() {
 updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
     //1.import images=====================
-    let imageObj = new Image();
-    imageObj.src = Dino 
+    let player = new Image();
+    player.src = Dino 
 
     let imageObj2 = new Image();
     imageObj2.src = Dino 
@@ -83,7 +84,7 @@ updateCanvas() {
     
     //SETTING VRIABLES FOR RENDERING==========
     //scale of character
-    const scale = 1.5;
+    const scale = 1;
     //width and height of spritesheet frame
     const width = 24;
     const height = 24;
@@ -108,14 +109,13 @@ updateCanvas() {
     let playerHurt = false
     let playerHurtLength = 0
     let attackLength = 0
-    let playerHealth = 100
     let beforeRoom = 0
 
     //spoofer =======================
     function frameRateSpoof(nums){
         const frameOutput = []
         nums.forEach(element => {
-            for(let i = 0; i < 5; i++){
+            for(let i = 0; i < 10; i++){
                 frameOutput.push(element)
             }
         });
@@ -124,6 +124,14 @@ updateCanvas() {
     
     };
     //animation frames====================================
+        const playerRightAnimate = frameRateSpoof([0,1,2,3,4,5,6,7])
+        // const playerLeftAnimate =  frameRateSpoof([43,42,41,40,39,38])
+        const playerBaseRightAnimate = frameRateSpoof([8,9,10,11,8,9,10,11])
+        //const playerBaseLeftAnimate = frameRateSpoof([47,47,46,45,44,44])
+        const playerAttackRight = frameRateSpoof([12,13,14,15,16,17,18,19])
+        // const playerAttackLeft = frameRateSpoof([37,36,36,36,35,34])
+        const playerHurtAnimateRight = frameRateSpoof([20,20,21,21,22,22,23,23])
+        // const playerHurtAnimateLeft = frameRateSpoof([33,33,32,32,31,31])
         const rightAnimate = frameRateSpoof([4,5,6,7,8,9])
         const leftAnimate =  frameRateSpoof([43,42,41,40,39,38])
         const baseRightAnimate = frameRateSpoof([0,0,1,2,3,3])
@@ -157,6 +165,14 @@ updateCanvas() {
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
         step2 = () => {
+            if(this.HP <= 0){
+                // playerHealth+=1
+                this.enemyAnimation = []
+                beforeRoom++
+                console.log(beforeRoom)
+                return
+            }
+            
             
             let distanceX = canvasX - this.enemyX 
             let distanceY = canvasY - this.enemyY
@@ -206,11 +222,7 @@ updateCanvas() {
             
             
                 
-            if(this.HP <= 0){
-                this.enemyAnimation = []
-                beforeRoom++
-                console.log(beforeRoom)
-            }
+            
 
         }
             
@@ -243,7 +255,7 @@ updateCanvas() {
     //basic animation function===================================
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop, cycleLoop2, cycleLoop3, cycleLoop4, cycleLoop5, cycleLoop6, cycleLoop7, cycleLoop8){
-        drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0); 
+        drawFrame(player,cycleLoop[currentLoopIndex], 0, 0, 0); 
         enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
         enemy1.drawFrame2(cycleLoop4[currentLoopIndex], 0, 0, 0);
         enemy2.drawFrame2(cycleLoop5[currentLoopIndex], 0, 0, 0);
@@ -520,25 +532,32 @@ updateCanvas() {
              return;
              }
             frameCount = 0;
-            ctx.clearRect(0, 0, 1200, 720);
+        ctx.clearRect(0, 0, 1200, 720);
         if(escPressed){
             this.setState({isPaused: true})
         }else{
-            enemy.step2()
-            enemy1.step2()
-            enemy2.step2()
-            enemy3.step2()
-            enemy4.step2()
-            enemy5.step2()
-            BOSS.step2()
-            step()
-            this.setState({isPaused: false})
+            if(playerHealth <= 0){
+
+            }else{
+                enemy.step2()
+                enemy1.step2()
+                enemy2.step2()
+                enemy3.step2()
+                enemy4.step2()
+                enemy5.step2()
+                BOSS.step2()
+                step()
+                this.setState({isPaused: false})
+
+            }
         }
+           
+    
             
-            move(animation, enemy.enemyAnimation, BOSS.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation, enemy3.enemyAnimation, enemy4.enemyAnimation, enemy5.enemyAnimation)
-            setTimeout(() => {
-                window.requestAnimationFrame(master);
-            }, 15);
+        move(animation, enemy.enemyAnimation, BOSS.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation, enemy3.enemyAnimation, enemy4.enemyAnimation, enemy5.enemyAnimation)
+        setTimeout(() => {
+            window.requestAnimationFrame(master);
+        }, 10);
         
     }
     
@@ -551,7 +570,7 @@ updateCanvas() {
     }
     
     //calls init(for second onload)
-    imageObj.onload = function() {
+    player.onload = function() {
         init();
     }
 
@@ -568,6 +587,7 @@ render() {
     return (
         <div style={style.body} className="d-flex justify-content-center">
             {this.state.isPaused ? <Pause /> : <div/>}
+            <Stats score="100" health={playerHealth} />
             <canvas ref="canvas" className="mt-4 mb-4"
             width={1200} height={720} 
             style={styles}></canvas>
