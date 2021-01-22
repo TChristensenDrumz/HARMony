@@ -1,4 +1,5 @@
 import React, { Component, PropTypes, useState } from 'react';
+import Stats from "../components/Stats/Stats";
 import Pause from "../components/Pause/Pause";
 import Dino from "./assets/sprites/DinoSprites-doux.png"
 // import BG from "../assets/images/image.jpg"
@@ -573,6 +574,7 @@ render() {
     return (
         <div style={style.body} className="d-flex justify-content-center">
             {this.state.isPaused ? <Pause /> : <div/>}
+            <Stats score="100" health="60" />
             <canvas ref="canvas" className="mt-4 mb-4"
             width={1200} height={720} 
             style={styles}></canvas>
