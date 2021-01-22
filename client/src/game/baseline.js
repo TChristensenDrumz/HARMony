@@ -38,7 +38,8 @@ updateCanvas() {
     let leftPressed = false;
     let upPressed = false;
     let downPressed = false;
-    let spacePressed = false
+    let spacePressed = false;
+    let escPressed = false
     
     function keyDownHandler(event) {
         switch (event.keyCode) {
@@ -56,6 +57,9 @@ updateCanvas() {
                 break;
             case 32:
                 spacePressed = true;
+                break;
+            case 27:
+                escPressed = !escPressed;
                 break;
         }
     }
@@ -207,10 +211,6 @@ updateCanvas() {
                 this.enemyAnimation = []
                 beforeRoom++
                 console.log(beforeRoom)
-            }else{
-                setTimeout(() => {
-                    window.requestAnimationFrame(this.step2)
-                }, 15);
             }
 
         }
@@ -401,13 +401,7 @@ updateCanvas() {
         if (canvasX < 10 && canvasY < 10) {
            this.setState({changeRoom: true});
         };
-        frameCount++;
-             if (frameCount <1) {
-             window.requestAnimationFrame(step);
-             return;
-             }
-            frameCount = 0;
-            ctx.clearRect(0, 0, 1200, 720);
+        
         if(playerHurt == true){
             playerHurtLength++
             switch(lastMove){
@@ -510,11 +504,8 @@ updateCanvas() {
                 animation = []
                 return
             }
-            move(animation, enemy.enemyAnimation, BOSS.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation, enemy3.enemyAnimation, enemy4.enemyAnimation, enemy5.enemyAnimation)
             //pass each entities animations into this function
-            setTimeout(() => {
-                window.requestAnimationFrame(step)
-            }, 15);
+           
            
             
             
@@ -523,24 +514,40 @@ updateCanvas() {
         
     }
 
-   
+    function master(){
+        frameCount++;
+             if (frameCount <1) {
+             window.requestAnimationFrame(master);
+             return;
+             }
+            frameCount = 0;
+            ctx.clearRect(0, 0, 1200, 720);
+        if(escPressed){
+
+        }else{
+            enemy.step2()
+            enemy1.step2()
+            enemy2.step2()
+            enemy3.step2()
+            enemy4.step2()
+            enemy5.step2()
+            BOSS.step2()
+            step()
+        }
+            
+            move(animation, enemy.enemyAnimation, BOSS.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation, enemy3.enemyAnimation, enemy4.enemyAnimation, enemy5.enemyAnimation)
+            setTimeout(() => {
+                window.requestAnimationFrame(master);
+            }, 15);
+        
+    }
     
     
 
     //calls first animation loop=================
     //make sure all entities are called in here
     function init() {
-        window.requestAnimationFrame(enemy.step2)
-        window.requestAnimationFrame(enemy1.step2)
-        window.requestAnimationFrame(enemy2.step2)
-        window.requestAnimationFrame(enemy3.step2)
-        window.requestAnimationFrame(enemy4.step2)
-        window.requestAnimationFrame(enemy5.step2)
-        window.requestAnimationFrame(BOSS.step2)
-        window.requestAnimationFrame(step);
-        
-        
-        
+        window.requestAnimationFrame(master);
     }
     
     //calls init(for second onload)
