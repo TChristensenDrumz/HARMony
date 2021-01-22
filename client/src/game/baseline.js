@@ -159,6 +159,13 @@ updateCanvas() {
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
         step2 = () => {
+            if(this.HP <= 0){
+                this.enemyAnimation = []
+                beforeRoom++
+                console.log(beforeRoom)
+                return
+            }
+            
             
             let distanceX = canvasX - this.enemyX 
             let distanceY = canvasY - this.enemyY
@@ -208,11 +215,7 @@ updateCanvas() {
             
             
                 
-            if(this.HP <= 0){
-                this.enemyAnimation = []
-                beforeRoom++
-                console.log(beforeRoom)
-            }
+            
 
         }
             
