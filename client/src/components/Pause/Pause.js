@@ -9,6 +9,7 @@ const styles = {
     backgroundColor: "black",
     alignItem: "center",
     opacity: "0.75",
+    zIndex: "2"
   },
   h1: {
     color: "red",
