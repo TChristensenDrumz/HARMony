@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Token from "../utils/Token";
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Background from "./DinoSprites_doux.gif";
+import Background from "../images/DinoSprites_doux.gif";
 
 export default function Landing() {
     let loggedIn = Token.authenticate();
