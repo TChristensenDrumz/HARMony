@@ -1,10 +1,10 @@
-
 import React, { Component, PropTypes, useState } from 'react';
-import Dino from "../assets/images/DinoSprites-doux.png"
+import Pause from "../components/Pause/Pause";
+import Dino from "./assets/sprites/DinoSprites-doux.png"
 // import BG from "../assets/images/image.jpg"
-import BG from "../assets/images/dungeon.png"
+import BG from "./assets/maps/pop/popLevel1.png"
 import { Redirect } from "react-router-dom";
-import { style } from "../../utils/theme"
+import { style } from "../utils/theme"
 
 
 
@@ -12,7 +12,8 @@ import { style } from "../../utils/theme"
 export default class Canvas extends Component {
 
     state = {
-        changeRoom: false
+        changeRoom: false,
+        isPaused: false
     }
     
      //ANIMATION=========================================
@@ -514,7 +515,7 @@ updateCanvas() {
         
     }
 
-    function master(){
+    const master = () => {
         frameCount++;
              if (frameCount <1) {
              window.requestAnimationFrame(master);
@@ -523,7 +524,7 @@ updateCanvas() {
             frameCount = 0;
             ctx.clearRect(0, 0, 1200, 720);
         if(escPressed){
-
+            this.setState({isPaused: true})
         }else{
             enemy.step2()
             enemy1.step2()
@@ -533,6 +534,7 @@ updateCanvas() {
             enemy5.step2()
             BOSS.step2()
             step()
+            this.setState({isPaused: false})
         }
             
             move(animation, enemy.enemyAnimation, BOSS.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation, enemy3.enemyAnimation, enemy4.enemyAnimation, enemy5.enemyAnimation)
@@ -567,10 +569,11 @@ render() {
 
     return (
         <div style={style.body} className="d-flex justify-content-center">
-        <canvas ref="canvas" className="mt-4 mb-4"
-        width={1200} height={720} 
-        style={styles}></canvas>
-        {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony" />}
+            {this.state.isPaused ? <Pause /> : <div/>}
+            <canvas ref="canvas" className="mt-4 mb-4"
+            width={1200} height={720} 
+            style={styles}></canvas>
+            {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony" />}
         </div>
         
 
