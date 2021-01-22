@@ -78,7 +78,7 @@ updateCanvas() {
     
     //SETTING VRIABLES FOR RENDERING==========
     //scale of character
-    const scale = 1.5;
+    const scale = 3;
     //width and height of spritesheet frame
     const width = 24;
     const height = 24;
@@ -162,12 +162,12 @@ updateCanvas() {
         function right(){
             animation = rightAnimate
             lastMove=0
-            canvasX += 2;
+            canvasX += 10;
             if(upPressed){
-                canvasY -= 2;
+                canvasY -= 10;
             }
             else if(downPressed){
-                canvasY += 2;
+                canvasY += 10;
             }
             
         }
@@ -175,12 +175,12 @@ updateCanvas() {
         function left(){
             animation = leftAnimate
             lastMove = 1
-            canvasX -= 2;
+            canvasX -= 10;
             if(upPressed){
-                canvasY -= 2;
+                canvasY -= 10;
             }
             else if(downPressed){
-                canvasY += 2;
+                canvasY += 10;
             }
         }
         //move down function
@@ -191,7 +191,7 @@ updateCanvas() {
                 animation = leftAnimate
             }
         
-            canvasY += 2;
+            canvasY += 10;
         }
         //move up function
         function up(){
@@ -200,7 +200,7 @@ updateCanvas() {
             }else{
                animation = leftAnimate
             }
-            canvasY -= 2;
+            canvasY -= 10;
         }
         //player attack logic
         function attack(){
@@ -293,7 +293,7 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
-        if (canvasX >= 545 && canvasX <= 620 && canvasY <= 40) {
+        if (canvasX >= 545 && canvasX <= 620 && canvasY <= 90) {
            this.setState({changeRoom: true});
         };
         frameCount++;
@@ -326,18 +326,18 @@ updateCanvas() {
             break;
             case rightPressed:
 
-                if(canvasX >= 1124) {
+                if(canvasX >= 1090) {
 
                     animation = rightAnimate
                     canvasX -= 6;
                 //===================
                 }
-                else if(canvasY <= 40) {
+                else if(canvasY <= 80) {
                     animation = rightAnimate
                     canvasY += 6;
                     canvasX += 2;
                 }
-                else if(canvasY >= 640) {
+                else if(canvasY >= 610) {
                     animation = rightAnimate
                     canvasY -= 6;
                     canvasX += 2;
@@ -348,18 +348,18 @@ updateCanvas() {
             break;
             case leftPressed:
 
-                if(canvasX <= 40){
+                if(canvasX <= 80){
 
                     animation = leftAnimate
                     canvasX += 6;
                 //===================
                 }
-                else if(canvasY <= 40) {
+                else if(canvasY <= 80) {
                     animation = leftAnimate
                     canvasY += 6;
                     canvasX -= 2;
                 }
-                else if(canvasY >= 640) {
+                else if(canvasY >= 610) {
                     animation = leftAnimate
                     canvasY -= 6;
                     canvasX -= 2;
@@ -369,7 +369,7 @@ updateCanvas() {
                 }   
             break;
             case downPressed:
-                if(canvasY >= 640){
+                if(canvasY >= 610){
                     if(lastMove===0){
                         animation = rightAnimate
                         canvasY -= 6;
@@ -382,7 +382,7 @@ updateCanvas() {
                 }
             break;
             case upPressed:
-                if(canvasY <= 40){
+                if(canvasY <= 80){
                     if(lastMove===0){
                         animation = rightAnimate
                         canvasY += 6;
@@ -445,16 +445,18 @@ render() {
 
     const styles = {
         backgroundImage: "url(" + BG + ")",
-        backgroundSize: "cover",
         backgroundRepeat: "no-repeat"
     }
 
     return (
-        <div style={style.body} className="d-flex justify-content-center">
-        <canvas ref="canvas" className="mt-4 mb-4"
-        width={1200} height={720} 
-        style={styles}></canvas>
-        {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony" />}
+        <div style={style.body}
+        className="d-flex justify-content-center"
+        >
+            <canvas ref="canvas" 
+            // className="mt-4 mb-4"
+            width={1200} height={720} 
+            style={styles}></canvas>
+            {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony" />}
         </div>
         
 

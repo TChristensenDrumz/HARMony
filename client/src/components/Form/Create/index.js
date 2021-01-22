@@ -51,7 +51,7 @@ function CreateForm() {
             </Form.Group>
             
             <Button type="submit" className="nes-btn is-error mb-3">
-                Login
+                Sign Up
             </Button>
 
             <small className="form-text"><a href="/login" className="nes-text is-error text-decoration-none mt-4">Already have an account? Login here</a></small>
