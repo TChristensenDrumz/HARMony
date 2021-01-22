@@ -6,6 +6,7 @@ import BG from "../assets/maps/pop/popLevel1.png"
 import { Redirect } from "react-router-dom";
 import { style } from "../../utils/theme"
 import Transition from "../../utils/Transition";
+import Stats from "../../components/Stats/Stats";
 
 
 
@@ -561,6 +562,7 @@ render() {
 
     return (
         <div style={style.body} className="d-flex justify-content-center">
+            <Stats score="100" health="60" />
         <canvas ref="canvas" className="mt-4 mb-4"
         width={1200} height={720} 
         style={styles}></canvas>
