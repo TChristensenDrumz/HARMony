@@ -12,8 +12,9 @@ import { style } from "../../utils/theme"
 export default class Canvas extends Component {
 
     state = {
-        changeRoom: false
-    }
+        direction: "",
+        roomChange: false
+    };
     
      //ANIMATION=========================================
 componentDidMount() {
@@ -293,9 +294,23 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
-        if (canvasX >= 545 && canvasX <= 620 && canvasY <= 40) {
-           this.setState({changeRoom: true});
-        };
+        if ((canvasX >= 560 && canvasX <= 640) && canvasY <= 40) {
+            this.setState({...this.state, direction: "top"});
+            localStorage.setItem("direction", JSON.stringify(this.state));
+           this.setState({...this.state, roomChange: true});
+        } else if ((canvasX >= 560 && canvasX <= 640) && canvasY >= 620) {
+            this.setState({...this.state, direction: "bottom"});
+            localStorage.setItem("direction", JSON.stringify(this.state));
+           this.setState({...this.state, roomChange: true});
+        } else if (canvasX > 1100 && (canvasY >= 320 && canvasY <= 400)) {
+            this.setState({...this.state, direction: "right"});
+            localStorage.setItem("direction", JSON.stringify(this.state));
+           this.setState({...this.state, roomChange: true});
+        } else if (canvasX <= 80 && (canvasY >= 320 && canvasY <= 400)) {
+            this.setState({...this.state, direction: "left"});
+            localStorage.setItem("direction", JSON.stringify(this.state));
+           this.setState({...this.state, roomChange: true});
+        }
         frameCount++;
              if (frameCount <1) {
              window.requestAnimationFrame(step);
@@ -450,11 +465,11 @@ render() {
     }
 
     return (
-        <div style={style.body} className="d-flex justify-content-center">
+        <div style={style.body} >
         <canvas ref="canvas" className="mt-4 mb-4"
         width={1200} height={720} 
         style={styles}></canvas>
-        {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony" />}
+        {this.state.roomChange ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony" />}
         </div>
         
 

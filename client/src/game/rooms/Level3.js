@@ -4,6 +4,7 @@ import BG from "../assets/maps/pop/popLevel3.png"
 // import BG from "../assets/images/dungeon.png"
 import { Redirect } from "react-router-dom";
 import { style } from "../../utils/theme"
+import Transition from "../../utils/Transition";
 
 
 
@@ -11,12 +12,16 @@ import { style } from "../../utils/theme"
 export default class Canvas extends Component {
 
     state = {
-        changeRoom: false
+        roomChange: false,
+        direction: "",
+        canvasX: Transition.checkDirection().canvasX,
+        canvasY: Transition.checkDirection().canvasY
     }
     
      //ANIMATION=========================================
 componentDidMount() {
     this.updateCanvas();
+    localStorage.removeItem("direction");
 }
 
 updateCanvas() {
@@ -95,8 +100,8 @@ updateCanvas() {
     let lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
 
     //position of PLayer(drawframe) on canvas
-    let canvasX = 583;
-    let canvasY = 636;
+    let canvasX = this.state.canvasX;
+    let canvasY = this.state.canvasY;
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
@@ -399,9 +404,23 @@ updateCanvas() {
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
         if(beforeRoom === 8){
-            if (canvasX >= 545 && canvasX <= 620 && canvasY <= 40) {
-                this.setState({changeRoom: true});
-             };
+            if ((canvasX >= 560 && canvasX <= 640) && canvasY <= 40) {
+                this.setState({...this.state, direction: "top"});
+                localStorage.setItem("direction", JSON.stringify(this.state));
+               this.setState({...this.state, roomChange: true});
+            } else if ((canvasX >= 560 && canvasX <= 640) && canvasY >= 620) {
+                this.setState({...this.state, direction: "bottom"});
+                localStorage.setItem("direction", JSON.stringify(this.state));
+               this.setState({...this.state, roomChange: true});
+            } else if (canvasX > 1100 && (canvasY >= 320 && canvasY <= 400)) {
+                this.setState({...this.state, direction: "right"});
+                localStorage.setItem("direction", JSON.stringify(this.state));
+               this.setState({...this.state, roomChange: true});
+            } else if (canvasX <= 80 && (canvasY >= 320 && canvasY <= 400)) {
+                this.setState({...this.state, direction: "left"});
+                localStorage.setItem("direction", JSON.stringify(this.state));
+               this.setState({...this.state, roomChange: true});
+            }
         }
         frameCount++;
              if (frameCount <1) {
@@ -560,7 +579,7 @@ render() {
         <canvas ref="canvas" className="mt-4 mb-4"
         width={1200} height={720} 
         style={styles}></canvas>
-        {this.state.changeRoom ? <Redirect to="/harmony/bossroom"/> : <Redirect to="/harmony/level3" />}
+        {this.state.roomChange ? <Redirect to="/harmony/bossroom"/> : <Redirect to="/harmony/level3" />}
         </div>
         
 
