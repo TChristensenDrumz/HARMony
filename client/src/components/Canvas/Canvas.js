@@ -1,14 +1,12 @@
 import React, { Component, PropTypes, useState } from 'react';
-import Pause from "../components/Pause/Pause";
-import Dino from "./assets/sprites/DinoSprites-doux.png"
-// import BG from "../assets/images/image.jpg"
-import BG from "./assets/maps/pop/popLevel1.png"
+import Pause from "../Pause/Pause";
+import Dino from "../../game/assets/sprites/DinoSprites-doux.png"
+import BG from "../../game/assets/maps/country/countryLevel2.png"
 import { Redirect } from "react-router-dom";
-import { style } from "../utils/theme"
+import { style } from "../../utils/theme"
 
 
 
-// import keyPressManager from './utils/keyPressManager';
 export default class Canvas extends Component {
 
     state = {
@@ -573,7 +571,7 @@ render() {
             <canvas ref="canvas" className="mt-4 mb-4"
             width={1200} height={720} 
             style={styles}></canvas>
-            {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony/testing" />}
+            {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony/refactor" />}
         </div>
         
 

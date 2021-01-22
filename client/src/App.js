@@ -19,7 +19,8 @@ import Level1 from "./game/rooms/Level1"
 import Level2 from "./game/rooms/Level2"
 import Level3 from "./game/rooms/Level3"
 import Bossroom from "./game/rooms/Bossroom"
-// import Harmony from "./pages/Harmony"
+import Canvas from "./components/Canvas/Canvas"
+
 
 const App = () => {
   
@@ -30,6 +31,9 @@ const App = () => {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/create" component={CreateAccount} />
+          <Route exact path="/harmony/testing">
+            <ProtectedRoute component={Baseline} />
+          </Route>
           <Route exact path="/harmony">
             <ProtectedRoute component={Homefield} />
           </Route>
@@ -44,6 +48,9 @@ const App = () => {
           </Route>
           <Route exact path="/harmony/bossroom">
             <ProtectedRoute component={Bossroom} />
+          </Route>
+          <Route exact path="/harmony/refactor">
+            <ProtectedRoute component={Canvas} />
           </Route>
           <Route component={Landing} />
         </Switch>
