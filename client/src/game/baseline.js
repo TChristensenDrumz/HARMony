@@ -150,7 +150,7 @@ updateCanvas() {
     let animation = []
 
     class Enemy{
-        constructor(img, enemyX, enemyY, scale, enemyAnimation, HP,ATK, attackBuild){
+        constructor(img, enemyX, enemyY, scale, enemyAnimation, HP,ATK, attackBuild, hitboxX, hitboxY){
             this.enemyX = enemyX;
             this.enemyY = enemyY;
             this.img = img;
@@ -161,6 +161,8 @@ updateCanvas() {
             this.HP = HP;
             this.ATK = ATK;
             this.attackBuild = attackBuild;
+            this.hitboxX = hitboxX
+            this.hitboxY = hitboxY
 
         }
            
@@ -171,22 +173,20 @@ updateCanvas() {
         }
         step2 = () => {
             if(this.HP <= 0){
-                // playerHealth+=1
+                playerHealth+=1
                 this.enemyAnimation = []
                 beforeRoom++
                 console.log(beforeRoom)
                 return
             }
-            
-            
-            let distanceX = canvasX - this.enemyX 
-            let distanceY = canvasY - this.enemyY
-            let unitVector = Math.hypot(distanceX,distanceY)
+            let distanceX = canvasX - this.enemyX - this.hitboxX
+            let distanceY = canvasY - this.enemyY - this.hitboxY
+            let unitVector = Math.hypot(distanceX, distanceY)
 
-            if(spacePressed && unitVector<=15){
+            if(spacePressed && unitVector <= 15){
                 console.log(this.attackBuild)
                 this.attackBuild+=10
-                if(lastMove === 0 && distanceX < 0){
+                if(lastMove === 0 && distanceX < 0 ){
                     this.enemyAnimation = hurtAnimateLeft
                     this.HP -= 1
                 }else if(lastMove === 1 && distanceX > 0){
@@ -222,28 +222,18 @@ updateCanvas() {
                     this.enemyX+=(distanceX/(2*unitVector))
                     this.enemyY+=(distanceY/(2*unitVector))
                 }  
-
-            }
-            
-            
-                
-            
-
+            }                                                    
         }
-            
-            
-        
-        
     }
 
     //construct enemies
-    const enemy = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy1 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy2 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy3 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy4 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy5 = new Enemy(imageObj2, Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000,200, 0)
+    const enemy = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    const enemy1 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    const enemy2 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    const enemy3 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    const enemy4 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    const enemy5 = new Enemy(imageObj2, Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    const BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000, 10, 0, 50, 80)
 
     
 
@@ -260,14 +250,16 @@ updateCanvas() {
     //basic animation function===================================
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop, cycleLoop2, cycleLoop3, cycleLoop4, cycleLoop5, cycleLoop6, cycleLoop7, cycleLoop8){
-        drawFrame(player,cycleLoop[currentLoopIndex], 0, 0, 0); 
+        
+        BOSS.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
         enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
         enemy1.drawFrame2(cycleLoop4[currentLoopIndex], 0, 0, 0);
         enemy2.drawFrame2(cycleLoop5[currentLoopIndex], 0, 0, 0);
         enemy3.drawFrame2(cycleLoop6[currentLoopIndex], 0, 0, 0);
         enemy4.drawFrame2(cycleLoop7[currentLoopIndex], 0, 0, 0);
         enemy5.drawFrame2(cycleLoop8[currentLoopIndex], 0, 0, 0);
-        BOSS.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
+        drawFrame(player,cycleLoop[currentLoopIndex], 0, 0, 0); 
+        
 
         currentLoopIndex++;
         if (currentLoopIndex >= cycleLoop.length) {
