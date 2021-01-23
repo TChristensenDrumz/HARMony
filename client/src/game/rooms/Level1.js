@@ -224,10 +224,17 @@ updateCanvas() {
         
     }
 
+    let enemies = [];
+    let amount = 3;
+    for (let i = 0; i < amount; i++) {
+        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0);
+        enemies.push(enemy);
+    };
+
     //construct enemies
-    const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0)
-    const enemy1 = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0)
-    const enemy2 = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0)
+    // const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0)
+    // const enemy1 = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0)
+    // const enemy2 = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0)
 
     
 
@@ -245,9 +252,10 @@ updateCanvas() {
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop, cycleLoop2, cycleLoop3, cycleLoop4){
         drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0); 
-        enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
-        enemy1.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
-        enemy2.drawFrame2(cycleLoop4[currentLoopIndex], 0, 0, 0);
+        enemies.forEach(enemy => enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0));
+        // enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
+        // enemy1.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
+        // enemy2.drawFrame2(cycleLoop4[currentLoopIndex], 0, 0, 0);
 
         currentLoopIndex++;
         if (currentLoopIndex >= cycleLoop.length) {
@@ -516,7 +524,13 @@ updateCanvas() {
                 return
             }
 
-            move(animation, enemy.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation)
+            let movedEnemies = [];
+            enemies.forEach(enemy => movedEnemies.push(enemy.enemyAnimation))
+
+            move(animation, ...movedEnemies)
+
+
+            // move(animation, enemy.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation)
 
             //pass each entities animations into this function
             setTimeout(() => {
@@ -536,9 +550,10 @@ updateCanvas() {
     //calls first animation loop=================
     //make sure all entities are called in here
     function init() {
-        requestAnimationFrame(enemy.step2)
-        requestAnimationFrame(enemy1.step2)
-        requestAnimationFrame(enemy2.step2)
+        enemies.forEach(enemy => requestAnimationFrame(enemy.step2));
+        // requestAnimationFrame(enemy.step2)
+        // requestAnimationFrame(enemy1.step2)
+        // requestAnimationFrame(enemy2.step2)
         requestAnimationFrame(step);
         
         
