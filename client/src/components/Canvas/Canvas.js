@@ -166,7 +166,7 @@ updateCanvas() {
         }
         step2 = () => {
             if(this.HP <= 0){
-                // playerHealth+=1
+                playerHealth+=.1
                 this.enemyAnimation = []
                 beforeRoom++
                 console.log(beforeRoom)
