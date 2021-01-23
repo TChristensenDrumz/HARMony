@@ -251,7 +251,7 @@ updateCanvas() {
     //basic animation function===================================
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop, cycleLoop2, cycleLoop3, cycleLoop4){
-        drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0); 
+        drawFrame(imageObj,cycleLoop[currentLoopIndex], 0, 0, 0);
         enemies.forEach(enemy => enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0));
         // enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
         // enemy1.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
@@ -444,81 +444,83 @@ updateCanvas() {
         }else{
 
         
-        switch(true){
-            case spacePressed:
-                attack();
-                break;
-            case rightPressed:
-                if(canvasX >= 1124) {
-                    animation = rightAnimate
-                    canvasX -= 6;
-                }
-                else if(canvasY <= 40) {
-                    animation = rightAnimate
-                    canvasY += 6;
-                    canvasX += 2;
-                }
-                else if(canvasY >= 640) {
-                    animation = rightAnimate
-                    canvasY -= 6;
-                    canvasX += 2;
-                }
-                else{
-                    right()
-                }
-                break;
-            case leftPressed:   
-                if(canvasX <= 40){   
-                    animation = leftAnimate
-                    canvasX += 6;
-                }
-                else if(canvasY <= 40) {
-                    animation = leftAnimate
-                    canvasY += 6;
-                    canvasX -= 2;
-                }
-                else if(canvasY >= 640) {
-                    animation = leftAnimate
-                    canvasY -= 6;
-                    canvasX -= 2;
-                }
-                else{
-                    left()
+            switch(true){
+                case spacePressed:
+                    attack();
+                    break;
+                case rightPressed:
+                    if(canvasX >= 1124) {
+                        animation = rightAnimate
+                        canvasX -= 6;
+                    }
+                    else if(canvasY <= 40) {
+                        animation = rightAnimate
+                        canvasY += 6;
+                        canvasX += 2;
+                    }
+                    else if(canvasY >= 640) {
+                        animation = rightAnimate
+                        canvasY -= 6;
+                        canvasX += 2;
+                    }
+                    else{
+                        right()
+                    }
+                    break;
+                case leftPressed:   
+                    if(canvasX <= 40){   
+                        animation = leftAnimate
+                        canvasX += 6;
+                    }
+                    else if(canvasY <= 40) {
+                        animation = leftAnimate
+                        canvasY += 6;
+                        canvasX -= 2;
+                    }
+                    else if(canvasY >= 640) {
+                        animation = leftAnimate
+                        canvasY -= 6;
+                        canvasX -= 2;
+                    }
+                    else{
+                        left()
+                    }   
+                    break;
+                case downPressed:
+                    if(canvasY >= 640){
+                        if(lastMove===0){
+                            animation = rightAnimate
+                            canvasY -= 6;
+                        }else{
+                            animation = leftAnimate
+                            canvasY -= 6;
+                        }
+                        }else{
+                            down()
+                        }
+                    break;
+                case upPressed:
+                    if(canvasY <= 40){
+                        if(lastMove===0){
+                            animation = rightAnimate
+                            canvasY += 6;
+                        }else{
+                            animation = leftAnimate
+                            canvasY += 6;
+                        }
+                    }else{
+                        up()
+                    }
+                    break;
+                default:
+                    if(lastMove===0){
+                       animation = baseRightAnimate
+                    }else{
+                       animation = baseLeftAnimate
+                    }
                 }   
-                break;
-            case downPressed:
-                if(canvasY >= 640){
-                    if(lastMove===0){
-                        animation = rightAnimate
-                        canvasY -= 6;
-                    }else{
-                        animation = leftAnimate
-                        canvasY -= 6;
-                    }
-                    }else{
-                        down()
-                    }
-                break;
-            case upPressed:
-                if(canvasY <= 40){
-                    if(lastMove===0){
-                        animation = rightAnimate
-                        canvasY += 6;
-                    }else{
-                        animation = leftAnimate
-                        canvasY += 6;
-                    }
-                }else{
-                    up()
-                }
-                break;
-            default:
-                if(lastMove===0){
-                   animation = baseRightAnimate
-                }else{
-                   animation = baseLeftAnimate
-                }
-            }}
+        
+            }
             if(playerHealth <= 0){
                 animation = []
                 return
@@ -536,11 +538,6 @@ updateCanvas() {
             setTimeout(() => {
                 window.requestAnimationFrame(step)
             }, 10);
-            
-            
-        
-        
-        
     }
 
    

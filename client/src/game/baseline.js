@@ -6,18 +6,21 @@ import RapRight from "./assets/sprites/rapRight.png"
 import BG from "./assets/maps/country/countryLevel2.png"
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme"
-
+import Transition from "../utils/Transition"
 let playerHealth = 100;
 export default class Canvas extends Component {
 
     state = {
-        changeRoom: false,
-        isPaused: false
+        roomChange: false,
+        direction: '',
+        // canvasX: Transition.checkDirection().canvasX,
+        // canvasY: Transition.checkDirection().canvasY
     }
     
      //ANIMATION=========================================
 componentDidMount() {
     this.updateCanvas();
+    localStorage.removeItem("direction");
 }
 
 updateCanvas() {
@@ -84,7 +87,7 @@ updateCanvas() {
     
     //SETTING VRIABLES FOR RENDERING==========
     //scale of character
-    const scale = 1;
+    const scale = 1.5;
     //width and height of spritesheet frame
     const width = 24;
     const height = 24;
@@ -102,7 +105,7 @@ updateCanvas() {
 
     //position of PLayer(drawframe) on canvas
     let canvasX = 600;
-    let canvasY = 360;
+    let canvasY = 300;
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
@@ -134,28 +137,33 @@ updateCanvas() {
         // const playerHurtAnimateLeft = frameRateSpoof([33,33,32,32,31,31])
         const rightAnimate = frameRateSpoof([4,5,6,7,8,9])
         const leftAnimate =  frameRateSpoof([43,42,41,40,39,38])
-        const baseRightAnimate = frameRateSpoof([0,0,1,2,3,3])
-        const baseLeftAnimate = frameRateSpoof([47,47,46,45,44,44])
-        const attackRight = frameRateSpoof([10,11,11,11,12,13])
-        const attackLeft = frameRateSpoof([37,36,36,36,35,34])
-        const hurtAnimateRight = frameRateSpoof([14,14,15,15,16,16])
-        const hurtAnimateLeft = frameRateSpoof([33,33,32,32,31,31])
+        const baseRightAnimate = frameRateSpoof([0,,1,2,,3])
+        const baseLeftAnimate = frameRateSpoof([47,46,45,44])
+        const attackRight = frameRateSpoof([10,11,12,13])
+        const attackLeft = frameRateSpoof([37,36,35,34])
+        const hurtAnimateRight = frameRateSpoof([14,15,16])
+        const hurtAnimateLeft = frameRateSpoof([33,32,31])
     //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
     //starting position for other entity(entities)
     let animation = []
 
     class Enemy{
-        constructor(img, enemyX, enemyY, scale, enemyAnimation, HP,ATK, attackBuild){
+        constructor(img, enemyX, enemyY, scale, enemyAnimation, HP,ATK, attackBuild, hitboxX, hitboxY, currentFrame, speed){
             this.enemyX = enemyX;
             this.enemyY = enemyY;
             this.img = img;
             this.width = 24;
             this.height = 24;
             this.scale = scale
-            this.enemyAnimation = enemyAnimation
+            this.enemyAnimation = enemyAnimation;
             this.HP = HP;
             this.ATK = ATK;
             this.attackBuild = attackBuild;
+            this.hitboxX = hitboxX;
+            this.hitboxY = hitboxY;
+            this.currentFrame = currentFrame;
+            this.speed = speed;
+
 
         }
            
@@ -165,23 +173,20 @@ updateCanvas() {
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
         step2 = () => {
+            
             if(this.HP <= 0){
-                // playerHealth+=1
+                playerHealth+=1
                 this.enemyAnimation = []
                 beforeRoom++
-                console.log(beforeRoom)
                 return
             }
-            
-            
-            let distanceX = canvasX - this.enemyX 
-            let distanceY = canvasY - this.enemyY
-            let unitVector = Math.hypot(distanceX,distanceY)
+            let distanceX = canvasX - this.enemyX - this.hitboxX
+            let distanceY = canvasY - this.enemyY - this.hitboxY
+            let unitVector = Math.hypot(distanceX, distanceY)
 
-            if(spacePressed && unitVector<=15){
-                console.log(this.attackBuild)
+            if(spacePressed && unitVector <= 15){
                 this.attackBuild+=10
-                if(lastMove === 0 && distanceX < 0){
+                if(lastMove === 0 && distanceX < 0 ){
                     this.enemyAnimation = hurtAnimateLeft
                     this.HP -= 1
                 }else if(lastMove === 1 && distanceX > 0){
@@ -191,7 +196,6 @@ updateCanvas() {
                 
             }else{
                 if(unitVector <= 15){
-                    console.log(this.attackBuild)
                     if(distanceX < 0){
                         this.enemyAnimation = attackLeft
                     }else{
@@ -214,31 +218,28 @@ updateCanvas() {
                         
                         this.enemyAnimation = leftAnimate
                     }
-                    this.enemyX+=(distanceX/(2*unitVector))
-                    this.enemyY+=(distanceY/(2*unitVector))
+                    this.enemyX+=(distanceX/(this.speed*unitVector))
+                    this.enemyY+=(distanceY/(this.speed*unitVector))
                 }  
-
-            }
-            
-            
-                
-            
-
+            }                                                    
         }
-            
-            
-        
-        
     }
 
     //construct enemies
-    const enemy = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy1 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy2 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy3 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy4 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const enemy5 = new Enemy(imageObj2, Math.random()*1050, 0, 1, [], 100, 10, 0)
-    const BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000,200, 0)
+    const enemies = [];
+    let amount = 3;
+    for (let i = 0; i < amount; i++) {
+        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0, 0, 0, 0,2);
+        enemies.push(enemy);
+    };
+     console.log(enemies)
+    // const enemy = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    // const enemy1 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    // const enemy2 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    // const enemy3 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    // const enemy4 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+    // const enemy5 = new Enemy(imageObj2,  Math.random()*1050, 0, 1, [], 100, 10, 0, 0, 0)
+     const BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000, 50, 0, 20, 80, 0,4)
 
     
 
@@ -254,16 +255,32 @@ updateCanvas() {
 
     //basic animation function===================================
     //add in cycleLoop for each entity so they can have seperate animations
-    function move(cycleLoop, cycleLoop2, cycleLoop3, cycleLoop4, cycleLoop5, cycleLoop6, cycleLoop7, cycleLoop8){
-        drawFrame(player,cycleLoop[currentLoopIndex], 0, 0, 0); 
-        enemy.drawFrame2(cycleLoop2[currentLoopIndex], 0, 0, 0);
-        enemy1.drawFrame2(cycleLoop4[currentLoopIndex], 0, 0, 0);
-        enemy2.drawFrame2(cycleLoop5[currentLoopIndex], 0, 0, 0);
-        enemy3.drawFrame2(cycleLoop6[currentLoopIndex], 0, 0, 0);
-        enemy4.drawFrame2(cycleLoop7[currentLoopIndex], 0, 0, 0);
-        enemy5.drawFrame2(cycleLoop8[currentLoopIndex], 0, 0, 0);
-        BOSS.drawFrame2(cycleLoop3[currentLoopIndex], 0, 0, 0);
+    function move(cycleLoop){
+        
+        if(BOSS.enemyY + 65 < canvasY){
+            BOSS.drawFrame2(BOSS.enemyAnimation[BOSS.currentFrame], 0, 0, 0);
+            
+            drawFrame(player, cycleLoop[currentLoopIndex], 0, 0, 0); 
+            
+        }else{
+            drawFrame(player, cycleLoop[currentLoopIndex], 0, 0, 0); 
+            BOSS.drawFrame2(BOSS.enemyAnimation[BOSS.currentFrame], 0, 0, 0);
 
+        }
+        enemies.forEach(enemy => {
+            enemy.drawFrame2(enemy.enemyAnimation[enemy.currentFrame], 0, 0, 0)
+            enemy.currentFrame++
+            
+            if(enemy.currentFrame>= enemy.enemyAnimation.length){
+                enemy.currentFrame = 0;
+            }
+        
+        })
+        //adjusting for multiple animation lengths
+        BOSS.currentFrame++
+        if(BOSS.currentFrame >= BOSS.enemyAnimation.length){
+            BOSS.currentFrame = 0;
+        }
         currentLoopIndex++;
         if (currentLoopIndex >= cycleLoop.length) {
           currentLoopIndex = 0;
@@ -409,6 +426,7 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
+        
         if (canvasX < 10 && canvasY < 10) {
            this.setState({changeRoom: true});
         };
@@ -516,16 +534,29 @@ updateCanvas() {
                 return
             }
             //pass each entities animations into this function
-           
-           
-            
-            
-        
-        
-        
     }
-
+    
     const master = () => {
+        
+        if(beforeRoom === 3){
+            if ((canvasX >= 560 && canvasX <= 640) && canvasY <= 40) {
+                this.setState({...this.state, direction: "top"});
+                localStorage.setItem("direction", JSON.stringify(this.state));
+               this.setState({...this.state, roomChange: true});
+            } else if ((canvasX >= 560 && canvasX <= 640) && canvasY >= 620) {
+                this.setState({...this.state, direction: "bottom"});
+                localStorage.setItem("direction", JSON.stringify(this.state));
+               this.setState({...this.state, roomChange: true});
+            } else if (canvasX > 1100 && (canvasY >= 320 && canvasY <= 400)) {
+                this.setState({...this.state, direction: "right"});
+                localStorage.setItem("direction", JSON.stringify(this.state));
+               this.setState({...this.state, roomChange: true});
+            } else if (canvasX <= 80 && (canvasY >= 320 && canvasY <= 400)) {
+                this.setState({...this.state, direction: "left"});
+                localStorage.setItem("direction", JSON.stringify(this.state));
+               this.setState({...this.state, roomChange: true});
+            }
+        }
         frameCount++;
              if (frameCount <1) {
              window.requestAnimationFrame(master);
@@ -539,22 +570,19 @@ updateCanvas() {
             if(playerHealth <= 0){
 
             }else{
-                enemy.step2()
-                enemy1.step2()
-                enemy2.step2()
-                enemy3.step2()
-                enemy4.step2()
-                enemy5.step2()
+
+                enemies.forEach(enemy => enemy.step2())
                 BOSS.step2()
                 step()
                 this.setState({isPaused: false})
 
             }
         }
-           
+        
+        // let movedEnemies = [];
+        // enemies.forEach(enemy => movedEnemies.push(enemy.enemyAnimation))
     
-            
-        move(animation, enemy.enemyAnimation, BOSS.enemyAnimation, enemy1.enemyAnimation, enemy2.enemyAnimation, enemy3.enemyAnimation, enemy4.enemyAnimation, enemy5.enemyAnimation)
+        move(animation, BOSS.enemyAnimation)
         setTimeout(() => {
             window.requestAnimationFrame(master);
         }, 10);
@@ -591,7 +619,7 @@ render() {
             <canvas ref="canvas" className="mt-4 mb-4"
             width={1200} height={720} 
             style={styles}></canvas>
-            {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony/refactor" />}
+            {/* {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony/refactor" />} */}
         </div>
         
 
