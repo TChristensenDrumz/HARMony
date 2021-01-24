@@ -8,7 +8,7 @@ import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme"
 import Transition from "../utils/Transition";
 import mapsArr from "./assets/maps/allMaps"
-import tracksArr from "./assets/maps/allTracks"
+import tracksArr from "./assets/audio/allTracks";
 
 let playerHealth = 100;
 
@@ -115,8 +115,8 @@ updateCanvas() {
     let lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
 
     //position of PLayer(drawframe) on canvas
-    let canvasX = Transition.checkDirection().canvasX || 600;
-    let canvasY = Transition.checkDirection().canvasY || 360;
+    let canvasX = Transition.checkDirection().canvasX;
+    let canvasY = Transition.checkDirection().canvasY;
 
     //COMBAT STUFF=======================
     let playerHurt = false
@@ -619,6 +619,7 @@ render() {
 
     return (
         <div style={style.body} className="d-flex justify-content-center">
+            <audio src={this.props.audio}/>
             {this.state.isPaused ? <Pause /> : <div/>}
             <Stats score="100" health={playerHealth} />
             <canvas ref="canvas" className="mt-4 mb-4"

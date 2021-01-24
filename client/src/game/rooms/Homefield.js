@@ -471,7 +471,7 @@ render() {
         <canvas ref="canvas" className="mt-4 mb-4"
         width={1200} height={720} 
         style={styles}></canvas>
-        {this.state.roomChange ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony" />}
+        {this.state.roomChange ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony/testing" />}
         </div>
         
 
