@@ -7,7 +7,7 @@ import BG from "./assets/maps/country/countryLevel2.png"
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme"
 import Transition from "../utils/Transition";
-import {mapsArr} from "./assets/maps/allMaps"
+import mapsArr from "./assets/maps/allMaps"
 let playerHealth = 100;
 
 
@@ -36,10 +36,10 @@ updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
     //1.import images=====================
     let player = new Image();
-    player.src = Dino 
+    player.src = this.props.player;
 
     let imageObj2 = new Image();
-    imageObj2.src = Dino 
+    imageObj2.src = this.props.enemy;
 
     //KEY COMMANDS================================================
     
@@ -93,7 +93,7 @@ updateCanvas() {
     }
     
     
-    let bossLevel = true
+    let bossLevel = this.props.bossLevel
     //SETTING VRIABLES FOR RENDERING==========
     //scale of character
     const scale = 1.5;
@@ -113,10 +113,9 @@ updateCanvas() {
     let lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
 
     //position of PLayer(drawframe) on canvas
-    let canvasX = 600;
-    let canvasY = 300;
-    // let enemyX = 100
-    // let enemyY = 200
+    let canvasX = Transition.checkDirection().canvasX || 600;
+    let canvasY = Transition.checkDirection().canvasY || 360;
+
     //COMBAT STUFF=======================
     let playerHurt = false
     let playerHurtLength = 0
@@ -236,7 +235,7 @@ updateCanvas() {
 
     //construct enemies
     const enemies = [];
-    let amount = 3;
+    let amount = this.props.enemyAmount;
     for (let i = 0; i < amount; i++) {
         const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0, 0, 0, 0,2);
         enemies.push(enemy);
@@ -437,11 +436,7 @@ updateCanvas() {
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
         
-        if (canvasX < 10 && canvasY < 10) {
-           this.setState({changeRoom: true});
-        };
-        
-        if(playerHurt == true){
+        if(playerHurt === true){
             playerHurtLength++
             switch(lastMove){
                 case 0 : animation = hurtAnimateRight
@@ -450,7 +445,7 @@ updateCanvas() {
                 break;
             
             }
-            if(playerHurtLength == 45){
+            if(playerHurtLength === 45){
                 playerHurt = false
                 playerHurtLength = 0
             }
@@ -548,7 +543,7 @@ updateCanvas() {
     
     const master = () => {
         
-        if(beforeRoom === 3){
+        if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 560 && canvasX <= 640) && canvasY <= 40) {
                 this.setState({...this.state, direction: "top"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
@@ -615,7 +610,7 @@ updateCanvas() {
 render() {
     console.log(mapsArr)
     const styles = {
-        backgroundImage: "url(" + mapsArr.country.level2 + ")",
+        backgroundImage: "url(" + this.props.background + ")",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat"
     }
@@ -627,7 +622,7 @@ render() {
             <canvas ref="canvas" className="mt-4 mb-4"
             width={1200} height={720} 
             style={styles}></canvas>
-            {/* {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony/refactor" />} */}
+            {this.state.changeRoom ? <Redirect to={this.props.nextLevel}/> : <></>}
         </div>
         
 
