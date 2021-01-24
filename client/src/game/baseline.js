@@ -7,7 +7,8 @@ import BG from "./assets/maps/country/countryLevel2.png"
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme"
 import Transition from "../utils/Transition";
-import {mapsArr} from "./assets/maps/allMaps"
+import mapsArr from "./assets/maps/allMaps"
+import tracksArr from "./assets/maps/allTracks"
 let playerHealth = 100;
 
 
