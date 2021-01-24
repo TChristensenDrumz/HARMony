@@ -24,7 +24,7 @@ import MetalBossroom from "./metal/opnl.mp3";
 //Pop
 import PopHome from "./pop/putj.mp3";
 import PopLevel1 from "./pop/lgis.mp3";
-import PopLevel2 from "./pop/mp.mp3";
+import PopLevel2 from "./pop/mb.mp3";
 import PopLevel3 from "./pop/yam.mp3";
 import PopBossroom from "./pop/mm.mp3";
 
@@ -74,5 +74,5 @@ const tracksArr = {
     }
 }
         
-export default mapsArr;
+export default tracksArr;
 

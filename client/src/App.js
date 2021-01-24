@@ -15,11 +15,12 @@ import Login from "./pages/Login"
 import CreateAccount from "./pages/CreateAccount"
 import Baseline from "./game/baseline"
 import Homefield from "./game/rooms/Homefield"
-import Level1 from "./game/rooms/Level1"
-import Level2 from "./game/rooms/Level2"
-import Level3 from "./game/rooms/Level3"
+// import Level1 from "./game/rooms/Level1"
+// import Level2 from "./game/rooms/Level2"
+// import Level3 from "./game/rooms/Level3"
 import Bossroom from "./game/rooms/Bossroom"
 import Canvas from "./components/Canvas/Canvas"
+import { Home, Level1, Level2, Level3, BossRoom } from "./game/rooms/Levels";
 
 
 const App = () => {
@@ -32,10 +33,10 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/create" component={CreateAccount} />
           <Route exact path="/harmony/testing">
-            <ProtectedRoute component={Baseline} />
+            <ProtectedRoute component={Homefield} />
           </Route>
           <Route exact path="/harmony">
-            <ProtectedRoute component={Homefield} />
+            <ProtectedRoute component={Home} />
           </Route>
           <Route exact path="/harmony/level1">
             <ProtectedRoute component={Level1} />
@@ -47,7 +48,7 @@ const App = () => {
             <ProtectedRoute component={Level3} />
           </Route>
           <Route exact path="/harmony/bossroom">
-            <ProtectedRoute component={Bossroom} />
+            <ProtectedRoute component={BossRoom} />
           </Route>
           <Route exact path="/harmony/refactor">
             <ProtectedRoute component={Canvas} />
