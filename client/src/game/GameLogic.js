@@ -196,7 +196,7 @@ updateCanvas() {
             let distanceY = canvasY - this.enemyY - this.hitboxY
             let unitVector = Math.hypot(distanceX, distanceY)
 
-            if(spacePressed && unitVector <= 15){
+            if(spacePressed && unitVector <= this.hitboxX){
                 this.attackBuild+=10
                 if(lastMove === 0 && distanceX < 0 ){
                     this.enemyAnimation = hurtAnimateLeft
@@ -207,7 +207,7 @@ updateCanvas() {
                 }
                 
             }else{
-                if(unitVector <= 15){
+                if(unitVector <= this.hitboxX){
                     if(distanceX < 0){
                         this.enemyAnimation = attackLeft
                     }else{
@@ -247,7 +247,7 @@ updateCanvas() {
      console.log(enemies)
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000, 50, 0, 20, 65, 0,4)
+        BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000, 50, 0, 35, 65, 0,4)
     }
 
     
@@ -594,11 +594,11 @@ updateCanvas() {
             }else{
                
                 if(bossLevel){
-                    BOSS.step2()
+                    BOSS.step2();
                 }
-                enemies.forEach(enemy => enemy.step2())
-                step()
-                this.setState({isPaused: false})
+                enemies.forEach(enemy => enemy.step2());
+                step();
+                this.setState({isPaused: false});
 
             };
         };
