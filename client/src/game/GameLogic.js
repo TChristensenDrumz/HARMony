@@ -4,6 +4,7 @@ import Pause from "../components/Pause/Pause";
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme";
 
+
 //amount
 //boss
 //background
@@ -181,6 +182,7 @@ updateCanvas() {
                           frameX * this.width, frameY * this.height, this.width, this.height,
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
+        isDead = () => this.dead;
         step2 = () => {
             if(this.dead) {
                 return;
@@ -554,7 +556,6 @@ updateCanvas() {
     }
     
     const master = () => {
-        console.log(beforeRoom)
         
         // if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 560 && canvasX <= 640) && canvasY <= 40) {
@@ -620,6 +621,16 @@ updateCanvas() {
         setTimeout(() => {
             window.requestAnimationFrame(master);
         }, 10);
+
+        if (bossLevel && BOSS.isDead()) {
+            let enemyGenre = JSON.parse(localStorage.getItem("randomEnemy"));
+            let leftoverGenres = JSON.parse(localStorage.getItem("leftoverGenres"));
+            leftoverGenres.splice(leftoverGenres.indexOf(enemyGenre), 1);
+            console.log(enemyGenre);
+            console.log(leftoverGenres);
+            localStorage.setItem("leftoverGenres", JSON.stringify(leftoverGenres));
+            localStorage.removeItem("randomEnemy");
+        };
     };
     
     
@@ -645,7 +656,7 @@ render() {
 
     return (
         <div style={style.body} className="d-flex justify-content-center">
-            <audio src={this.props.audio} autoPlay />
+            <audio src={this.props.audio} />
             {this.state.isPaused ? <Pause /> : <div/>}
             <Stats score="100" health={playerHealth} />
             <canvas ref="canvas" className="mt-4 mb-4"

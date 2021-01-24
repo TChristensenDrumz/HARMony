@@ -1,7 +1,26 @@
 import mapsArr from "../game/assets/maps/allMaps";
 import tracksArr from "../game/assets/audio/allTracks";
+import API from "../utils/API";
+import Token from "../utils/Token";
 
 export default {
+
+    setGenre: function() {
+        let homeGenre = "classical";
+        let genres = ["pop", "classical", "country", "metal", "rap"];
+        if (genres.includes(homeGenre)) {
+            genres.splice(genres.indexOf(homeGenre), 1);
+        };
+        let randomEnemy = genres[Math.floor(Math.random() * genres.length)];
+        let genreObj = {
+            homeGenre: homeGenre,
+            randomEnemy: randomEnemy,
+            leftoverGenres: genres
+        };
+        let userId = {id: Token.getId()};
+        let data = {genreObj, userId};
+        API.setGenres(data).then(res => (console.log(res)));
+    },
 
     homeGenre: function() {
         let homeGenre = "classical";
@@ -11,7 +30,9 @@ export default {
     enemyGenre: function() {
         let homeGenre = "classical";
         let genres = JSON.parse(localStorage.getItem("leftoverGenres")) || ["pop", "classical", "country", "metal", "rap"];
-        genres.splice(genres.indexOf(homeGenre), 1);
+        if (genres.includes(homeGenre)) {
+            genres.splice(genres.indexOf(homeGenre), 1);
+        };
         let randomEnemy = JSON.parse(localStorage.getItem("randomEnemy")) || genres[Math.floor(Math.random() * genres.length)];
         localStorage.setItem("randomEnemy", JSON.stringify(randomEnemy));
         localStorage.setItem("leftoverGenres", JSON.stringify(genres));
