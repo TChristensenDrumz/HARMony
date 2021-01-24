@@ -6,8 +6,7 @@ import RapRight from "./assets/sprites/rapRight.png"
 import BG from "./assets/maps/country/countryLevel2.png"
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme"
-import Transition from "../utils/Transition";
-import {mapsArr} from "./assets/maps/allMaps"
+import Transition from "../utils/Transition"
 let playerHealth = 100;
 
 
@@ -93,7 +92,7 @@ updateCanvas() {
     }
     
     
-    let bossLevel = true
+    let bossLevel = false
     //SETTING VRIABLES FOR RENDERING==========
     //scale of character
     const scale = 1.5;
@@ -242,9 +241,8 @@ updateCanvas() {
         enemies.push(enemy);
     };
      console.log(enemies)
-    let BOSS = {}
     if(bossLevel){
-      BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000, 50, 0, 20, 65, 0,4);
+     const BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000, 50, 0, 20, 65, 0,4)
     }
 
     
@@ -262,7 +260,7 @@ updateCanvas() {
     //basic animation function===================================
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop){
-        if(bossLevel === true){
+        if(bossLevel){
             if(BOSS.enemyY + BOSS.hitboxY < canvasY){
                 BOSS.drawFrame2(BOSS.enemyAnimation[BOSS.currentFrame], 0, 0, 0);
                 
@@ -580,17 +578,24 @@ updateCanvas() {
             if(playerHealth <= 0){
 
             }else{
-                if(bossLevel){
-                    BOSS.step2()
-                }
+
                 enemies.forEach(enemy => enemy.step2())
+                BOSS.step2()
                 step()
                 this.setState({isPaused: false})
 
             }
         }
         
-        move(animation, BOSS.enemyAnimation)
+        // let movedEnemies = [];
+        // enemies.forEach(enemy => movedEnemies.push(enemy.enemyAnimation))
+        if(bossLevel){
+            move(animation, BOSS.enemyAnimation)
+
+        }else{
+            move(animation)
+
+        }
         setTimeout(() => {
             window.requestAnimationFrame(master);
         }, 10);
@@ -613,9 +618,9 @@ updateCanvas() {
 }
 
 render() {
-    console.log(mapsArr)
+
     const styles = {
-        backgroundImage: "url(" + mapsArr.country.level2 + ")",
+        backgroundImage: "url(" + BG + ")",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat"
     }
