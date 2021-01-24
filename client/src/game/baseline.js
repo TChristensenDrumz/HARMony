@@ -118,6 +118,7 @@ updateCanvas() {
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
+    let dying = 0
     let playerHurt = false
     let playerHurtLength = 0
     let attackLength = 0
@@ -146,7 +147,7 @@ updateCanvas() {
         // const playerHurtAnimateLeft = frameRateSpoof([33,33,32,32,31,31])
         const rightAnimate = frameRateSpoof([4,5,6,7,8,9])
         const leftAnimate =  frameRateSpoof([43,42,41,40,39,38])
-        const baseRightAnimate = frameRateSpoof([0,,1,2,,3])
+        const baseRightAnimate = frameRateSpoof([0,1,2,3])
         const baseLeftAnimate = frameRateSpoof([47,46,45,44])
         const attackRight = frameRateSpoof([10,11,12,13])
         const attackLeft = frameRateSpoof([37,36,35,34])
@@ -436,12 +437,12 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
-        
+        console.log(dying)
         if (canvasX < 10 && canvasY < 10) {
            this.setState({changeRoom: true});
         };
         
-        if(playerHurt == true){
+        if(playerHurt == true && dying === 0){
             playerHurtLength++
             switch(lastMove){
                 case 0 : animation = hurtAnimateRight
@@ -454,6 +455,8 @@ updateCanvas() {
                 playerHurt = false
                 playerHurtLength = 0
             }
+        }else if (dying > 0){
+            animation = baseRightAnimate
         }else{
 
         
@@ -540,7 +543,8 @@ updateCanvas() {
                 }
             }}
             if(playerHealth <= 0){
-                animation = []
+                dying++
+            }else if(dying >= 40){
                 return
             }
             //pass each entities animations into this function
@@ -577,8 +581,8 @@ updateCanvas() {
         if(escPressed){
             this.setState({isPaused: true})
         }else{
-            if(playerHealth <= 0){
-
+            if(dying >= 40){
+                animation = [0]
             }else{
                 if(bossLevel){
                     BOSS.step2()
@@ -600,6 +604,7 @@ updateCanvas() {
     
 
     //calls first animation loop=================
+
     //make sure all entities are called in here
     function init() {
         window.requestAnimationFrame(master);
