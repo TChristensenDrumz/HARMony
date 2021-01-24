@@ -454,7 +454,8 @@ updateCanvas() {
         }else{
 
         
-         switch(true){
+
+            switch(true){
                 case spacePressed:
                     console.log(`X: ${canvasX}, Y: ${canvasY}`);
                     attack();
