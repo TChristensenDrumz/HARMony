@@ -112,6 +112,7 @@ updateCanvas() {
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
+    let dying = 0
     let playerHurt = false
     let playerHurtLength = 0
     let attackLength = 0
@@ -130,22 +131,27 @@ updateCanvas() {
     
     };
     //animation frames====================================
-        const playerRightAnimate = frameRateSpoof([0,1,2,3,4,5,6,7])
-        // const playerLeftAnimate =  frameRateSpoof([43,42,41,40,39,38])
-        const playerBaseRightAnimate = frameRateSpoof([8,9,10,11,8,9,10,11])
-        //const playerBaseLeftAnimate = frameRateSpoof([47,47,46,45,44,44])
-        const playerAttackRight = frameRateSpoof([12,13,14,15,16,17,18,19])
-        // const playerAttackLeft = frameRateSpoof([37,36,36,36,35,34])
-        const playerHurtAnimateRight = frameRateSpoof([20,20,21,21,22,22,23,23])
-        // const playerHurtAnimateLeft = frameRateSpoof([33,33,32,32,31,31])
-        const rightAnimate = frameRateSpoof([4,5,6,7,8,9])
-        const leftAnimate =  frameRateSpoof([43,42,41,40,39,38])
-        const baseRightAnimate = frameRateSpoof([0,,1,2,,3])
-        const baseLeftAnimate = frameRateSpoof([47,46,45,44])
-        const attackRight = frameRateSpoof([10,11,12,13])
-        const attackLeft = frameRateSpoof([37,36,35,34])
-        const hurtAnimateRight = frameRateSpoof([14,15,16])
-        const hurtAnimateLeft = frameRateSpoof([33,32,31])
+        const playerRightAnimate = frameRateSpoof([4,5,6,7,8,9,10,11]);
+        const playerLeftAnimate =  frameRateSpoof([51,50,49,48,47,46,45,44]);
+        const playerBaseRightAnimate = frameRateSpoof([0,1,2,3]);
+        const playerBaseLeftAnimate = frameRateSpoof([55,54,53,52]);
+        const playerAttackRight = frameRateSpoof([12,13,14,15,16,17,18,19]);
+        const playerAttackLeft = frameRateSpoof([43,42,41,40,39,38,37,36]);
+        const playerHurtAnimateRight = frameRateSpoof([20,21,22,23]);
+        const playerHurtAnimateLeft = frameRateSpoof([35,34,33,32]);
+        const playerDeadRight = frameRateSpoof([24,25,26,27]);
+        const playerDeadLeft = frameRateSpoof([31,30,29,28]);
+
+
+
+        const rightAnimate = frameRateSpoof([4,5,6,7,8,9]);
+        const leftAnimate =  frameRateSpoof([43,42,41,40,39,38]);
+        const baseRightAnimate = frameRateSpoof([0,1,2,3]);
+        const baseLeftAnimate = frameRateSpoof([47,46,45,44]);
+        const attackRight = frameRateSpoof([10,11,12,13]);
+        const attackLeft = frameRateSpoof([37,36,35,34]);
+        const hurtAnimateRight = frameRateSpoof([14,15,16]);
+        const hurtAnimateLeft = frameRateSpoof([33,32,31]);
     //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
     //starting position for other entity(entities)
     let animation = []
@@ -434,7 +440,7 @@ updateCanvas() {
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
         
-        if(playerHurt === true){
+        if(playerHurt === true && dying === 0){
             playerHurtLength++
             switch(lastMove){
                 case 0 : animation = hurtAnimateRight
@@ -442,11 +448,17 @@ updateCanvas() {
                 case 1 : animation =  hurtAnimateLeft
                 break;
             
-            }
+            };
             if(playerHurtLength === 45){
                 playerHurt = false
                 playerHurtLength = 0
             }
+        }else if (dying > 0){
+            if(lastMove == 0){
+                animation = playerDeadRight
+            }else{
+                animation = playerDeadLeft
+            };
         }else{
 
         
@@ -476,7 +488,7 @@ updateCanvas() {
                     }
                     else{
                         right()
-                    }
+                    };
                 break;
                 case leftPressed:
     
@@ -498,7 +510,7 @@ updateCanvas() {
                     }
                     else{
                         left()
-                    }   
+                    };
                 break;
                 case downPressed:
                     if(canvasY >= 640){
@@ -511,7 +523,7 @@ updateCanvas() {
                         }
                     }else{
                     down()
-                    }
+                    };
                 break;
                 case upPressed:
                     if(canvasY <= 40){
@@ -525,19 +537,20 @@ updateCanvas() {
         
                     }else{
                         up()
-                    }
+                    };
                 break;
                 default:
                     if(lastMove===0){
                        animation = baseRightAnimate
                     }else{
                        animation = baseLeftAnimate
-                    }
+                    };
                 }}
-            if(playerHealth <= 0){
-                animation = []
-                return
-            }
+                if(playerHealth <= 0){
+                    dying++
+                }else if(dying >= 40){
+                    return
+                };
             //pass each entities animations into this function
     }
     
@@ -572,8 +585,12 @@ updateCanvas() {
         if(escPressed){
             this.setState({isPaused: true})
         }else{
-            if(playerHealth <= 0){
-
+            if(dying >= 40){
+                if(lastMove === 0){
+                    animation = [27]
+                }else{
+                    animation = [28]
+                }
             }else{
                
                 if(bossLevel){
@@ -583,28 +600,22 @@ updateCanvas() {
                 step()
                 this.setState({isPaused: false})
 
-            }
-        }
-        
-        // let movedEnemies = [];
-        // enemies.forEach(enemy => movedEnemies.push(enemy.enemyAnimation))
+            };
+        };
         if(bossLevel){
             move(animation, BOSS.enemyAnimation)
-
         }else{
             move(animation)
 
-        }
+        };
         setTimeout(() => {
             window.requestAnimationFrame(master);
         }, 10);
-        
-    }
+    };
     
     
 
     //calls first animation loop=================
-    //make sure all entities are called in here
     function init() {
         window.requestAnimationFrame(master);
     }
