@@ -3,8 +3,31 @@ import tracksArr from "../game/assets/audio/allTracks";
 
 export default {
 
-    levelObj: function() {
-        let genre = "classical";
+    homeGenre: function() {
+        let homeGenre = "classical";
+        return this.levelObj(homeGenre);
+    },
+
+    enemyGenre: function() {
+        let homeGenre = "classical";
+        let genres = JSON.parse(localStorage.getItem("leftoverGenres")) || ["pop", "classical", "country", "metal", "rap"];
+        genres.splice(genres.indexOf(homeGenre), 1);
+        let randomEnemy = JSON.parse(localStorage.getItem("randomEnemy")) || genres[Math.floor(Math.random() * genres.length)];
+        localStorage.setItem("randomEnemy", JSON.stringify(randomEnemy));
+        localStorage.setItem("leftoverGenres", JSON.stringify(genres));
+        return this.levelObj(randomEnemy);
+    },
+
+    levelObj: function(genre) {
+        // let genres = ["pop", "classical", "country", "metal", "rap"];
+        // let homeGenre = "classical";
+        // genres.splice(genres.indexOf(homeGenre), 1);
+        // let hash = {home: homeGenre};
+        // for (let i = 0; i < genres.length; i++) {
+        //     hash.i = genres[i];
+        // }
+        // let randomGenre = genres[Math.floor(Math.random() * genres.length)];
+        // localStorage.setItem(currentGenre, JSON.stringify(randomGenre));
         switch (genre) {
             case "pop":
                 return {

@@ -184,12 +184,12 @@ updateCanvas() {
         }
         step2 = () => {
             
-            if(this.HP <= 0){
-                playerHealth+=1
-                this.enemyAnimation = []
-                beforeRoom++
-                return
-            }
+            // if(this.HP <= 0){
+            //     playerHealth+=1
+            //     this.enemyAnimation = []
+            //     beforeRoom++
+            //     return
+            // }
             let distanceX = canvasX - this.enemyX - this.hitboxX
             let distanceY = canvasY - this.enemyY - this.hitboxY
             let unitVector = Math.hypot(distanceX, distanceY)
@@ -231,7 +231,7 @@ updateCanvas() {
                     this.enemyX+=(distanceX/(this.speed*unitVector))
                     this.enemyY+=(distanceY/(this.speed*unitVector))
                 }  
-            }                                                    
+            }                                 
         }
     }
 
@@ -437,7 +437,6 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
-        
         if(playerHurt === true){
             playerHurtLength++
             switch(lastMove){
@@ -457,7 +456,6 @@ updateCanvas() {
 
             switch(true){
                 case spacePressed:
-                    console.log(`X: ${canvasX}, Y: ${canvasY}`);
                     attack();
                 break;
                 case rightPressed:
@@ -546,8 +544,9 @@ updateCanvas() {
     }
     
     const master = () => {
+        console.log(beforeRoom)
         
-        if(beforeRoom === this.props.enemyAmount){
+        // if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 560 && canvasX <= 640) && canvasY <= 40) {
                 this.setState({...this.state, direction: "top"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
@@ -565,7 +564,7 @@ updateCanvas() {
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
             }
-        }
+        // }
         frameCount++;
              if (frameCount <1) {
              window.requestAnimationFrame(master);
@@ -582,14 +581,31 @@ updateCanvas() {
                 if(bossLevel){
                     BOSS.step2()
                 }
-                enemies.forEach(enemy => enemy.step2())
+                enemies.forEach(enemy => {
+                    if(enemy.HP <= 0){
+                        playerHealth+=1
+                        enemy.enemyAnimation = []
+                        beforeRoom++
+                        return
+                    } else {
+                        enemy.step2()
+                    }
+                });
                 step()
                 this.setState({isPaused: false})
 
             }
         }
+
+        // let movedEnemies = [];
+        //     enemies.forEach(enemy => movedEnemies.push(enemy.enemyAnimation));
+        // if (bossLevel) {
+        //     move(animation, BOSS.enemyAnimation, ...movedEnemies);
+        // } else {
+        //     move(animation, ...movedEnemies);
+        // };
         
-        move(animation, BOSS.enemyAnimation)
+        move(animation)
         setTimeout(() => {
             window.requestAnimationFrame(master);
         }, 10);
@@ -612,7 +628,6 @@ updateCanvas() {
 }
 
 render() {
-    console.log(mapsArr)
     const styles = {
         backgroundImage: "url(" + this.props.background + ")",
         backgroundSize: "cover",
@@ -621,13 +636,13 @@ render() {
 
     return (
         <div style={style.body} className="d-flex justify-content-center">
-            <audio src={this.props.audio}/>
+            <audio src={this.props.audio} autoPlay />
             {this.state.isPaused ? <Pause /> : <div/>}
             <Stats score="100" health={playerHealth} />
             <canvas ref="canvas" className="mt-4 mb-4"
             width={1200} height={720} 
             style={styles}></canvas>
-            {this.state.changeRoom ? <Redirect to={this.props.nextLevel}/> : <></>}
+            {this.state.roomChange ? <Redirect to={this.props.nextLevel}/> : <></>}
         </div>
         
 

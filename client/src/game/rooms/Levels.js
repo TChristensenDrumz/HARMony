@@ -3,7 +3,7 @@ import Canvas from "../baseline";
 import LevelLogic from "../../utils/LevelLogic";
 import Dino from "../assets/sprites/DinoSprites-doux.png";
 
-let { background, audio } = LevelLogic.levelObj();
+let { background, audio } = LevelLogic.enemyGenre();
 
 export const Home = () => {
     return (
@@ -12,14 +12,15 @@ export const Home = () => {
             enemy={Dino}
             bossLevel={false}
             enemyAmount={0}
-            background={background.home}
-            audio={audio.home}
+            background={LevelLogic.homeGenre().background.home}
+            audio={LevelLogic.homeGenre().audio.home}
             nextLevel="/harmony/level1"
         />
     );
 };
 
 export const Level1 = () => {
+    localStorage.setItem("currentLevel", JSON.stringify("0"));
     return (
         <Canvas
             player={Dino}
