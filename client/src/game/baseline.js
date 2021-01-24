@@ -350,11 +350,11 @@ updateCanvas() {
         function attack(){
             if(rightPressed){
                 lastMove=0
-                if(canvasX >=1020) {
+                if(canvasX >= 1124) {
                     canvasX -= 6;
                 }
                 if(upPressed){
-                    if(canvasY <= 0) {
+                    if(canvasY <= 40) {
                         canvasY += 6;
                         canvasX += 2;
                     }
@@ -364,7 +364,7 @@ updateCanvas() {
                     }
                 }
                 else if(downPressed){
-                    if(canvasY >= 560) {
+                    if(canvasY >= 640) {
                         canvasY -= 6;
                         canvasX += 2;
                     }
@@ -379,11 +379,11 @@ updateCanvas() {
             }
             else if(leftPressed){
                 lastMove = 1
-                if(canvasX <= 0) {
+                if(canvasX <= 40) {
                     canvasX += 6;
                 }
                 if(upPressed){
-                    if(canvasY <= 0) {
+                    if(canvasY <= 40) {
                         canvasY += 6;
                         canvasX -= 2;
                     }
@@ -393,7 +393,7 @@ updateCanvas() {
                     }
                 }
                 else if(downPressed){
-                    if(canvasY >= 560) {
+                    if(canvasY >= 640) {
                         canvasY -= 6;
                         canvasX -= 2;
                     }
@@ -407,7 +407,7 @@ updateCanvas() {
                 }
             }
             else if(upPressed){
-                if(canvasY <= 0) {
+                if(canvasY <= 40) {
                     canvasY += 6;
                 }
                 else {
@@ -415,7 +415,7 @@ updateCanvas() {
                 }
             }
             else if(downPressed){
-                if(canvasY >= 560) {
+                if(canvasY >= 640) {
                     canvasY -= 6;
                 }
                 else {
@@ -454,88 +454,89 @@ updateCanvas() {
         }else{
 
         
-        switch(true){
-            case spacePressed:
-                attack();
-            break;
-            case rightPressed:
-
-                if(canvasX >= 1040) {
-
-                    animation = rightAnimate
-                    canvasX -= 6;
-                //===================
-                }
-                else if(canvasY <= 0) {
-                    animation = rightAnimate
-                    canvasY += 6;
-                    canvasX += 2;
-                }
-                else if(canvasY >= 560) {
-                    animation = rightAnimate
-                    canvasY -= 6;
-                    canvasX += 2;
-                }
-                else{
-                    right()
-                }
-            break;
-            case leftPressed:
-
-                if(canvasX <=0){
-
-                    animation = leftAnimate
-                    canvasX += 6;
-                //===================
-                }
-                else if(canvasY <= 0) {
-                    animation = leftAnimate
-                    canvasY += 6;
-                    canvasX -= 2;
-                }
-                else if(canvasY >= 560) {
-                    animation = leftAnimate
-                    canvasY -= 6;
-                    canvasX -= 2;
-                }
-                else{
-                    left()
-                }   
-            break;
-            case downPressed:
-                if(canvasY >= 560){
-                    if(lastMove===0){
-                        animation = rightAnimate
-                        canvasY -= 6;
-                    }else{
-                        animation = leftAnimate
-                        canvasY -= 6;
-                    }
-                }else{
-                down()
-                }
-            break;
-            case upPressed:
-                if(canvasY <=0){
-                    if(lastMove===0){
-                        animation = rightAnimate
-                        canvasY += 6;
-                    }else{
-                        animation = leftAnimate
-                        canvasY += 6;
-                    }
+            switch(true){
+                case spacePressed:
+                    console.log(`X: ${canvasX}, Y: ${canvasY}`);
+                    attack();
+                break;
+                case rightPressed:
     
-                }else{
-                    up()
-                }
-            break;
-            default:
-                if(lastMove===0){
-                   animation = baseRightAnimate
-                }else{
-                   animation = baseLeftAnimate
-                }
-            }}
+                    if(canvasX >= 1124) {
+    
+                        animation = rightAnimate
+                        canvasX -= 6;
+                    //===================
+                    }
+                    else if(canvasY <= 40) {
+                        animation = rightAnimate
+                        canvasY += 6;
+                        canvasX += 2;
+                    }
+                    else if(canvasY >= 640) {
+                        animation = rightAnimate
+                        canvasY -= 6;
+                        canvasX += 2;
+                    }
+                    else{
+                        right()
+                    }
+                break;
+                case leftPressed:
+    
+                    if(canvasX <= 40){
+    
+                        animation = leftAnimate
+                        canvasX += 6;
+                    //===================
+                    }
+                    else if(canvasY <= 40) {
+                        animation = leftAnimate
+                        canvasY += 6;
+                        canvasX -= 2;
+                    }
+                    else if(canvasY >= 640) {
+                        animation = leftAnimate
+                        canvasY -= 6;
+                        canvasX -= 2;
+                    }
+                    else{
+                        left()
+                    }   
+                break;
+                case downPressed:
+                    if(canvasY >= 640){
+                        if(lastMove===0){
+                            animation = rightAnimate
+                            canvasY -= 6;
+                        }else{
+                            animation = leftAnimate
+                            canvasY -= 6;
+                        }
+                    }else{
+                    down()
+                    }
+                break;
+                case upPressed:
+                    if(canvasY <= 40){
+                        if(lastMove===0){
+                            animation = rightAnimate
+                            canvasY += 6;
+                        }else{
+                            animation = leftAnimate
+                            canvasY += 6;
+                        }
+        
+                    }else{
+                        up()
+                    }
+                break;
+                default:
+                    if(lastMove===0){
+                       animation = baseRightAnimate
+                    }else{
+                       animation = baseLeftAnimate
+                    }
+                }}
             if(playerHealth <= 0){
                 animation = []
                 return
