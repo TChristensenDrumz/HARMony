@@ -4,6 +4,7 @@ import Pause from "../components/Pause/Pause";
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme";
 
+
 //amount
 //boss
 //background
@@ -181,6 +182,7 @@ updateCanvas() {
                           frameX * this.width, frameY * this.height, this.width, this.height,
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
+        isDead = () => this.dead;
         step2 = () => {
             if(this.dead) {
                 return;
@@ -233,7 +235,7 @@ updateCanvas() {
                     this.enemyX+=(distanceX/(this.speed*unitVector))
                     this.enemyY+=(distanceY/(this.speed*unitVector))
                 }  
-            }                                                    
+            }                                 
         }
     }
 
@@ -465,7 +467,6 @@ updateCanvas() {
 
             switch(true){
                 case spacePressed:
-                    console.log(`X: ${canvasX}, Y: ${canvasY}`);
                     attack();
                 break;
                 case rightPressed:
@@ -556,7 +557,7 @@ updateCanvas() {
     
     const master = () => {
         
-        if(beforeRoom === this.props.enemyAmount){
+        // if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 560 && canvasX <= 640) && canvasY <= 40) {
                 this.setState({...this.state, direction: "top"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
@@ -574,7 +575,7 @@ updateCanvas() {
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
             }
-        }
+        // }
         frameCount++;
              if (frameCount <1) {
              window.requestAnimationFrame(master);
@@ -596,6 +597,7 @@ updateCanvas() {
                 if(bossLevel){
                     BOSS.step2();
                 }
+
                 enemies.forEach(enemy => enemy.step2());
                 step();
                 this.setState({isPaused: false});
@@ -611,6 +613,16 @@ updateCanvas() {
         setTimeout(() => {
             window.requestAnimationFrame(master);
         }, 10);
+
+        if (bossLevel && BOSS.isDead()) {
+            let enemyGenre = JSON.parse(localStorage.getItem("randomEnemy"));
+            let leftoverGenres = JSON.parse(localStorage.getItem("leftoverGenres"));
+            leftoverGenres.splice(leftoverGenres.indexOf(enemyGenre), 1);
+            console.log(enemyGenre);
+            console.log(leftoverGenres);
+            localStorage.setItem("leftoverGenres", JSON.stringify(leftoverGenres));
+            localStorage.removeItem("randomEnemy");
+        };
     };
     
     
@@ -636,7 +648,7 @@ render() {
 
     return (
         <div style={style.body} className="d-flex justify-content-center">
-            <audio src={this.props.audio}/>
+            <audio src={this.props.audio} />
             {this.state.isPaused ? <Pause /> : <div/>}
             <Stats score="100" health={playerHealth} />
             <canvas ref="canvas" className="mt-4 mb-4"

@@ -7,5 +7,9 @@ export default {
 
     login: function(userData) {
         return axios.post("/api/user/login", userData);
+    },
+
+    setGenres: function(gameData) {
+        return axios.post("/api/gameplay/genre", gameData);
     }
 };
