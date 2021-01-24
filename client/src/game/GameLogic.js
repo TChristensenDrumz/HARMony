@@ -1,14 +1,8 @@
 import React, { Component, PropTypes, useState } from 'react';
 import Stats from "../components/Stats/Stats";
 import Pause from "../components/Pause/Pause";
-import Dino from "./assets/sprites/DinoSprites-doux.png"
-import RapRight from "./assets/sprites/rapRight.png"
-import BG from "./assets/maps/country/countryLevel2.png"
 import { Redirect } from "react-router-dom";
-import { style } from "../utils/theme"
-import Transition from "../utils/Transition"
-let playerHealth = 100;
-
+import { style } from "../utils/theme";
 
 //amount
 //boss
@@ -16,13 +10,14 @@ let playerHealth = 100;
 //music
 //playerimg
 //bossimg
+
+let playerHealth = 100;
+
 export default class Canvas extends Component {
 
     state = {
         roomChange: false,
         direction: '',
-        // canvasX: Transition.checkDirection().canvasX,
-        // canvasY: Transition.checkDirection().canvasY
     }
     
      //ANIMATION=========================================
@@ -35,10 +30,10 @@ updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
     //1.import images=====================
     let player = new Image();
-    player.src = Dino 
+    player.src = this.props.player; 
 
     let imageObj2 = new Image();
-    imageObj2.src = Dino 
+    imageObj2.src = this.props.enemy;
 
     //KEY COMMANDS================================================
     
@@ -92,7 +87,7 @@ updateCanvas() {
     }
     
     
-    let bossLevel = false
+    let bossLevel = this.props.bossLevel;
     //SETTING VRIABLES FOR RENDERING==========
     //scale of character
     const scale = 1.5;
@@ -171,7 +166,7 @@ updateCanvas() {
             this.hitboxY = hitboxY;
             this.currentFrame = currentFrame;
             this.speed = speed;
-
+            this.dead = false;
 
         }
            
@@ -181,11 +176,14 @@ updateCanvas() {
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
         step2 = () => {
-            
+            if(this.dead) {
+                return;
+            }
             if(this.HP <= 0){
-                playerHealth+=1
+                playerHealth+=20
                 this.enemyAnimation = []
                 beforeRoom++
+                this.dead = true;
                 return
             }
             let distanceX = canvasX - this.enemyX - this.hitboxX
@@ -229,20 +227,21 @@ updateCanvas() {
                     this.enemyX+=(distanceX/(this.speed*unitVector))
                     this.enemyY+=(distanceY/(this.speed*unitVector))
                 }  
-            }                                                    
+            }                                 
         }
     }
 
     //construct enemies
     const enemies = [];
-    let amount = 3;
+    let amount = this.props.enemyAmount;
     for (let i = 0; i < amount; i++) {
         const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0, 0, 0, 0,2);
         enemies.push(enemy);
     };
      console.log(enemies)
+    let BOSS = {};
     if(bossLevel){
-     const BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000, 50, 0, 20, 65, 0,4)
+        BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000, 50, 0, 20, 65, 0,4)
     }
 
     
@@ -347,11 +346,11 @@ updateCanvas() {
         function attack(){
             if(rightPressed){
                 lastMove=0
-                if(canvasX >=1020) {
+                if(canvasX >= 1124) {
                     canvasX -= 6;
                 }
                 if(upPressed){
-                    if(canvasY <= 0) {
+                    if(canvasY <= 40) {
                         canvasY += 6;
                         canvasX += 2;
                     }
@@ -361,7 +360,7 @@ updateCanvas() {
                     }
                 }
                 else if(downPressed){
-                    if(canvasY >= 560) {
+                    if(canvasY >= 640) {
                         canvasY -= 6;
                         canvasX += 2;
                     }
@@ -376,11 +375,11 @@ updateCanvas() {
             }
             else if(leftPressed){
                 lastMove = 1
-                if(canvasX <= 0) {
+                if(canvasX <= 40) {
                     canvasX += 6;
                 }
                 if(upPressed){
-                    if(canvasY <= 0) {
+                    if(canvasY <= 40) {
                         canvasY += 6;
                         canvasX -= 2;
                     }
@@ -390,7 +389,7 @@ updateCanvas() {
                     }
                 }
                 else if(downPressed){
-                    if(canvasY >= 560) {
+                    if(canvasY >= 640) {
                         canvasY -= 6;
                         canvasX -= 2;
                     }
@@ -404,7 +403,7 @@ updateCanvas() {
                 }
             }
             else if(upPressed){
-                if(canvasY <= 0) {
+                if(canvasY <= 40) {
                     canvasY += 6;
                 }
                 else {
@@ -412,7 +411,7 @@ updateCanvas() {
                 }
             }
             else if(downPressed){
-                if(canvasY >= 560) {
+                if(canvasY >= 640) {
                     canvasY -= 6;
                 }
                 else {
@@ -434,12 +433,7 @@ updateCanvas() {
 
     //function for directing rendering by keypress======(character movement/collision/behavior)
     const step = () => {
-        
-        if (canvasX < 10 && canvasY < 10) {
-           this.setState({changeRoom: true});
-        };
-        
-        if(playerHurt == true){
+        if(playerHurt === true){
             playerHurtLength++
             switch(lastMove){
                 case 0 : animation = hurtAnimateRight
@@ -448,95 +442,96 @@ updateCanvas() {
                 break;
             
             }
-            if(playerHurtLength == 45){
+            if(playerHurtLength === 45){
                 playerHurt = false
                 playerHurtLength = 0
             }
         }else{
 
         
-        switch(true){
-            case spacePressed:
-                attack();
-            break;
-            case rightPressed:
 
-                if(canvasX >= 1040) {
-
-                    animation = rightAnimate
-                    canvasX -= 6;
-                //===================
-                }
-                else if(canvasY <= 0) {
-                    animation = rightAnimate
-                    canvasY += 6;
-                    canvasX += 2;
-                }
-                else if(canvasY >= 560) {
-                    animation = rightAnimate
-                    canvasY -= 6;
-                    canvasX += 2;
-                }
-                else{
-                    right()
-                }
-            break;
-            case leftPressed:
-
-                if(canvasX <=0){
-
-                    animation = leftAnimate
-                    canvasX += 6;
-                //===================
-                }
-                else if(canvasY <= 0) {
-                    animation = leftAnimate
-                    canvasY += 6;
-                    canvasX -= 2;
-                }
-                else if(canvasY >= 560) {
-                    animation = leftAnimate
-                    canvasY -= 6;
-                    canvasX -= 2;
-                }
-                else{
-                    left()
-                }   
-            break;
-            case downPressed:
-                if(canvasY >= 560){
-                    if(lastMove===0){
-                        animation = rightAnimate
-                        canvasY -= 6;
-                    }else{
-                        animation = leftAnimate
-                        canvasY -= 6;
-                    }
-                }else{
-                down()
-                }
-            break;
-            case upPressed:
-                if(canvasY <=0){
-                    if(lastMove===0){
-                        animation = rightAnimate
-                        canvasY += 6;
-                    }else{
-                        animation = leftAnimate
-                        canvasY += 6;
-                    }
+            switch(true){
+                case spacePressed:
+                    attack();
+                break;
+                case rightPressed:
     
-                }else{
-                    up()
-                }
-            break;
-            default:
-                if(lastMove===0){
-                   animation = baseRightAnimate
-                }else{
-                   animation = baseLeftAnimate
-                }
-            }}
+                    if(canvasX >= 1124) {
+    
+                        animation = rightAnimate
+                        canvasX -= 6;
+                    //===================
+                    }
+                    else if(canvasY <= 40) {
+                        animation = rightAnimate
+                        canvasY += 6;
+                        canvasX += 2;
+                    }
+                    else if(canvasY >= 640) {
+                        animation = rightAnimate
+                        canvasY -= 6;
+                        canvasX += 2;
+                    }
+                    else{
+                        right()
+                    }
+                break;
+                case leftPressed:
+    
+                    if(canvasX <= 40){
+    
+                        animation = leftAnimate
+                        canvasX += 6;
+                    //===================
+                    }
+                    else if(canvasY <= 40) {
+                        animation = leftAnimate
+                        canvasY += 6;
+                        canvasX -= 2;
+                    }
+                    else if(canvasY >= 640) {
+                        animation = leftAnimate
+                        canvasY -= 6;
+                        canvasX -= 2;
+                    }
+                    else{
+                        left()
+                    }   
+                break;
+                case downPressed:
+                    if(canvasY >= 640){
+                        if(lastMove===0){
+                            animation = rightAnimate
+                            canvasY -= 6;
+                        }else{
+                            animation = leftAnimate
+                            canvasY -= 6;
+                        }
+                    }else{
+                    down()
+                    }
+                break;
+                case upPressed:
+                    if(canvasY <= 40){
+                        if(lastMove===0){
+                            animation = rightAnimate
+                            canvasY += 6;
+                        }else{
+                            animation = leftAnimate
+                            canvasY += 6;
+                        }
+        
+                    }else{
+                        up()
+                    }
+                break;
+                default:
+                    if(lastMove===0){
+                       animation = baseRightAnimate
+                    }else{
+                       animation = baseLeftAnimate
+                    }
+                }}
             if(playerHealth <= 0){
                 animation = []
                 return
@@ -545,8 +540,9 @@ updateCanvas() {
     }
     
     const master = () => {
+        console.log(beforeRoom)
         
-        if(beforeRoom === 3){
+        // if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 560 && canvasX <= 640) && canvasY <= 40) {
                 this.setState({...this.state, direction: "top"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
@@ -564,7 +560,7 @@ updateCanvas() {
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
             }
-        }
+        // }
         frameCount++;
              if (frameCount <1) {
              window.requestAnimationFrame(master);
@@ -578,14 +574,33 @@ updateCanvas() {
             if(playerHealth <= 0){
 
             }else{
-
-                enemies.forEach(enemy => enemy.step2())
-                BOSS.step2()
+               
+                if(bossLevel){
+                    BOSS.step2()
+                }
+                enemies.forEach(enemy => {
+                    if(enemy.HP <= 0){
+                        playerHealth+=1
+                        enemy.enemyAnimation = []
+                        beforeRoom++
+                        return
+                    } else {
+                        enemy.step2()
+                    }
+                });
                 step()
                 this.setState({isPaused: false})
 
             }
         }
+
+        // let movedEnemies = [];
+        //     enemies.forEach(enemy => movedEnemies.push(enemy.enemyAnimation));
+        // if (bossLevel) {
+        //     move(animation, BOSS.enemyAnimation, ...movedEnemies);
+        // } else {
+        //     move(animation, ...movedEnemies);
+        // };
         
         // let movedEnemies = [];
         // enemies.forEach(enemy => movedEnemies.push(enemy.enemyAnimation))
@@ -618,21 +633,21 @@ updateCanvas() {
 }
 
 render() {
-
     const styles = {
-        backgroundImage: "url(" + BG + ")",
+        backgroundImage: "url(" + this.props.background + ")",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat"
     }
 
     return (
         <div style={style.body} className="d-flex justify-content-center">
+            <audio src={this.props.audio} autoPlay />
             {this.state.isPaused ? <Pause /> : <div/>}
             <Stats score="100" health={playerHealth} />
             <canvas ref="canvas" className="mt-4 mb-4"
             width={1200} height={720} 
             style={styles}></canvas>
-            {/* {this.state.changeRoom ? <Redirect to="/harmony/level1"/> : <Redirect to="/harmony/refactor" />} */}
+            {this.state.roomChange ? <Redirect to={this.props.nextLevel}/> : <></>}
         </div>
         
 

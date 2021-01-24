@@ -1,7 +1,7 @@
 import React from "react";
-import Canvas from "../baseline";
-import LevelLogic from "../../utils/LevelLogic";
-import Dino from "../assets/sprites/DinoSprites-doux.png";
+import Canvas from "../game/GameLogic";
+import LevelLogic from "../utils/LevelLogic";
+import Dino from "../game/assets/sprites/DinoSprites-doux.png";
 
 let { background, audio } = LevelLogic.enemyGenre();
 
