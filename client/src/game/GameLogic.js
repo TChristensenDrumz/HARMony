@@ -14,7 +14,8 @@ export default class Canvas extends Component {
 
     state = {
         roomChange: false,
-        direction: ''
+        direction: '',
+        gameOver: false
     }
     
      //ANIMATION=========================================
@@ -114,11 +115,17 @@ updateCanvas() {
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
-    let dying = 0
-    let playerHurt = false
-    let playerHurtLength = 0
-    let attackLength = 0
-    let beforeRoom = 0
+    let dying = 0;
+    let playerHurt = false;
+    let playerHurtLength = 0;
+    let attackLength = 0;
+    let beforeRoom;
+    if(bossLevel) {
+        beforeRoom = 1;
+    }
+    else {
+        beforeRoom = 0;
+    }
 
     //spoofer =======================
     const spoofer = 10
@@ -294,6 +301,10 @@ updateCanvas() {
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop){
         enemies.forEach(enemy => {
+<<<<<<< HEAD
+=======
+            // console.log(enemy.currentFrame)
+>>>>>>> c67740f0a2529d1a51a73c7068ec177bb80a3c86
             enemy.drawFrame2(enemy.enemyAnimation[enemy.currentFrame], 0, 0, 0)
             enemy.currentFrame++
             
@@ -579,6 +590,7 @@ updateCanvas() {
                     };
                 }}
                 if(playerHealth <= 0 ){
+                    this.setState({...this.state, gameOver: true});
                     if(dying === 0){
                         currentLoopIndex=0
                     }
@@ -590,6 +602,10 @@ updateCanvas() {
     }
     
     const master = () => {
+<<<<<<< HEAD
+=======
+        // console.log(beforeRoom)
+>>>>>>> c67740f0a2529d1a51a73c7068ec177bb80a3c86
         if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
                 this.setState({...this.state, direction: "top"});
@@ -699,6 +715,7 @@ render() {
             width={1200} height={720} 
             style={styles.background}></canvas>
             {this.state.roomChange ? <Redirect to={this.props.nextLevel}/> : <></>}
+            {this.state.gameOver ? <Redirect to="/harmony/gameover" /> : <></>}
         </div>
         
 
