@@ -29,7 +29,7 @@ import PopLevel3 from "./pop/yam.mp3";
 import PopBossroom from "./pop/mm.mp3";
 
 //Rap
-import RapHome from "./rap/hypnotize.mp3";
+import RapHome from "./rap/cp.mp3";
 import RapLevel1 from "./rap/ron.mp3";
 import RapLevel2 from "./rap/jump.mp3";
 import RapLevel3 from "./rap/chl.mp3";
