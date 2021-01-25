@@ -102,8 +102,8 @@ updateCanvas() {
     let lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
 
     //position of PLayer(drawframe) on canvas
-    let canvasX = 600;
-    let canvasY = 300;
+    let canvasX = 478;
+    let canvasY = 232;
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
@@ -572,19 +572,19 @@ updateCanvas() {
     const master = () => {
         
         if(beforeRoom === this.props.enemyAmount){
-            if ((canvasX >= 552 && canvasX <= 638) && canvasY <= 70) {
+            if ((canvasX >= 476 && canvasX <= 480) && canvasY <= -10) {
                 this.setState({...this.state, direction: "top"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
-            } else if ((canvasX >= 552 && canvasX <= 638) && canvasY >= 476) {
+            } else if ((canvasX >= 476 && canvasX <= 480) && canvasY >= 476) {
                 this.setState({...this.state, direction: "bottom"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
-            } else if (canvasX >= 1100 && (canvasY >= 310 && canvasY <= 400)) {
+            } else if (canvasX >= 974 && (canvasY >= 230 && canvasY <= 234)) {
                 this.setState({...this.state, direction: "right"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
-            } else if (canvasX <= 68 && (canvasY >= 310 && canvasY <= 400)) {
+            } else if (canvasX <= -28 && (canvasY >= 230 && canvasY <= 234)) {
                 this.setState({...this.state, direction: "left"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
