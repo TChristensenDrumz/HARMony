@@ -587,19 +587,19 @@ updateCanvas() {
     const master = () => {
         console.log(beforeRoom)
         if(beforeRoom === this.props.enemyAmount){
-            if ((canvasX >= 476 && canvasX <= 480) && canvasY <= -10) {
+            if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
                 this.setState({...this.state, direction: "top"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
-            } else if ((canvasX >= 476 && canvasX <= 480) && canvasY >= 476) {
+            } else if ((canvasX >= 436 && canvasX <= 520) && canvasY >= 476) {
                 this.setState({...this.state, direction: "bottom"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
-            } else if (canvasX >= 974 && (canvasY >= 230 && canvasY <= 234)) {
+            } else if (canvasX >= 974 && (canvasY >= 190 && canvasY <= 274)) {
                 this.setState({...this.state, direction: "right"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
-            } else if (canvasX <= -28 && (canvasY >= 230 && canvasY <= 234)) {
+            } else if (canvasX <= -28 && (canvasY >= 190 && canvasY <= 274)) {
                 this.setState({...this.state, direction: "left"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
