@@ -21,7 +21,7 @@ import { Home, Level1, Level2, Level3, BossRoom } from "./pages/Levels";
 const App = () => {
 
   return (
-
+    <div style={{height: "100vh", backgroundColor: "black"}}>
     <Router>
         <Header />
         <Switch>
@@ -49,6 +49,7 @@ const App = () => {
         </Switch>
         <Footer />
     </Router>
+    </div>
 
   )
 };
