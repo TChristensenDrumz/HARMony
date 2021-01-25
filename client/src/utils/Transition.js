@@ -5,27 +5,27 @@ export default {
             let x = direction.direction;
             const hash = {
                 "top": {
-                    canvasX: 600,
-                    canvasY: 610
+                    canvasX: 478,
+                    canvasY: 476
                 },
                 "bottom": {
-                    canvasX: 600,
-                    canvasY: 90
+                    canvasX: 478,
+                    canvasY: -10
                 },
                 "left": {
-                    canvasX: 1100,
-                    canvasY: 360
+                    canvasX: 974,
+                    canvasY: 232
                 },
                 "right": {
-                    canvasX: 90,
-                    canvasY: 360
+                    canvasX: -28,
+                    canvasY: 232
                 }
             };
             return hash[x];
         } else {
             return {
-                canvasX: 600,
-                canvasY: 300
+                canvasX: 478,
+                canvasY: 232
             }
         }
     }

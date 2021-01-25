@@ -20,7 +20,7 @@ const Stats = (props) => {
     return (
         <div>
             <p style={styles.health}>Health: </p>
-            <progress style={styles.progress} className="nes-progress is-error" value={props.health} max="100" />
+            <progress style={styles.progress} className="nes-progress is-error" value={props.health} max={props.max} />
         </div>
     )
 };

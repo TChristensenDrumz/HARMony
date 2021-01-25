@@ -7,7 +7,7 @@ import LevelLogic from '../utils/LevelLogic';
 import Transition from "../utils/Transition";
 
 
-
+let maxHealth = 100;
 let playerHealth = 100;
 
 export default class Canvas extends Component {
@@ -107,8 +107,10 @@ updateCanvas() {
     let lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
 
     //position of PLayer(drawframe) on canvas
+
     let canvasX = Transition.checkDirection().canvasX;
     let canvasY = Transition.checkDirection().canvasY;
+
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
@@ -211,6 +213,7 @@ updateCanvas() {
                 }
                 if(this.dying >= this.enemyAnimation.length){
                     beforeRoom++
+                    maxHealth+=20;
                     playerHealth+=20
                     this.dead = true;
                     if(distanceX > 0){
@@ -691,7 +694,7 @@ render() {
             <p style={styles.song}>{this.props.song}</p>
             <audio src={this.props.audio} style={styles.audio} controls loop/>
             {this.state.isPaused ? <Pause /> : <div/>}
-            <Stats health={playerHealth} />
+            <Stats health={playerHealth} max={maxHealth}/>
             <canvas ref="canvas"
             width={1200} height={720} 
             style={styles.background}></canvas>
