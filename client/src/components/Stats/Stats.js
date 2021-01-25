@@ -5,13 +5,13 @@ const styles = {
         position: "absolute",
         color: "white",
         left: "21.5%",
-        top: "4.5%"
+        top: ".5%"
     },
     progress: {
         position: "absolute",
         width: "367px",
         left: "28%",
-        top: "4%",
+        top: ".2%",
         height: "23px",
     }
 }

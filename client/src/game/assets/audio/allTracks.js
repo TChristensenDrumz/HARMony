@@ -9,8 +9,8 @@ import ClassicalBossroom from "./classical/caprice.mp3";
 //Country
 import CountryHome from "./country/tg.mp3";
 import CountryLevel1 from "./country/rsc.mp3";
-import CountryLevel2 from "./country/j.mp3";
-import CountryLevel3 from "./country/jttw.mp3";
+import CountryLevel2 from "./country/jttw.mp3";
+import CountryLevel3 from "./country/j.mp3";
 import CountryBossroom from "./country/iptbaa.mp3";
 
 //Metal
@@ -60,8 +60,8 @@ const tracksArr = {
         name: {
             home: "The Gambler",
             level1: "Red Solo Cup",
-            level2: "Jolene",
-            level3: "Jesus Take The Wheel",
+            level2: "Jesus Take The Wheel",
+            level3: "Jolene",
             bossroom: "Proud To Be An American"
         }
     },
