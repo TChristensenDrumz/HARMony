@@ -28,16 +28,14 @@ const styles = {
   }
 };
 
-const Pause = () => {
+const GG = () => {
   return (
     <div style={styles.overlay}>
-      <h1 style={styles.h1}>PAUSED</h1>
-      <h2 style={styles.h2}>Controls</h2>
-      <p style={styles.p}>Move: W-A-S-D </p>
-      <p style={styles.p}>Attack: Space</p>
-      <p style={styles.p}>Pause: Esc</p> 
+      <h1 style={styles.h1}>GAME OVER</h1>
+      <h2 style={styles.h2}>Score: </h2>
+      <a className="nes-btn is-error text-center" href="/harmony">Play Again</a>
     </div>
   );
 };
 
-export default Pause;
+export default GG;

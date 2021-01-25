@@ -6,10 +6,12 @@ function Footer() {
     const footerStyle={
         height: "10vh",
         width: "100vw",
-        overflowX: "hidden"
+        margin: "0",
+        overflowX: "hidden",
+        backgroundColor: "black"
     }
     return (
-        <footer className="row"  style={footerStyle}>
+        <footer className="row" style={footerStyle}>
             <div className="container">
                 <div className="text-center align-item-center mt-4 p-2">
                     <a href="https://github.com/TChristensenDrumz/HARMony" target="_blank"><i className="nes-icon github m-0"></i></a>
