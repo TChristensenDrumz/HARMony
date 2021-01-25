@@ -39,26 +39,33 @@ function LoginForm(props) {
         };
     };
 
+    const textColor = {
+        color: "white"
+    }
+
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formBasicEmail">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="username" name="username" placeholder="Enter Username" value={loginForm.username} onChange={e => setLoginForm({ ...loginForm, username: e.target.value })}/>
-            </Form.Group>
+        
+        <div style={textColor}>
+            <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="username" name="username" placeholder="Enter Username" value={loginForm.username} onChange={e => setLoginForm({ ...loginForm, username: e.target.value })}/>
+                </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" value={loginForm.password} onChange={e => setLoginForm({ ...loginForm, password: e.target.value })}/>
-            </Form.Group>
-            
-            <Button type="submit" className="nes-btn is-error mb-3">
-                Login
-            </Button>
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" value={loginForm.password} onChange={e => setLoginForm({ ...loginForm, password: e.target.value })}/>
+                </Form.Group>
+                
+                <Button type="submit" className="nes-btn mb-3">
+                    Login
+                </Button>
 
-            <small className="form-text"><a href="/create" className="nes-text is-error text-decoration-none mt-4">New player? Sign up for an account here</a></small>
-            {/* {redirect.change ? <Redirect to="/harmony" /> : <Redirect to="/login" />} */}
-            <Redirect to={redirect.url} />
-        </Form> 
+                <small className="form-text"><a href="/create" className="nes-text text-decoration-none mt-4" style={{color:"red"}}>New player? Sign up for an account here</a></small>
+                {/* {redirect.change ? <Redirect to="/harmony" /> : <Redirect to="/login" />} */}
+                <Redirect to={redirect.url} />
+            </Form>
+        </div> 
     );
 };
 
