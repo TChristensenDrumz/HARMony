@@ -26,28 +26,37 @@ export default {
     },
 
     getGenre: async function() {
+        let home;
+        let enemy;
         let userId = Token.getId();
-        let res = await API.getGenre({id: userId});
-        console.log(res);
-        return res;
+        await API.getGenre({id: userId})
+            .then(data => {
+                // home = this.levelObj(data.data.genres[0].homeGenre);
+                // console.log(home);
+                // return this.returnGenre(home);
+                return data.data.genres[0];
+            })
+            // .then(data => {
+            //     enemy = this.levelObj(data.data.genres[0].randomEnemy);
+            // })
     },
 
-    homeGenre: function() {
-        let homeGenre = "classical";
-        return this.levelObj(homeGenre);
+    returnGenre: async function() {
+        let genres = await this.getGenre();
+        console.log(genres)
     },
 
-    enemyGenre: function() {
-        let homeGenre = "classical";
-        let genres = JSON.parse(localStorage.getItem("leftoverGenres")) || ["pop", "classical", "country", "metal", "rap"];
-        if (genres.includes(homeGenre)) {
-            genres.splice(genres.indexOf(homeGenre), 1);
-        };
-        let randomEnemy = JSON.parse(localStorage.getItem("randomEnemy")) || genres[Math.floor(Math.random() * genres.length)];
-        localStorage.setItem("randomEnemy", JSON.stringify(randomEnemy));
-        localStorage.setItem("leftoverGenres", JSON.stringify(genres));
-        return this.levelObj(randomEnemy);
-    },
+    // enemyGenre: function() {
+    //     let homeGenre = "classical";
+    //     let genres = JSON.parse(localStorage.getItem("leftoverGenres")) || ["pop", "classical", "country", "metal", "rap"];
+    //     if (genres.includes(homeGenre)) {
+    //         genres.splice(genres.indexOf(homeGenre), 1);
+    //     };
+    //     let randomEnemy = JSON.parse(localStorage.getItem("randomEnemy")) || genres[Math.floor(Math.random() * genres.length)];
+    //     localStorage.setItem("randomEnemy", JSON.stringify(randomEnemy));
+    //     localStorage.setItem("leftoverGenres", JSON.stringify(genres));
+    //     return this.levelObj(randomEnemy);
+    // },
 
     levelObj: function(genre) {
         // let genres = ["pop", "classical", "country", "metal", "rap"];
