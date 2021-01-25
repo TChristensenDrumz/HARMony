@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Token from "../utils/Token";
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Background from "../images/DinoSprites_doux.gif";
+import Background from "../images/colors.gif";
 
 export default function Landing() {
     localStorage.removeItem("direction");
