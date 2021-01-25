@@ -5,7 +5,7 @@ import Token from "../utils/Token";
 
 export default {
 
-    setGenre: function() {
+    setGenre: async function() {
         let homeGenre = "classical";
         let genres = ["pop", "classical", "country", "metal", "rap"];
         if (genres.includes(homeGenre)) {
@@ -17,9 +17,18 @@ export default {
             randomEnemy: randomEnemy,
             leftoverGenres: genres
         };
-        let userId = {id: Token.getId()};
+        let userId = {_id: Token.getId()};
         let data = {genreObj, userId};
-        API.setGenres(data).then(res => (console.log(res)));
+        let res = await API.setGenres(data);
+        console.log(res);
+        return res;
+    },
+
+    getGenre: async function() {
+        let userId = Token.getId();
+        let res = await API.getGenre({id: userId});
+        console.log(res);
+        return res;
     },
 
     homeGenre: function() {
