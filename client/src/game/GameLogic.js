@@ -6,7 +6,7 @@ import { style } from "../utils/theme";
 import LevelLogic from '../utils/LevelLogic';
 
 
-
+let maxHealth = 100;
 let playerHealth = 100;
 
 export default class Canvas extends Component {
@@ -210,6 +210,7 @@ updateCanvas() {
                 }
                 if(this.dying >= this.enemyAnimation.length){
                     beforeRoom++
+                    maxHealth+=20;
                     playerHealth+=20
                     this.dead = true;
                     if(distanceX > 0){
@@ -691,7 +692,7 @@ render() {
             <p style={styles.song}>{this.props.song}</p>
             <audio src={this.props.audio} style={styles.audio} controls loop/>
             {this.state.isPaused ? <Pause /> : <div/>}
-            <Stats health={playerHealth} />
+            <Stats health={playerHealth} max={maxHealth}/>
             <canvas ref="canvas"
             width={1200} height={720} 
             style={styles.background}></canvas>
