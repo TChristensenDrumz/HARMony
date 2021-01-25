@@ -267,7 +267,7 @@ updateCanvas() {
      console.log(enemies)
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 1, 25, 125, 175, 4, 100, 100)
+        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100)
     }
 
     
@@ -657,18 +657,19 @@ render() {
         background: {
             backgroundImage: "url(" + this.props.background + ")",
             backgroundSize: "cover",
-            backgroundRepeat: "no-repeat"
+            backgroundRepeat: "no-repeat",
+            marginBottom: "35px"
         },
         audio: {
             position: "absolute",
-            top: "3%",
+            top: "-1.5%",
             right: "19%",
             transform: "scale(.7)"
         },
         song: {
             position: "absolute",
             color: "white",
-            top: "5%",
+            top: ".5%",
             right: "33%" 
         }
     }
@@ -679,7 +680,7 @@ render() {
             <audio src={this.props.audio} style={styles.audio} controls loop/>
             {this.state.isPaused ? <Pause /> : <div/>}
             <Stats health={playerHealth} />
-            <canvas ref="canvas" className="my-5"
+            <canvas ref="canvas"
             width={1200} height={720} 
             style={styles.background}></canvas>
             {this.state.roomChange ? <Redirect to={this.props.nextLevel}/> : <></>}

@@ -54,7 +54,7 @@ export const Level1 = () => {
             player={home.player}
             enemy={Slime}
             bossLevel={false}
-            enemyAmount={0}
+            enemyAmount={3}
             background={enemy.background.level1}
             audio={enemy.audio.level1}
             song={enemy.audio.name.level1}
@@ -84,7 +84,7 @@ export const Level2 = () => {
             player={home.player}
             enemy={Slime}
             bossLevel={false}
-            enemyAmount={0}
+            enemyAmount={5}
             background={enemy.background.level2}
             audio={enemy.audio.level2}
             song={enemy.audio.name.level2}
@@ -114,7 +114,7 @@ export const Level3 = () => {
             player={home.player}
             enemy={Slime}
             bossLevel={false}
-            enemyAmount={0}
+            enemyAmount={7}
             background={enemy.background.level3}
             audio={enemy.audio.level3}
             song={enemy.audio.name.level3}
@@ -145,7 +145,7 @@ export const BossRoom = () => {
             boss={enemy.player}
             enemy={Slime}
             bossLevel={true}
-            enemyAmount={0}
+            enemyAmount={1}
             background={enemy.background.bossroom}
             audio={enemy.audio.bossroom}
             song={enemy.audio.name.bossroom}
