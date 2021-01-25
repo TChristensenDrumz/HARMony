@@ -5,11 +5,14 @@ import Background from "../images/DinoSprites_doux.gif";
 
 export default function Landing() {
     let loggedIn = Token.authenticate();
-
+    
     const background = {
         height: "80vh",
         width: "100vw",
         overflow: "hidden",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        transform: "scale(0.8)",
         backgroundImage: `url(${ Background })`,
     };
     
@@ -25,6 +28,11 @@ export default function Landing() {
         left: "50vw",
         transform: "translate(-50%, -50%)"
     };
+
+    const a = {
+        transform: "scale(1.7)",
+        marginBottom: "22vw"
+    }
     return (
         <div style={background}>
             <Container style={bodyStyle}>
