@@ -5,12 +5,6 @@ import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme";
 
 
-//amount
-//boss
-//background
-//music
-//playerimg
-//bossimg
 
 let playerHealth = 100;
 
@@ -120,10 +114,11 @@ updateCanvas() {
     let beforeRoom = 0
 
     //spoofer =======================
+    const spoofer = 10
     function frameRateSpoof(nums){
         const frameOutput = []
         nums.forEach(element => {
-            for(let i = 0; i < 10; i++){
+            for(let i = 0; i < spoofer; i++){
                 frameOutput.push(element)
             }
         });
@@ -133,33 +128,36 @@ updateCanvas() {
     };
     //animation frames====================================
     //PLAYER && BOSS
-        const playerRightAnimate = frameRateSpoof([4,5,6,7,8,9,10,11]);
-        const playerLeftAnimate =  frameRateSpoof([51,50,49,48,47,46,45,44]);
-        const playerBaseRightAnimate = frameRateSpoof([0,1,2,3]);
-        const playerBaseLeftAnimate = frameRateSpoof([55,54,53,52]);
-        const playerAttackRight = frameRateSpoof([12,13,14,15,16,17,18,19]);
-        const playerAttackLeft = frameRateSpoof([43,42,41,40,39,38,37,36]);
-        const playerHurtAnimateRight = frameRateSpoof([20,21,22,23]);
-        const playerHurtAnimateLeft = frameRateSpoof([35,34,33,32]);
-        const playerDeadRight = frameRateSpoof([24,25,26,27]);
-        const playerDeadLeft = frameRateSpoof([31,30,29,28]);
+        const rightAnimate = frameRateSpoof([4,5,6,7,8,9,10,11]);
+        const leftAnimate =  frameRateSpoof([51,50,49,48,47,46,45,44]);
+        const baseRightAnimate = frameRateSpoof([0,1,2,3]);
+        const baseLeftAnimate = frameRateSpoof([55,54,53,52]);
+        const attackRight = frameRateSpoof([12,13,14,15,16,17,18,19]);
+        const attackLeft = frameRateSpoof([43,42,41,40,39,38,37,36]);
+        const hurtAnimateRight = frameRateSpoof([20,21,22,23]);
+        const hurtAnimateLeft = frameRateSpoof([35,34,33,32]);
+        const deadRight = frameRateSpoof([24,25,26,27,27]);
+        const deadLeft = frameRateSpoof([31,30,29,28,28]);
 
     //small ENEMY
 
-        const rightAnimate = frameRateSpoof([4,5,6,7,8,9]);
-        const leftAnimate =  frameRateSpoof([43,42,41,40,39,38]);
-        const baseRightAnimate = frameRateSpoof([0,1,2,3]);
-        const baseLeftAnimate = frameRateSpoof([47,46,45,44]);
-        const attackRight = frameRateSpoof([10,11,12,13]);
-        const attackLeft = frameRateSpoof([37,36,35,34]);
-        const hurtAnimateRight = frameRateSpoof([14,15,16]);
-        const hurtAnimateLeft = frameRateSpoof([33,32,31]);
+        const slimeRightAnimate = frameRateSpoof([6,7,8,9,10,11,12,13,14,15,16,17,18]);
+        const slimeLeftAnimate =  frameRateSpoof([65,64,63,62,61,60,59,58,57,56,55,54,53]);
+        const slimeBaseRightAnimate = frameRateSpoof([0,1,2,3,4,5]);
+        const slimeBaseLeftAnimate = frameRateSpoof([71,70,69,68,67,66]);
+        const slimeAttackRight = frameRateSpoof([19,20,21,22,23,24,25,26]);
+        const slimeAttackLeft = frameRateSpoof([52,51,50,49,48,47,46,45]);
+        const slimeHurtAnimateRight = frameRateSpoof([27,28,29,30]);
+        const slimeHurtAnimateLeft = frameRateSpoof([44,43,42,41]);
+        const slimeDeadRight = frameRateSpoof([31,32,33,34,35])
+        const slimeDeadLeft = frameRateSpoof([40,39,38,37,36])
     //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
     //starting position for other entity(entities)
     let animation = []
-
+    const bossAnimations = [rightAnimate, leftAnimate, baseRightAnimate, baseLeftAnimate, attackRight, attackLeft, hurtAnimateRight, hurtAnimateLeft, deadRight, deadLeft, [27] ,[28]]
+    const slimeAnimations = [slimeRightAnimate, slimeLeftAnimate, slimeBaseRightAnimate, slimeBaseLeftAnimate, slimeAttackRight, slimeAttackLeft, slimeHurtAnimateRight, slimeHurtAnimateLeft, slimeDeadRight, slimeDeadLeft, [35], [35]]
     class Enemy{
-        constructor(img, enemyX, enemyY, scale, enemyAnimation, HP, ATK, attackBuild, hitboxX, hitboxY, currentFrame, speed, width, height){
+        constructor(img, enemyX, enemyY, scale, enemyAnimation, HP, ATK, hitboxX, hitboxY, speed, width, height){
             this.enemyX = enemyX;
             this.enemyY = enemyY;
             this.img = img;
@@ -169,12 +167,14 @@ updateCanvas() {
             this.enemyAnimation = enemyAnimation;
             this.HP = HP;
             this.ATK = ATK;
-            this.attackBuild = attackBuild;
+            this.attackBuild = 0;
             this.hitboxX = hitboxX;
             this.hitboxY = hitboxY;
-            this.currentFrame = currentFrame;
+            this.currentFrame = 0;
             this.speed = speed;
             this.dead = false;
+            this.dying = 0
+
 
         }
            
@@ -184,37 +184,49 @@ updateCanvas() {
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
         isDead = () => this.dead;
-        step2 = () => {
-            if(this.dead) {
-                return;
-            }
-            if(this.HP <= 0){
-                playerHealth+=20
-                this.enemyAnimation = []
-                beforeRoom++
-                this.dead = true;
-                return
-            }
+        step2 = (animations) => {
             let distanceX = canvasX - this.enemyX - this.hitboxX + 100
             let distanceY = canvasY - this.enemyY - this.hitboxY + 140
             let unitVector = Math.hypot(distanceX, distanceY)
-
-            if(spacePressed && unitVector <= 70){
+            if(this.dead) {
+                return;
+            }
+            else if(this.HP <= 0){
+                beforeRoom++
+                this.dying++
+                if(distanceX < 0){
+                    this.enemyAnimation = animations[9]
+                }else{
+                    this.enemyAnimation = animations[8]
+                }
+                if(this.dying >= this.enemyAnimation.length){
+                    playerHealth+=20
+                    this.dead = true;
+                    if(distanceX > 0){
+                        this.enemyAnimation = animations[10]
+                    }else{
+                        this.enemyAnimation = animations[11]
+                    }
+                    return
+                }
+                
+            }
+            else if(spacePressed && unitVector <= 70){
                 this.attackBuild+=10
                 if(lastMove === 0 && distanceX < 0 ){
-                    this.enemyAnimation = hurtAnimateLeft
+                    this.enemyAnimation = animations[7]
                     this.HP -= 1
                 }else if(lastMove === 1 && distanceX > 0){
-                    this.enemyAnimation = hurtAnimateRight
+                    this.enemyAnimation = animations[6]
                     this.HP -= 1
                 }
                 
             }else{
                 if(unitVector <= 70){
                     if(distanceX < 0){
-                        this.enemyAnimation = attackLeft
+                        this.enemyAnimation = animations[5]
                     }else{
-                        this.enemyAnimation = attackRight
+                        this.enemyAnimation = animations[4]
                     }
                     this.attackBuild+=5
                     if(this.attackBuild>=500){
@@ -227,11 +239,11 @@ updateCanvas() {
                 }else{
                     if(distanceX > 0 ){
                        
-                        this.enemyAnimation = rightAnimate
+                        this.enemyAnimation = animations[0]
                     }
                     else if(distanceX < 0){
                         
-                        this.enemyAnimation = leftAnimate
+                        this.enemyAnimation = animations[1]
                     }
                     this.enemyX+=(distanceX/(this.speed*unitVector))
                     this.enemyY+=(distanceY/(this.speed*unitVector))
@@ -244,13 +256,13 @@ updateCanvas() {
     const enemies = [];
     let amount = this.props.enemyAmount;
     for (let i = 0; i < amount; i++) {
-        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 3, [], 100, 10, 0, 30, 70, 0, 2, 24, 24);
+        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1.5, [], 100, 10, 30, 70, 2, 64, 64);
         enemies.push(enemy);
     };
      console.log(enemies)
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(player, 200, 300, 3, [], 1000, 25, 0, 125, 175, 0, 4, 100, 100)
+        BOSS = new Enemy(player, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100)
     }
 
     
@@ -269,6 +281,7 @@ updateCanvas() {
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop){
         enemies.forEach(enemy => {
+            console.log(enemy.currentFrame)
             enemy.drawFrame2(enemy.enemyAnimation[enemy.currentFrame], 0, 0, 0)
             enemy.currentFrame++
             
@@ -310,7 +323,7 @@ updateCanvas() {
             
         //move right function
         function right(){
-            animation = playerRightAnimate
+            animation = rightAnimate
             lastMove=0
             canvasX += 2;
             if(upPressed){
@@ -323,7 +336,7 @@ updateCanvas() {
         }
         //move left function
         function left(){
-            animation = playerLeftAnimate
+            animation = leftAnimate
             lastMove = 1
             canvasX -= 2;
             if(upPressed){
@@ -336,9 +349,9 @@ updateCanvas() {
         //move down function
         function down(){
             if(lastMove===0){
-                animation = playerRightAnimate
+                animation = rightAnimate
             }else{
-                animation = playerLeftAnimate
+                animation = leftAnimate
             }
         
             canvasY += 2;
@@ -346,9 +359,9 @@ updateCanvas() {
         //move up function
         function up(){
             if(lastMove===0){
-                animation = playerRightAnimate
+                animation = rightAnimate
             }else{
-               animation = playerLeftAnimate
+               animation = leftAnimate
             }
             canvasY -= 2;
         }
@@ -430,9 +443,9 @@ updateCanvas() {
             }
             attackLength++
                 if(lastMove===0){
-                    animation = playerAttackRight
+                    animation = attackRight
                 }else{
-                    animation = playerAttackLeft
+                    animation = attackLeft
                 }
                 if(attackLength===80){
                     spacePressed = false
@@ -447,9 +460,9 @@ updateCanvas() {
         if(playerHurt === true && dying === 0){
             playerHurtLength++
             switch(lastMove){
-                case 0 : animation = playerHurtAnimateRight
+                case 0 : animation = hurtAnimateRight
                 break;
-                case 1 : animation =  playerHurtAnimateLeft
+                case 1 : animation =  hurtAnimateLeft
                 break;
             
             };
@@ -459,13 +472,11 @@ updateCanvas() {
             }
         }else if (dying > 0){
             if(lastMove == 0){
-                animation = playerDeadRight
+                animation = deadRight
             }else{
-                animation = playerDeadLeft
+                animation = deadLeft
             };
         }else{
-
-        
 
             switch(true){
                 case spacePressed:
@@ -475,17 +486,17 @@ updateCanvas() {
     
                     if(canvasX >= 1124) {
     
-                        animation = playerRightAnimate
+                        animation = rightAnimate
                         canvasX -= 6;
                     //===================
                     }
                     else if(canvasY <= 40) {
-                        animation = playerRightAnimate
+                        animation = rightAnimate
                         canvasY += 6;
                         canvasX += 2;
                     }
                     else if(canvasY >= 640) {
-                        animation = playerRightAnimate
+                        animation = rightAnimate
                         canvasY -= 6;
                         canvasX += 2;
                     }
@@ -497,17 +508,17 @@ updateCanvas() {
     
                     if(canvasX <= 40){
     
-                        animation = playerLeftAnimate
+                        animation = leftAnimate
                         canvasX += 6;
                     //===================
                     }
                     else if(canvasY <= 40) {
-                        animation = playerLeftAnimate
+                        animation = leftAnimate
                         canvasY += 6;
                         canvasX -= 2;
                     }
                     else if(canvasY >= 640) {
-                        animation = playerLeftAnimate
+                        animation = leftAnimate
                         canvasY -= 6;
                         canvasX -= 2;
                     }
@@ -518,10 +529,10 @@ updateCanvas() {
                 case downPressed:
                     if(canvasY >= 640){
                         if(lastMove===0){
-                            animation = playerRightAnimate
+                            animation = rightAnimate
                             canvasY -= 6;
                         }else{
-                            animation = playerLeftAnimate
+                            animation = leftAnimate
                             canvasY -= 6;
                         }
                     }else{
@@ -531,10 +542,10 @@ updateCanvas() {
                 case upPressed:
                     if(canvasY <= 40){
                         if(lastMove===0){
-                            animation = playerRightAnimate
+                            animation = rightAnimate
                             canvasY += 6;
                         }else{
-                            animation = playerLeftAnimate
+                            animation = leftAnimate
                             canvasY += 6;
                         }
         
@@ -544,14 +555,14 @@ updateCanvas() {
                 break;
                 default:
                     if(lastMove===0){
-                       animation = playerBaseRightAnimate
+                       animation = baseRightAnimate
                     }else{
-                       animation = playerBaseLeftAnimate
+                       animation = baseLeftAnimate
                     };
                 }}
                 if(playerHealth <= 0){
                     dying++
-                }else if(dying >= 40){
+                }else if(dying >= animation.length){
                     return
                 };
             //pass each entities animations into this function
@@ -589,7 +600,7 @@ updateCanvas() {
             this.setState({isPaused: true})
         }else{
             // console.log(dying)
-            if(dying >= 40){
+            if(dying >= animation.length){
                 if(lastMove === 0){
                     animation = [27]
                 }else{
@@ -598,10 +609,10 @@ updateCanvas() {
             }else{
                
                 if(bossLevel){
-                    BOSS.step2();
+                    BOSS.step2(bossAnimations);
                 }
 
-                enemies.forEach(enemy => enemy.step2());
+                enemies.forEach(enemy => enemy.step2(slimeAnimations));
                 step();
                 this.setState({isPaused: false});
 

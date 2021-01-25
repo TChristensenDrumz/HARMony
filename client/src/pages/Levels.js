@@ -32,6 +32,7 @@ export const Home = ({genres}) => {
         <Canvas
             player={player}
             enemy={Dino}
+
             bossLevel={false}
             enemyAmount={0}
             background={background.home}
@@ -111,7 +112,7 @@ export const BossRoom = () => {
 //     // console.log(LevelLogic.levelObj(allGenres.homeGenre));
 //     return (
 //         <Canvas
-//             player={Dino}
+//             player={Slime}
 //             enemy={Dino}
 //             bossLevel={false}
 //             enemyAmount={0}
