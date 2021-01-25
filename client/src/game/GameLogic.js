@@ -367,13 +367,14 @@ updateCanvas() {
         }
         //player attack logic
         function attack(){
+            console.log(`x: ${canvasX}, y: ${canvasY}`)
             if(rightPressed){
                 lastMove=0
-                if(canvasX >= 1124) {
+                if(canvasX >= 974) {
                     canvasX -= 6;
                 }
                 if(upPressed){
-                    if(canvasY <= 40) {
+                    if(canvasY <= -10) {
                         canvasY += 6;
                         canvasX += 2;
                     }
@@ -383,7 +384,7 @@ updateCanvas() {
                     }
                 }
                 else if(downPressed){
-                    if(canvasY >= 640) {
+                    if(canvasY >= 476) {
                         canvasY -= 6;
                         canvasX += 2;
                     }
@@ -398,11 +399,11 @@ updateCanvas() {
             }
             else if(leftPressed){
                 lastMove = 1
-                if(canvasX <= 40) {
+                if(canvasX <= -28) {
                     canvasX += 6;
                 }
                 if(upPressed){
-                    if(canvasY <= 40) {
+                    if(canvasY <= -10) {
                         canvasY += 6;
                         canvasX -= 2;
                     }
@@ -412,7 +413,7 @@ updateCanvas() {
                     }
                 }
                 else if(downPressed){
-                    if(canvasY >= 640) {
+                    if(canvasY >= 476) {
                         canvasY -= 6;
                         canvasX -= 2;
                     }
@@ -426,7 +427,7 @@ updateCanvas() {
                 }
             }
             else if(upPressed){
-                if(canvasY <= 40) {
+                if(canvasY <= -10) {
                     canvasY += 6;
                 }
                 else {
@@ -434,7 +435,7 @@ updateCanvas() {
                 }
             }
             else if(downPressed){
-                if(canvasY >= 640) {
+                if(canvasY >= 476) {
                     canvasY -= 6;
                 }
                 else {
@@ -484,18 +485,18 @@ updateCanvas() {
                 break;
                 case rightPressed:
     
-                    if(canvasX >= 1124) {
+                    if(canvasX >= 974) {
     
                         animation = rightAnimate
                         canvasX -= 6;
                     //===================
                     }
-                    else if(canvasY <= 40) {
+                    else if(canvasY <= -10) {
                         animation = rightAnimate
                         canvasY += 6;
                         canvasX += 2;
                     }
-                    else if(canvasY >= 640) {
+                    else if(canvasY >= 476) {
                         animation = rightAnimate
                         canvasY -= 6;
                         canvasX += 2;
@@ -506,18 +507,18 @@ updateCanvas() {
                 break;
                 case leftPressed:
     
-                    if(canvasX <= 40){
+                    if(canvasX <= -28){
     
                         animation = leftAnimate
                         canvasX += 6;
                     //===================
                     }
-                    else if(canvasY <= 40) {
+                    else if(canvasY <= -10) {
                         animation = leftAnimate
                         canvasY += 6;
                         canvasX -= 2;
                     }
-                    else if(canvasY >= 640) {
+                    else if(canvasY >= 476) {
                         animation = leftAnimate
                         canvasY -= 6;
                         canvasX -= 2;
@@ -527,7 +528,7 @@ updateCanvas() {
                     };
                 break;
                 case downPressed:
-                    if(canvasY >= 640){
+                    if(canvasY >= 476){
                         if(lastMove===0){
                             animation = rightAnimate
                             canvasY -= 6;
@@ -540,7 +541,7 @@ updateCanvas() {
                     };
                 break;
                 case upPressed:
-                    if(canvasY <= 40){
+                    if(canvasY <= -10){
                         if(lastMove===0){
                             animation = rightAnimate
                             canvasY += 6;
@@ -570,25 +571,25 @@ updateCanvas() {
     
     const master = () => {
         
-        // if(beforeRoom === this.props.enemyAmount){
-            if ((canvasX >= 560 && canvasX <= 640) && canvasY <= 40) {
+        if(beforeRoom === this.props.enemyAmount){
+            if ((canvasX >= 552 && canvasX <= 638) && canvasY <= 70) {
                 this.setState({...this.state, direction: "top"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
-            } else if ((canvasX >= 560 && canvasX <= 640) && canvasY >= 620) {
+            } else if ((canvasX >= 552 && canvasX <= 638) && canvasY >= 476) {
                 this.setState({...this.state, direction: "bottom"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
-            } else if (canvasX > 1100 && (canvasY >= 320 && canvasY <= 400)) {
+            } else if (canvasX >= 1100 && (canvasY >= 310 && canvasY <= 400)) {
                 this.setState({...this.state, direction: "right"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
-            } else if (canvasX <= 80 && (canvasY >= 320 && canvasY <= 400)) {
+            } else if (canvasX <= 68 && (canvasY >= 310 && canvasY <= 400)) {
                 this.setState({...this.state, direction: "left"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
                this.setState({...this.state, roomChange: true});
             }
-        // }
+        }
         frameCount++;
              if (frameCount <1) {
              window.requestAnimationFrame(master);
