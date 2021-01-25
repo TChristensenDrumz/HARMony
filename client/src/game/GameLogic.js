@@ -578,7 +578,7 @@ updateCanvas() {
                         }
         
                     }else{
-                        up()
+                        up();
                     };
                 break;
                 default:
@@ -602,6 +602,7 @@ updateCanvas() {
     
     const master = () => {
         if(beforeRoom === this.props.enemyAmount){
+            console.log(beforeRoom)
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
                 this.setState({...this.state, direction: "top"});
                 localStorage.setItem("direction", JSON.stringify(this.state));
