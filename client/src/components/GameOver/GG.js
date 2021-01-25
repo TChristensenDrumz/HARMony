@@ -23,7 +23,7 @@ const GG = () => {
   return (
     <div style={styles.overlay}>
       <h1 style={styles.h1}>GAME OVER</h1>
-      <a className="nes-btn is-error text-center" href="/harmony">Play Again</a>
+      <a className="nes-btn is-error text-center" href="/character">Play Again</a>
     </div>
   );
 };

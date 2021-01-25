@@ -17,7 +17,7 @@ export default {
         return await axios.get("/api/gameplay/"+ gameData.id, gameData);
     },
 
-    updateGenre: async function(gameData) {
-        return await axios.put("/api/gameplay/" + gameData.id, gameData);
+    updateGenre: async function(id, gameData) {
+        return await axios.put("/api/gameplay/" + id, gameData);
     }
 };

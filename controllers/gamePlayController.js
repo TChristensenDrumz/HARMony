@@ -24,7 +24,7 @@ module.exports = {
     },
 
     updateGenre: function(req, res) {
-        db.GameData.findOneAndUpdate({_id: req.params.id}, {randomEnemy: req.body.newEnemy, leftoverGenres: req.body.leftoverGenres})
+        db.GameData.findOneAndUpdate({_id: req.params.id}, req.body)
             .then(data => {
                 res.json(data);
             })

@@ -19,6 +19,15 @@ export default function Select() {
 
     const [redirect, setRedirect] = useState(false);
 
+    let id;
+
+    useEffect(async () => {
+        let existing = await LevelLogic.getGenre();
+        if (existing) {
+            id = existing._id
+        };
+    }, []);
+
     const handleImgClick = event => {
         console.log(event.target.alt);
         selectGenre(event.target.alt);
@@ -30,8 +39,13 @@ export default function Select() {
     };
 
     const selectGenre = genre => {
-        LevelLogic.setGenre(genre)
-            .then(() => setRedirect(true));
+        if (id) {
+            LevelLogic.resetGenre(genre, id)
+                .then(() => setRedirect(true));
+        } else {
+            LevelLogic.setGenre(genre)
+                .then(() => setRedirect(true));
+        };
     };
     
     const black = {

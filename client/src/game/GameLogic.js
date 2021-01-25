@@ -2,7 +2,6 @@ import React, { Component, PropTypes, useState } from 'react';
 import Stats from "../components/Stats/Stats";
 import Pause from "../components/Pause/Pause";
 import { Redirect } from "react-router-dom";
-import { style } from "../utils/theme";
 import LevelLogic from '../utils/LevelLogic';
 import Transition from "../utils/Transition";
 
@@ -660,10 +659,9 @@ updateCanvas() {
         }, 10);
 
        if (BOSS.dying === 40) {
-           LevelLogic.resetEnemy();
-           localStorage.removeItem("direction");
-
-           
+            localStorage.removeItem("direction");
+            LevelLogic.resetEnemy();
+            beforeRoom -= 1;
        }
     };
     
@@ -683,6 +681,13 @@ updateCanvas() {
 
 render() {
     const styles = {
+        body: {
+            position: "relative",
+            margin: "0 auto",
+            backgroundColor: "black",
+            width: "1200px",
+            height: "720px"
+        },
         background: {
             backgroundImage: "url(" + this.props.background + ")",
             backgroundSize: "cover",
@@ -690,20 +695,20 @@ render() {
         },
         audio: {
             position: "absolute",
-            top: "-1.5%",
-            right: "19%",
+            top: "-12px",
+            right: "8px",
             transform: "scale(.7)"
         },
         song: {
             position: "absolute",
             color: "white",
-            top: ".5%",
-            right: "33%" 
+            top: "7px",
+            right: "280px" 
         }
     }
 
     return (
-        <div style={style.body} className="d-flex justify-content-center">
+        <div style={styles.body} className="d-flex justify-content-center">
             <p style={styles.song}>{this.props.song}</p>
             <audio src={this.props.audio} style={styles.audio} controls loop/>
             {this.state.isPaused ? <Pause /> : <div/>}
