@@ -3,6 +3,7 @@ import Stats from "../components/Stats/Stats";
 import Pause from "../components/Pause/Pause";
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme";
+import LevelLogic from '../utils/LevelLogic';
 
 
 
@@ -12,7 +13,7 @@ export default class Canvas extends Component {
 
     state = {
         roomChange: false,
-        direction: '',
+        direction: ''
     }
     
      //ANIMATION=========================================
@@ -29,6 +30,9 @@ updateCanvas() {
 
     let imageObj2 = new Image();
     imageObj2.src = this.props.enemy;
+
+    let imageObj3 = new Image();
+    imageObj3.src = this.props.boss;
 
     //KEY COMMANDS================================================
     
@@ -184,6 +188,7 @@ updateCanvas() {
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
         isDead = () => this.dead;
+
         step2 = (animations) => {
             let distanceX = canvasX - this.enemyX - this.hitboxX + 100
             let distanceY = canvasY - this.enemyY - this.hitboxY + 140
@@ -262,7 +267,7 @@ updateCanvas() {
      console.log(enemies)
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(player, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100)
+        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100)
     }
 
     
@@ -629,15 +634,9 @@ updateCanvas() {
             window.requestAnimationFrame(master);
         }, 10);
 
-        if (bossLevel && BOSS.isDead()) {
-            let enemyGenre = JSON.parse(localStorage.getItem("randomEnemy"));
-            let leftoverGenres = JSON.parse(localStorage.getItem("leftoverGenres"));
-            leftoverGenres.splice(leftoverGenres.indexOf(enemyGenre), 1);
-            console.log(enemyGenre);
-            console.log(leftoverGenres);
-            localStorage.setItem("leftoverGenres", JSON.stringify(leftoverGenres));
-            localStorage.removeItem("randomEnemy");
-        };
+       if (BOSS.dying === 40) {
+           LevelLogic.resetEnemy();
+       }
     };
     
     
