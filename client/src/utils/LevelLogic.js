@@ -21,53 +21,29 @@ export default {
         let userId = {_id: Token.getId()};
         let data = {genreObj, userId};
         let res = await API.setGenres(data);
-        console.log(res);
         return res;
     },
 
     getGenre: async function() {
-        let home;
-        let enemy;
         let userId = Token.getId();
         const data = await API.getGenre({id: userId})
-                // home = this.levelObj(data.data.genres[0].homeGenre);
-                // console.log(home);
-                // return this.returnGenre(home);
                 return data.data.genres[0];
-            
-            // .then(data => {
-            //     enemy = this.levelObj(data.data.genres[0].randomEnemy);
-            // })
     },
 
-    returnGenre: async function() {
+    resetEnemy: async function() {
         let genres = await this.getGenre();
-        console.log(genres)
-        return genres
+        const { _id, randomEnemy, leftoverGenres } = genres;
+        leftoverGenres.splice(leftoverGenres.indexOf(randomEnemy), 1);
+        let newEnemy = leftoverGenres[Math.floor(Math.random() * leftoverGenres.length)];
+        let data = {
+            id: _id,
+            newEnemy: newEnemy,
+            leftoverGenres: leftoverGenres
+        };
+        API.updateGenre(data);
     },
-
-    // enemyGenre: function() {
-    //     let homeGenre = "classical";
-    //     let genres = JSON.parse(localStorage.getItem("leftoverGenres")) || ["pop", "classical", "country", "metal", "rap"];
-    //     if (genres.includes(homeGenre)) {
-    //         genres.splice(genres.indexOf(homeGenre), 1);
-    //     };
-    //     let randomEnemy = JSON.parse(localStorage.getItem("randomEnemy")) || genres[Math.floor(Math.random() * genres.length)];
-    //     localStorage.setItem("randomEnemy", JSON.stringify(randomEnemy));
-    //     localStorage.setItem("leftoverGenres", JSON.stringify(genres));
-    //     return this.levelObj(randomEnemy);
-    // },
 
     levelObj: function(genre) {
-        // let genres = ["pop", "classical", "country", "metal", "rap"];
-        // let homeGenre = "classical";
-        // genres.splice(genres.indexOf(homeGenre), 1);
-        // let hash = {home: homeGenre};
-        // for (let i = 0; i < genres.length; i++) {
-        //     hash.i = genres[i];
-        // }
-        // let randomGenre = genres[Math.floor(Math.random() * genres.length)];
-        // localStorage.setItem(currentGenre, JSON.stringify(randomGenre));
         switch (genre) {
             case "pop":
                 return {
