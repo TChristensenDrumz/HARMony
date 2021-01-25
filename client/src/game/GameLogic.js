@@ -180,7 +180,7 @@ updateCanvas() {
             this.dying = 0
 
 
-        }
+        };
            
         drawFrame2(frameX, frameY) {
             ctx.drawImage(this.img,
@@ -194,10 +194,14 @@ updateCanvas() {
             let distanceY = canvasY - this.enemyY - this.hitboxY + 140
             let unitVector = Math.hypot(distanceX, distanceY)
             if(this.dead) {
+                
                 return;
             }
             else if(this.HP <= 0){
-                beforeRoom++
+                if(this.dying === 0){
+                    this.currentFrame=0
+                }
+                
                 this.dying++
                 if(distanceX < 0){
                     this.enemyAnimation = animations[9]
@@ -205,6 +209,7 @@ updateCanvas() {
                     this.enemyAnimation = animations[8]
                 }
                 if(this.dying >= this.enemyAnimation.length){
+                    beforeRoom++
                     playerHealth+=20
                     this.dead = true;
                     if(distanceX > 0){
@@ -216,7 +221,7 @@ updateCanvas() {
                 }
                 
             }
-            else if(spacePressed && unitVector <= 70){
+            else if(spacePressed && unitVector <= 80){
                 this.attackBuild+=10
                 if(lastMove === 0 && distanceX < 0 ){
                     this.enemyAnimation = animations[7]
@@ -227,7 +232,7 @@ updateCanvas() {
                 }
                 
             }else{
-                if(unitVector <= 70){
+                if(unitVector <= 80){
                     if(distanceX < 0){
                         this.enemyAnimation = animations[5]
                     }else{
@@ -372,14 +377,16 @@ updateCanvas() {
         }
         //player attack logic
         function attack(){
-            console.log(`x: ${canvasX}, y: ${canvasY}`)
+            if(attackLength === 0){
+                currentLoopIndex = 0
+            }
             if(rightPressed){
                 lastMove=0
                 if(canvasX >= 974) {
                     canvasX -= 6;
                 }
                 if(upPressed){
-                    if(canvasY <= -10) {
+                    if(canvasY <= -10){
                         canvasY += 6;
                         canvasX += 2;
                     }
@@ -566,7 +573,10 @@ updateCanvas() {
                        animation = baseLeftAnimate
                     };
                 }}
-                if(playerHealth <= 0){
+                if(playerHealth <= 0 ){
+                    if(dying === 0){
+                        currentLoopIndex=0
+                    }
                     dying++
                 }else if(dying >= animation.length){
                     return
@@ -575,7 +585,7 @@ updateCanvas() {
     }
     
     const master = () => {
-        
+        console.log(beforeRoom)
         if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 476 && canvasX <= 480) && canvasY <= -10) {
                 this.setState({...this.state, direction: "top"});
