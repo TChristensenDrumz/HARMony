@@ -3,6 +3,7 @@ import Stats from "../components/Stats/Stats";
 import Pause from "../components/Pause/Pause";
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme";
+import LevelLogic from '../utils/LevelLogic';
 
 
 
@@ -12,7 +13,7 @@ export default class Canvas extends Component {
 
     state = {
         roomChange: false,
-        direction: '',
+        direction: ''
     }
     
      //ANIMATION=========================================
@@ -184,6 +185,7 @@ updateCanvas() {
                           this.enemyX, this.enemyY, this.scale*this.width, this.scale*this.width);
         }
         isDead = () => this.dead;
+
         step2 = (animations) => {
             let distanceX = canvasX - this.enemyX - this.hitboxX + 100
             let distanceY = canvasY - this.enemyY - this.hitboxY + 140
@@ -628,15 +630,9 @@ updateCanvas() {
             window.requestAnimationFrame(master);
         }, 10);
 
-        if (bossLevel && BOSS.isDead()) {
-            let enemyGenre = JSON.parse(localStorage.getItem("randomEnemy"));
-            let leftoverGenres = JSON.parse(localStorage.getItem("leftoverGenres"));
-            leftoverGenres.splice(leftoverGenres.indexOf(enemyGenre), 1);
-            console.log(enemyGenre);
-            console.log(leftoverGenres);
-            localStorage.setItem("leftoverGenres", JSON.stringify(leftoverGenres));
-            localStorage.removeItem("randomEnemy");
-        };
+       if (BOSS.dying === 40) {
+           LevelLogic.resetEnemy();
+       }
     };
     
     

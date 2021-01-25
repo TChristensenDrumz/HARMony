@@ -5,7 +5,6 @@ module.exports = {
     db.GameData.create(req.body.genreObj)
         .then(({_id}) => db.User.findOneAndUpdate(req.body.userId, { $push: {genres: _id} }, { new: true}))
         .then(dbUser => {
-            console.log(dbUser);
             res.json(dbUser);
         })
         .catch(err => {
@@ -14,16 +13,23 @@ module.exports = {
     },
 
     getGenre: function(req, res) {
-        console.log(req.params.id)
         db.User.findOne({_id: req.params.id})
             .populate("genres")
             .then(dbUser => {
-                console.log("user " + dbUser);
                 res.json(dbUser);
             })
             .catch(err => {
-                console.log("err " + err);
                 res.json(err);
             })
+    },
+
+    updateGenre: function(req, res) {
+        db.GameData.findOneAndUpdate({_id: req.params.id}, {randomEnemy: req.body.newEnemy, leftoverGenres: req.body.leftoverGenres})
+            .then(data => {
+                res.json(data);
+            })
+            .catch(err => {
+                res.json(err);
+            });
     }
 };

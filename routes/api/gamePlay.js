@@ -6,5 +6,6 @@ router.route("/genre")
 
 router.route("/:id")
     .get(gamePlayController.getGenre)
+    .put(gamePlayController.updateGenre)
 
 module.exports = router;

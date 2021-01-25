@@ -21,7 +21,6 @@ export default {
         let userId = {_id: Token.getId()};
         let data = {genreObj, userId};
         let res = await API.setGenres(data);
-        console.log(res);
         return res;
     },
 
@@ -29,6 +28,19 @@ export default {
         let userId = Token.getId();
         const data = await API.getGenre({id: userId})
                 return data.data.genres[0];
+    },
+
+    resetEnemy: async function() {
+        let genres = await this.getGenre();
+        const { _id, randomEnemy, leftoverGenres } = genres;
+        leftoverGenres.splice(leftoverGenres.indexOf(randomEnemy), 1);
+        let newEnemy = leftoverGenres[Math.floor(Math.random() * leftoverGenres.length)];
+        let data = {
+            id: _id,
+            newEnemy: newEnemy,
+            leftoverGenres: leftoverGenres
+        };
+        API.updateGenre(data);
     },
 
     levelObj: function(genre) {
