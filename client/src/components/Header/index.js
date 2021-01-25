@@ -29,15 +29,20 @@ function Header() {
     const headerStyle = {
         height: "10vh",
         width: "100vw",
-        overflowX: "hidden"
+        overflowX: "hidden",
+        color: "white"
+    };
+
+    const black = {
+        backgroundColor: "black"
     };
 
     return (
-        <div>
+        <div style={black}>
             <Navbar bg="transparent" expand="lg" className="row p-4 m-0"  style={headerStyle}>
                 <div className="col-4">{username}</div>
                 <div className="col-4 text-center">
-                    <Navbar.Brand href="/" className="p-0 m-0"><span style={{color:"red"}}>HARM</span>øny</Navbar.Brand>
+                    <Navbar.Brand href="/" className="p-0 m-0"><span style={{color:"red"}}>HARM</span><span style={{color:"white"}}>øny</span></Navbar.Brand>
                 </div>
                 <div className="col-4 text-right">
                     <Button variant = "link" className="nes-text is-error sm text-decoration-none p-0 m-0" onClick={clearStorage} href={status.loggedIn ? "/" : "/login"}>{status.loggedIn ? "Logout" : "Login"}</Button>

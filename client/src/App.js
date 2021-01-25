@@ -13,6 +13,7 @@ import Footer from "./components/Footer"
 import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import CreateAccount from "./pages/CreateAccount"
+import Character from "./components/CharacterSelect/Select"
 import { Home, Level1, Level2, Level3, BossRoom } from "./pages/Levels";
 
 
@@ -25,6 +26,7 @@ const App = () => {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/create" component={CreateAccount} />
+          <Route exact path="/character" component={Character} />
           <Route exact path="/harmony">
             <ProtectedRoute component={Home} />
           </Route>
