@@ -22,7 +22,7 @@ function CreateForm() {
             API.createUser(loginForm)
                 .then(res => {
                     console.log(res);
-                    alert(res.data.message);
+                    alert("Please proceed to login");
                     if (res.data.success) {
                         setRedirect({ change: true });
                     };

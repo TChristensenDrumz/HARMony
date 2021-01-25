@@ -588,7 +588,7 @@ updateCanvas() {
         if(escPressed){
             this.setState({isPaused: true})
         }else{
-            console.log(dying)
+            // console.log(dying)
             if(dying >= 40){
                 if(lastMove === 0){
                     animation = [27]
