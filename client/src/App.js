@@ -17,6 +17,7 @@ import CreateAccount from "./pages/CreateAccount"
 import Character from "./components/CharacterSelect/Select"
 import GameOver from "./components/GameOver/GG"
 import { Home, Level1, Level2, Level3, BossRoom } from "./pages/Levels";
+import GG from "./components/GameOver/GG";
 
 
 const App = () => {
@@ -47,7 +48,7 @@ const App = () => {
             <ProtectedRoute component={BossRoom} />
           </Route>
           <Route exact path="/harmony/gameover">
-            <ProtectedRoute component={GameOver} />
+            <ProtectedRoute component={GG} />
           </Route>
           <Route component={Landing} />
         </Switch>
