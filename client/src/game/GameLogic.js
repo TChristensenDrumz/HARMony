@@ -114,11 +114,17 @@ updateCanvas() {
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
-    let dying = 0
-    let playerHurt = false
-    let playerHurtLength = 0
-    let attackLength = 0
-    let beforeRoom = 0
+    let dying = 0;
+    let playerHurt = false;
+    let playerHurtLength = 0;
+    let attackLength = 0;
+    let beforeRoom;
+    if(bossLevel) {
+        beforeRoom = 1;
+    }
+    else {
+        beforeRoom = 0;
+    }
 
     //spoofer =======================
     const spoofer = 10
