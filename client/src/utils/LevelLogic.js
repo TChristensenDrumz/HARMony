@@ -17,9 +17,19 @@ export default {
             randomEnemy: randomEnemy,
             leftoverGenres: genres
         };
-        let userId = {id: Token.getId()};
+        let userId = {_id: Token.getId()};
         let data = {genreObj, userId};
-        API.setGenres(data).then(res => (console.log(res)));
+        API.setGenres(data).then(res => {
+            (console.log("setGenre " + res));
+            return res.data;
+        });
+    },
+
+    getGenre: async function() {
+        let userId = Token.getId();
+        let res = await API.getGenre({id: userId});
+        console.log(res);
+        return res;
     },
 
     homeGenre: function() {

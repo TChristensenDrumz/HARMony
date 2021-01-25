@@ -6,6 +6,10 @@ import Dino from "../game/assets/sprites/DinoSprites-doux.png";
 // let { background, audio } = LevelLogic.enemyGenre();
 
 export const Home = () => {
+    // let info = LevelLogic.setGenre();
+    // console.log("levelInfo " + info)
+    let userInfo = LevelLogic.getGenre();
+    console.log("userInfo " + userInfo);
     return (
         <Canvas
             player={Dino}

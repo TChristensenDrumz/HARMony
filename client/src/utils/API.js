@@ -11,5 +11,9 @@ export default {
 
     setGenres: function(gameData) {
         return axios.post("/api/gameplay/genre", gameData);
+    },
+
+    getGenre: function(gameData) {
+        return axios.get("/api/gameplay/"+ gameData.id, gameData);
     }
 };
