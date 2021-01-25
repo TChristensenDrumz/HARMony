@@ -367,6 +367,9 @@ updateCanvas() {
         }
         //player attack logic
         function attack(){
+            if(attackLength === 0){
+                currentLoopIndex = 0
+            }
             if(rightPressed){
                 lastMove=0
                 if(canvasX >= 1124) {
