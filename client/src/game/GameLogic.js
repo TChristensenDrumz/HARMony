@@ -114,10 +114,11 @@ updateCanvas() {
     let beforeRoom = 0
 
     //spoofer =======================
+    const spoofer = 10
     function frameRateSpoof(nums){
         const frameOutput = []
         nums.forEach(element => {
-            for(let i = 0; i < 10; i++){
+            for(let i = 0; i < spoofer; i++){
                 frameOutput.push(element)
             }
         });
@@ -129,31 +130,32 @@ updateCanvas() {
     //PLAYER && BOSS
         const rightAnimate = frameRateSpoof([4,5,6,7,8,9,10,11]);
         const leftAnimate =  frameRateSpoof([51,50,49,48,47,46,45,44]);
-        const baseRightAnimate = frameRateSpoof([0,1,2,3,4]);
+        const baseRightAnimate = frameRateSpoof([0,1,2,3]);
         const baseLeftAnimate = frameRateSpoof([55,54,53,52]);
         const attackRight = frameRateSpoof([12,13,14,15,16,17,18,19]);
         const attackLeft = frameRateSpoof([43,42,41,40,39,38,37,36]);
         const hurtAnimateRight = frameRateSpoof([20,21,22,23]);
         const hurtAnimateLeft = frameRateSpoof([35,34,33,32]);
-        const deadRight = frameRateSpoof([24,25,26,27]);
-        const deadLeft = frameRateSpoof([31,30,29,28]);
+        const deadRight = frameRateSpoof([24,25,26,27,27]);
+        const deadLeft = frameRateSpoof([31,30,29,28,28]);
 
     //small ENEMY
 
-        const slimeRightAnimate = frameRateSpoof([4,5,6,7,8,9]);
-        const slimeLeftAnimate =  frameRateSpoof([43,42,41,40,39,38]);
-        const slimeBaseRightAnimate = frameRateSpoof([0,1,2,3]);
-        const slimeBaseLeftAnimate = frameRateSpoof([47,46,45,44]);
-        const slimeAttackRight = frameRateSpoof([10,11,12,13]);
-        const slimeAttackLeft = frameRateSpoof([37,36,35,34]);
-        const slimeHurtAnimateRight = frameRateSpoof([14,15,16]);
-        const slimeHurtAnimateLeft = frameRateSpoof([33,32,31]);
-        const slimeDead = frameRateSpoof([])
+        const slimeRightAnimate = frameRateSpoof([6,7,8,9,10,11,12,13,14,15,16,17,18]);
+        const slimeLeftAnimate =  frameRateSpoof([65,64,63,62,61,60,59,58,57,56,55,54,53]);
+        const slimeBaseRightAnimate = frameRateSpoof([0,1,2,3,4,5]);
+        const slimeBaseLeftAnimate = frameRateSpoof([71,70,69,68,67,66]);
+        const slimeAttackRight = frameRateSpoof([19,20,21,22,23,24,25,26]);
+        const slimeAttackLeft = frameRateSpoof([52,51,50,49,48,47,46,45]);
+        const slimeHurtAnimateRight = frameRateSpoof([27,28,29,30]);
+        const slimeHurtAnimateLeft = frameRateSpoof([44,43,42,41]);
+        const slimeDeadRight = frameRateSpoof([31,32,33,34,35])
+        const slimeDeadLeft = frameRateSpoof([40,39,38,37,36])
     //  (enemyX, enemyY, img, width, height, scale, HP, ATK, EXP)
     //starting position for other entity(entities)
     let animation = []
-    const bossAnimations = [rightAnimate, leftAnimate, baseRightAnimate, baseLeftAnimate, attackRight, attackLeft, hurtAnimateRight, hurtAnimateLeft, deadRight, deadLeft]
-    const slimeAnimations = [slimeRightAnimate, slimeLeftAnimate, slimeBaseRightAnimate, slimeBaseLeftAnimate, slimeAttackRight, slimeAttackLeft, slimeHurtAnimateRight, slimeHurtAnimateLeft, slimeDead, slimeDead]
+    const bossAnimations = [rightAnimate, leftAnimate, baseRightAnimate, baseLeftAnimate, attackRight, attackLeft, hurtAnimateRight, hurtAnimateLeft, deadRight, deadLeft, [27] ,[28]]
+    const slimeAnimations = [slimeRightAnimate, slimeLeftAnimate, slimeBaseRightAnimate, slimeBaseLeftAnimate, slimeAttackRight, slimeAttackLeft, slimeHurtAnimateRight, slimeHurtAnimateLeft, slimeDeadRight, slimeDeadLeft, [35], [35]]
     class Enemy{
         constructor(img, enemyX, enemyY, scale, enemyAnimation, HP, ATK, hitboxX, hitboxY, speed, width, height){
             this.enemyX = enemyX;
@@ -189,27 +191,27 @@ updateCanvas() {
             if(this.dead) {
                 return;
             }
-            if(this.HP <= 0){
-                playerHealth+=20
+            else if(this.HP <= 0){
                 beforeRoom++
                 this.dying++
                 if(distanceX < 0){
-                    this.enemyAnimation = animations[8]
-                }else{
                     this.enemyAnimation = animations[9]
+                }else{
+                    this.enemyAnimation = animations[8]
                 }
-                if(this.dying >= 80){
-                    if(distanceX > 0){
-                        this.enemyAnimation = animations[8][animations[8].length - 1]
-                    }else{
-                        this.enemyAnimation = animations[9][animations[9].length - 1]
-                    }
+                if(this.dying >= this.enemyAnimation.length){
+                    playerHealth+=20
                     this.dead = true;
+                    if(distanceX > 0){
+                        this.enemyAnimation = animations[10]
+                    }else{
+                        this.enemyAnimation = animations[11]
+                    }
                     return
                 }
                 
             }
-            if(spacePressed && unitVector <= 70){
+            else if(spacePressed && unitVector <= 70){
                 this.attackBuild+=10
                 if(lastMove === 0 && distanceX < 0 ){
                     this.enemyAnimation = animations[7]
@@ -254,7 +256,7 @@ updateCanvas() {
     const enemies = [];
     let amount = this.props.enemyAmount;
     for (let i = 0; i < amount; i++) {
-        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 3, [], 100, 10, 30, 70, 2, 64, 64);
+        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1.5, [], 100, 10, 30, 70, 2, 64, 64);
         enemies.push(enemy);
     };
      console.log(enemies)
@@ -279,6 +281,7 @@ updateCanvas() {
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop){
         enemies.forEach(enemy => {
+            console.log(enemy.currentFrame)
             enemy.drawFrame2(enemy.enemyAnimation[enemy.currentFrame], 0, 0, 0)
             enemy.currentFrame++
             
@@ -475,8 +478,6 @@ updateCanvas() {
             };
         }else{
 
-        
-
             switch(true){
                 case spacePressed:
                     attack();
@@ -561,7 +562,7 @@ updateCanvas() {
                 }}
                 if(playerHealth <= 0){
                     dying++
-                }else if(dying >= 40){
+                }else if(dying >= animation.length){
                     return
                 };
             //pass each entities animations into this function
@@ -599,7 +600,7 @@ updateCanvas() {
             this.setState({isPaused: true})
         }else{
             // console.log(dying)
-            if(dying >= 40){
+            if(dying >= animation.length){
                 if(lastMove === 0){
                     animation = [27]
                 }else{

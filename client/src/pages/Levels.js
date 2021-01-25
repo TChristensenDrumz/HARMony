@@ -1,7 +1,7 @@
 import React from "react";
 import Canvas from "../game/GameLogic";
 import LevelLogic from "../utils/LevelLogic";
-import Dino from "../game/assets/sprites/DinoSprites-doux.png";
+import Slime from "../game/assets/sprites/Slime/slime.png";
 import rapChar from "../game/assets/sprites/Character5/Character5.png"
 import metalChar from "../game/assets/sprites/Character3/Character3.png"
 import classicChar from "../game/assets/sprites/Character1/Character1.png"
@@ -18,7 +18,7 @@ export const Home = () => {
     return (
         <Canvas
             player={rapChar}
-            enemy={Dino}
+            enemy={Slime}
             bossLevel={false}
             enemyAmount={0}
             background={LevelLogic.homeGenre().background.home}
@@ -34,7 +34,7 @@ export const Level1 = () => {
     return (
         <Canvas
             player={countryChar}
-            enemy={Dino}
+            enemy={Slime}
             bossLevel={false}
             enemyAmount={3}
             background={background.level1}
@@ -49,7 +49,7 @@ export const Level2 = () => {
     return (
         <Canvas
             player={popChar}
-            enemy={Dino}
+            enemy={Slime}
             bossLevel={false}
             enemyAmount={5}
             background={background.level2}
@@ -64,7 +64,7 @@ export const Level3 = () => {
     return (
         <Canvas
             player={metalChar}
-            enemy={Dino}
+            enemy={Slime}
             bossLevel={false}
             enemyAmount={7}
             background={background.level3}
@@ -79,7 +79,7 @@ export const BossRoom = () => {
     return (
         <Canvas
             player={classicChar}
-            enemy={Dino}
+            enemy={Slime}
             bossLevel={true}
             enemyAmount={1}
             background={background.bossroom}
@@ -103,7 +103,7 @@ export const BossRoom = () => {
 //     // console.log(LevelLogic.levelObj(allGenres.homeGenre));
 //     return (
 //         <Canvas
-//             player={Dino}
+//             player={Slime}
 //             enemy={Dino}
 //             bossLevel={false}
 //             enemyAmount={0}
