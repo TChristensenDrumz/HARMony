@@ -646,6 +646,7 @@ updateCanvas() {
 
        if (BOSS.dying === 40) {
            LevelLogic.resetEnemy();
+           beforeRoom -= 1;
        }
     };
     
