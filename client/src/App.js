@@ -17,6 +17,7 @@ import CreateAccount from "./pages/CreateAccount"
 import Character from "./components/CharacterSelect/Select"
 import GameOver from "./components/GameOver/GG"
 import { Home, Level1, Level2, Level3, BossRoom } from "./pages/Levels";
+import GameOver from "./components/GameOver/GG";
 
 
 const App = () => {
