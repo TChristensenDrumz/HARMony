@@ -216,7 +216,7 @@ updateCanvas() {
                 }
                 
             }
-            else if(spacePressed && unitVector <= 70){
+            else if(spacePressed && unitVector <= 80){
                 this.attackBuild+=10
                 if(lastMove === 0 && distanceX < 0 ){
                     this.enemyAnimation = animations[7]
@@ -227,7 +227,7 @@ updateCanvas() {
                 }
                 
             }else{
-                if(unitVector <= 70){
+                if(unitVector <= 80){
                     if(distanceX < 0){
                         this.enemyAnimation = animations[5]
                     }else{
@@ -267,7 +267,7 @@ updateCanvas() {
      console.log(enemies)
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100)
+        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 10, 25, 125, 175, 4, 100, 100)
     }
 
     
