@@ -29,6 +29,7 @@ const styles = {
 };
 
 const GG = () => {
+  localStorage.removeItem("direction");
   return (
     <div style={styles.overlay}>
       <h1 style={styles.h1}>GAME OVER</h1>

@@ -14,7 +14,8 @@ export default class Canvas extends Component {
 
     state = {
         roomChange: false,
-        direction: ''
+        direction: '',
+        gameOver: false
     }
     
      //ANIMATION=========================================
@@ -295,7 +296,7 @@ updateCanvas() {
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop){
         enemies.forEach(enemy => {
-            console.log(enemy.currentFrame)
+            // console.log(enemy.currentFrame)
             enemy.drawFrame2(enemy.enemyAnimation[enemy.currentFrame], 0, 0, 0)
             enemy.currentFrame++
             
@@ -578,6 +579,7 @@ updateCanvas() {
                     };
                 }}
                 if(playerHealth <= 0 ){
+                    this.setState({...this.state, gameOver: true});
                     if(dying === 0){
                         currentLoopIndex=0
                     }
@@ -589,7 +591,7 @@ updateCanvas() {
     }
     
     const master = () => {
-        console.log(beforeRoom)
+        // console.log(beforeRoom)
         if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
                 this.setState({...this.state, direction: "top"});
@@ -699,6 +701,7 @@ render() {
             width={1200} height={720} 
             style={styles.background}></canvas>
             {this.state.roomChange ? <Redirect to={this.props.nextLevel}/> : <></>}
+            {this.state.gameOver ? <Redirect to="/harmony/gameover" /> : <></>}
         </div>
         
 
