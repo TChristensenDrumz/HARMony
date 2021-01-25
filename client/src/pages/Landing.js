@@ -4,6 +4,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import Background from "../images/DinoSprites_doux.gif";
 
 export default function Landing() {
+    localStorage.removeItem("direction");
     let loggedIn = Token.authenticate();
 
     const background = {

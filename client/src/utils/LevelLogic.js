@@ -6,8 +6,7 @@ import Token from "../utils/Token";
 
 export default {
 
-    setGenre: async function(genre) {
-        let homeGenre = genre;
+    setGenre: async function(homeGenre) {
         let genres = ["pop", "classical", "country", "metal", "rap"];
         if (genres.includes(homeGenre)) {
             genres.splice(genres.indexOf(homeGenre), 1);
@@ -30,6 +29,21 @@ export default {
                 return data.data.genres[0];
     },
 
+    resetGenre: async function(homeGenre, id) {
+        let genres = ["pop", "classical", "country", "metal", "rap"];
+        if (genres.includes(homeGenre)) {
+            genres.splice(genres.indexOf(homeGenre), 1);
+        };
+        let randomEnemy = genres[Math.floor(Math.random() * genres.length)];
+        let genreObj = {
+            homeGenre: homeGenre,
+            randomEnemy: randomEnemy,
+            leftoverGenres: genres
+        };
+        let res = await API.updateGenre(id, genreObj);
+        return res;
+    },
+
     resetEnemy: async function() {
         let genres = await this.getGenre();
         let { _id, randomEnemy, leftoverGenres, homeGenre } = genres;
@@ -40,11 +54,10 @@ export default {
         };
         let newEnemy = leftoverGenres[Math.floor(Math.random() * leftoverGenres.length)];
         let data = {
-            id: _id,
-            newEnemy: newEnemy,
+            randomEnemy: newEnemy,
             leftoverGenres: leftoverGenres
         };
-        API.updateGenre(data);
+        API.updateGenre(_id, data);
     },
 
     levelObj: function(genre) {

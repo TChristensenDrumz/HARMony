@@ -4,14 +4,14 @@ const styles = {
     health: {
         position: "absolute",
         color: "white",
-        left: "21.5%",
-        top: ".5%"
+        left: "51px",
+        top: "5px"
     },
     progress: {
         position: "absolute",
         width: "367px",
-        left: "28%",
-        top: ".2%",
+        left: "178px",
+        top: "1px",
         height: "23px",
     }
 }
