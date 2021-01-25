@@ -145,7 +145,7 @@ export const BossRoom = () => {
             boss={enemy.player}
             enemy={Slime}
             bossLevel={true}
-            enemyAmount={1}
+            enemyAmount={0}
             background={enemy.background.bossroom}
             audio={enemy.audio.bossroom}
             song={enemy.audio.name.bossroom}
