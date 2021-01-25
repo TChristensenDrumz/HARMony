@@ -32,8 +32,12 @@ export default {
 
     resetEnemy: async function() {
         let genres = await this.getGenre();
-        const { _id, randomEnemy, leftoverGenres } = genres;
+        let { _id, randomEnemy, leftoverGenres, homeGenre } = genres;
         leftoverGenres.splice(leftoverGenres.indexOf(randomEnemy), 1);
+        if (leftoverGenres.length === 0) {
+            leftoverGenres = ["pop", "classical", "country", "metal", "rap"];
+            leftoverGenres.splice(leftoverGenres.indexOf(homeGenre), 1);
+        };
         let newEnemy = leftoverGenres[Math.floor(Math.random() * leftoverGenres.length)];
         let data = {
             id: _id,

@@ -27,6 +27,7 @@ export const Home = () => {
             enemyAmount={0}
             background={background.home}
             audio={audio.home}
+            song={audio.name.home}
             nextLevel="/harmony/level1"
         />
     );
@@ -56,6 +57,7 @@ export const Level1 = () => {
             enemyAmount={3}
             background={enemy.background.level1}
             audio={enemy.audio.level1}
+            song={enemy.audio.name.level1}
             nextLevel="/harmony/level2"
         />
     );
@@ -85,6 +87,7 @@ export const Level2 = () => {
             enemyAmount={5}
             background={enemy.background.level2}
             audio={enemy.audio.level2}
+            song={enemy.audio.name.level2}
             nextLevel="/harmony/level3"
         />
     );
@@ -114,6 +117,7 @@ export const Level3 = () => {
             enemyAmount={7}
             background={enemy.background.level3}
             audio={enemy.audio.level3}
+            song={enemy.audio.name.level3}
             nextLevel="/harmony/bossroom"
         />
     );
@@ -144,6 +148,7 @@ export const BossRoom = () => {
             enemyAmount={1}
             background={enemy.background.bossroom}
             audio={enemy.audio.bossroom}
+            song={enemy.audio.name.bossroom}
             nextLevel="/harmony"
         />
     );

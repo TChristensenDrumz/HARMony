@@ -665,19 +665,35 @@ updateCanvas() {
 
 render() {
     const styles = {
-        backgroundImage: "url(" + this.props.background + ")",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat"
+        background: {
+            backgroundImage: "url(" + this.props.background + ")",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            marginBottom: "35px"
+        },
+        audio: {
+            position: "absolute",
+            top: "-1.5%",
+            right: "19%",
+            transform: "scale(.7)"
+        },
+        song: {
+            position: "absolute",
+            color: "white",
+            top: ".5%",
+            right: "33%" 
+        }
     }
 
     return (
         <div style={style.body} className="d-flex justify-content-center">
-            <audio src={this.props.audio} />
+            <p style={styles.song}>{this.props.song}</p>
+            <audio src={this.props.audio} style={styles.audio} controls loop/>
             {this.state.isPaused ? <Pause /> : <div/>}
-            <Stats score="100" health={playerHealth} />
-            <canvas ref="canvas" className="mt-4 mb-4"
+            <Stats health={playerHealth} />
+            <canvas ref="canvas"
             width={1200} height={720} 
-            style={styles}></canvas>
+            style={styles.background}></canvas>
             {this.state.roomChange ? <Redirect to={this.props.nextLevel}/> : <></>}
         </div>
         
