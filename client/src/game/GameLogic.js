@@ -273,7 +273,6 @@ updateCanvas() {
         const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1.5, [], 100, 10, 30, 70, 2, 64, 64);
         enemies.push(enemy);
     };
-     console.log(enemies)
     let BOSS = {};
     if(bossLevel){
         BOSS = new Enemy(imageObj3, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100);
@@ -295,7 +294,6 @@ updateCanvas() {
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop){
         enemies.forEach(enemy => {
-            console.log(enemy.currentFrame)
             enemy.drawFrame2(enemy.enemyAnimation[enemy.currentFrame], 0, 0, 0)
             enemy.currentFrame++
             
@@ -475,6 +473,9 @@ updateCanvas() {
     const step = () => {
         
         if(playerHurt === true && dying === 0){
+            if(playerHurtLength===0){
+                currentLoopIndex = 0
+            }
             playerHurtLength++
             switch(lastMove){
                 case 0 : animation = hurtAnimateRight
@@ -589,7 +590,6 @@ updateCanvas() {
     }
     
     const master = () => {
-        console.log(beforeRoom)
         if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
                 this.setState({...this.state, direction: "top"});
