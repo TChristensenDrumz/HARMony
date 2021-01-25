@@ -4,6 +4,7 @@ import Pause from "../components/Pause/Pause";
 import { Redirect } from "react-router-dom";
 import { style } from "../utils/theme";
 import LevelLogic from '../utils/LevelLogic';
+import Transition from "../utils/Transition";
 
 
 let maxHealth = 100;
@@ -106,8 +107,8 @@ updateCanvas() {
     let lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
 
     //position of PLayer(drawframe) on canvas
-    let canvasX = 478;
-    let canvasY = 232;
+    let canvasX = Transition.checkDirection().canvasX
+    let canvasY = Transition.checkDirection().canvasY
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
