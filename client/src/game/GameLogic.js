@@ -204,7 +204,6 @@ updateCanvas() {
             let distanceY = canvasY - this.enemyY - this.hitboxY + 140
             let unitVector = Math.hypot(distanceX, distanceY)
             if(this.dead) {
-                
                 return;
             }
             else if(this.HP <= 0){
@@ -219,7 +218,11 @@ updateCanvas() {
                     this.enemyAnimation = animations[8]
                 }
                 if(this.dying >= this.enemyAnimation.length){
-                    beforeRoom++
+                    if(bossLevel){
+                        beforeRoom --;
+                    }else{
+                        beforeRoom++
+                    }
                     maxHealth+=20;
                     playerHealth+=20
                     this.dead = true;
@@ -282,7 +285,7 @@ updateCanvas() {
     };
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100);
+        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 10, 25, 125, 175, 4, 100, 100);
     };
 
     
@@ -301,10 +304,6 @@ updateCanvas() {
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop){
         enemies.forEach(enemy => {
-<<<<<<< HEAD
-=======
-            // console.log(enemy.currentFrame)
->>>>>>> c67740f0a2529d1a51a73c7068ec177bb80a3c86
             enemy.drawFrame2(enemy.enemyAnimation[enemy.currentFrame], 0, 0, 0)
             enemy.currentFrame++
             
@@ -602,10 +601,6 @@ updateCanvas() {
     }
     
     const master = () => {
-<<<<<<< HEAD
-=======
-        // console.log(beforeRoom)
->>>>>>> c67740f0a2529d1a51a73c7068ec177bb80a3c86
         if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
                 this.setState({...this.state, direction: "top"});
@@ -666,7 +661,9 @@ updateCanvas() {
 
        if (BOSS.dying === 40) {
            LevelLogic.resetEnemy();
-           beforeRoom -= 1;
+           localStorage.removeItem("direction");
+
+           
        }
     };
     
