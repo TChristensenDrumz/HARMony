@@ -107,8 +107,10 @@ updateCanvas() {
     let lastMove = 0 //<<====numbers to be passed as identifiers for conditionals or switches
 
     //position of PLayer(drawframe) on canvas
-    let canvasX = Transition.checkDirection().canvasX
-    let canvasY = Transition.checkDirection().canvasY
+
+    let canvasX = Transition.checkDirection().canvasX;
+    let canvasY = Transition.checkDirection().canvasY;
+
     // let enemyX = 100
     // let enemyY = 200
     //COMBAT STUFF=======================
@@ -671,8 +673,7 @@ render() {
         background: {
             backgroundImage: "url(" + this.props.background + ")",
             backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            marginBottom: "35px"
+            backgroundRepeat: "no-repeat"
         },
         audio: {
             position: "absolute",
