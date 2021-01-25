@@ -31,6 +31,9 @@ updateCanvas() {
     let imageObj2 = new Image();
     imageObj2.src = this.props.enemy;
 
+    let imageObj3 = new Image();
+    imageObj3.src = this.props.boss;
+
     //KEY COMMANDS================================================
     
     document.addEventListener('keydown', keyDownHandler, false);
@@ -264,7 +267,7 @@ updateCanvas() {
      console.log(enemies)
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(player, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100)
+        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100)
     }
 
     

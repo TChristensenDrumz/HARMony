@@ -138,6 +138,7 @@ export const BossRoom = () => {
     return (
         <Canvas
             player={home.player}
+            boss={enemy.player}
             enemy={Slime}
             bossLevel={true}
             enemyAmount={1}
