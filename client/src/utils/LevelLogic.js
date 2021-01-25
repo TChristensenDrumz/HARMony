@@ -29,13 +29,12 @@ export default {
         let home;
         let enemy;
         let userId = Token.getId();
-        await API.getGenre({id: userId})
-            .then(data => {
+        const data = await API.getGenre({id: userId})
                 // home = this.levelObj(data.data.genres[0].homeGenre);
                 // console.log(home);
                 // return this.returnGenre(home);
                 return data.data.genres[0];
-            })
+            
             // .then(data => {
             //     enemy = this.levelObj(data.data.genres[0].randomEnemy);
             // })
@@ -44,6 +43,7 @@ export default {
     returnGenre: async function() {
         let genres = await this.getGenre();
         console.log(genres)
+        return genres
     },
 
     // enemyGenre: function() {

@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Canvas from "../game/GameLogic";
 import LevelLogic from "../utils/LevelLogic";
 import Dino from "../game/assets/sprites/DinoSprites-doux.png";
 
+const useLevelObj = (genre) => {
+    // console.log(genre)
+    const levelObj = React.useMemo(() => LevelLogic.levelObj(genre), [genre])
+    // console.log(levelObj)
+    return levelObj;
+}
 
+export const Home = ({genres}) => {
+    const [genre, setGenre] = useState();
 
-export const Home = () => {
-    console.log(LevelLogic.returnGenre());
+    useEffect(() => {
+        loadGenre();
+    }, [])
+
+    const loadGenre = async () => {
+        const data = await LevelLogic.getGenre();
+        const obj = LevelLogic.levelObj(data.homeGenre);
+        setGenre(obj)
+    };
+    // console.log(genres)
+    // const {background} = useLevelObj(genres.homeGenre)
+    if(!genre) return <h1>Loading....</h1>
+
+    const { background, audio, player } = genre;
+
     return (
         <Canvas
-            player={Dino}
+            player={player}
             enemy={Dino}
             bossLevel={false}
             enemyAmount={0}
-            // background={background.home}
-            // audio={audio.home}
+            background={background.home}
+            audio={audio.home}
             nextLevel="/harmony/level1"
         />
     );

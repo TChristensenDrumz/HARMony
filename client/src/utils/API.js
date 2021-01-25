@@ -9,11 +9,11 @@ export default {
         return axios.post("/api/user/login", userData);
     },
 
-    setGenres: function(gameData) {
-        return axios.post("/api/gameplay/genre", gameData);
+    setGenres: async function(gameData) {
+        return await axios.post("/api/gameplay/genre", gameData);
     },
 
-    getGenre: function(gameData) {
-        return axios.get("/api/gameplay/"+ gameData.id, gameData);
+    getGenre: async function(gameData) {
+        return await axios.get("/api/gameplay/"+ gameData.id, gameData);
     }
 };

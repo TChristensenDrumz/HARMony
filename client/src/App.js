@@ -1,7 +1,8 @@
 //React
-import React from 'react';
+import React,{ useState ,useEffect } from 'react';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import useAsync from "./utils/Hooks"
 
 //Styling
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,7 +19,7 @@ import { Home, Level1, Level2, Level3, BossRoom } from "./pages/Levels";
 
 
 const App = () => {
-  
+
   return (
 
     <Router>
