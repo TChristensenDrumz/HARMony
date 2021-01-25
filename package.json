@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/TChristensenDrumz/HARMony#readme",
   "dependencies": {
-    "@ion-phaser/react": "^1.2.2",
     "axios": "^0.21.1",
     "create-react-app": "^4.0.1",
     "dotenv": "^8.2.0",
