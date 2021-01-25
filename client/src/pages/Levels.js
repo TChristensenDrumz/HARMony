@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Canvas from "../game/GameLogic";
 import LevelLogic from "../utils/LevelLogic";
-import Dino from "../game/assets/sprites/DinoSprites-doux.png";
+import Slime from "../game/assets/sprites/Slime/slime.png";
 
-const useLevelObj = (genre) => {
-    // console.log(genre)
-    const levelObj = React.useMemo(() => LevelLogic.levelObj(genre), [genre])
-    // console.log(levelObj)
-    return levelObj;
-}
-
-export const Home = ({genres}) => {
+export const Home = () => {
     const [genre, setGenre] = useState();
 
     useEffect(() => {
@@ -22,8 +15,6 @@ export const Home = ({genres}) => {
         const obj = LevelLogic.levelObj(data.homeGenre);
         setGenre(obj)
     };
-    // console.log(genres)
-    // const {background} = useLevelObj(genres.homeGenre)
     if(!genre) return <h1>Loading....</h1>
 
     const { background, audio, player } = genre;
@@ -31,8 +22,7 @@ export const Home = ({genres}) => {
     return (
         <Canvas
             player={player}
-            enemy={Dino}
-
+            enemy={Slime}
             bossLevel={false}
             enemyAmount={0}
             background={background.home}
@@ -43,138 +33,119 @@ export const Home = ({genres}) => {
 };
 
 export const Level1 = () => {
+    const [genre, setGenre] = useState();
+
+    useEffect(() => {
+        loadGenre();
+    }, [])
+
+    const loadGenre = async () => {
+        const data = await LevelLogic.getGenre();
+        const enemy = LevelLogic.levelObj(data.randomEnemy);
+        const home = LevelLogic.levelObj(data.homeGenre);
+        setGenre({enemy: enemy, home: home})
+    };
+    if(!genre) return <h1>Loading....</h1>
+
+    const { enemy, home } = genre;
     return (
         <Canvas
-            player={Dino}
-            enemy={Dino}
+            player={home.player}
+            enemy={Slime}
             bossLevel={false}
             enemyAmount={3}
-            // background={enemy.background.level1}
-            // audio={enemy.audio.level1}
+            background={enemy.background.level1}
+            audio={enemy.audio.level1}
             nextLevel="/harmony/level2"
         />
     );
 };
 
 export const Level2 = () => {
+    const [genre, setGenre] = useState();
+
+    useEffect(() => {
+        loadGenre();
+    }, [])
+
+    const loadGenre = async () => {
+        const data = await LevelLogic.getGenre();
+        const enemy = LevelLogic.levelObj(data.randomEnemy);
+        const home = LevelLogic.levelObj(data.homeGenre);
+        setGenre({enemy: enemy, home: home})
+    };
+    if(!genre) return <h1>Loading....</h1>
+
+    const { enemy, home } = genre;
     return (
         <Canvas
-            player={Dino}
-            enemy={Dino}
+            player={home.player}
+            enemy={Slime}
             bossLevel={false}
             enemyAmount={5}
-            // background={background.level2}
-            // audio={audio.level2}
+            background={enemy.background.level2}
+            audio={enemy.audio.level2}
             nextLevel="/harmony/level3"
         />
     );
 };
 
 export const Level3 = () => {
+    const [genre, setGenre] = useState();
+
+    useEffect(() => {
+        loadGenre();
+    }, [])
+
+    const loadGenre = async () => {
+        const data = await LevelLogic.getGenre();
+        const enemy = LevelLogic.levelObj(data.randomEnemy);
+        const home = LevelLogic.levelObj(data.homeGenre);
+        setGenre({enemy: enemy, home: home})
+    };
+    if(!genre) return <h1>Loading....</h1>
+
+    const { enemy, home } = genre;
     return (
         <Canvas
-            player={Dino}
-            enemy={Dino}
+            player={home.player}
+            enemy={Slime}
             bossLevel={false}
             enemyAmount={7}
-            // background={background.level3}
-            // audio={audio.level3}
+            background={enemy.background.level3}
+            audio={enemy.audio.level3}
             nextLevel="/harmony/bossroom"
         />
     );
 };
 
 export const BossRoom = () => {
+    const [genre, setGenre] = useState();
+
+    useEffect(() => {
+        loadGenre();
+    }, [])
+
+    const loadGenre = async () => {
+        const data = await LevelLogic.getGenre();
+        const enemy = LevelLogic.levelObj(data.randomEnemy);
+        const home = LevelLogic.levelObj(data.homeGenre);
+        setGenre({enemy: enemy, home: home})
+    };
+    if(!genre) return <h1>Loading....</h1>
+
+    const { enemy, home } = genre;
     return (
         <Canvas
-            player={Dino}
-            enemy={Dino}
+            player={home.player}
+            boss={enemy.player}
+            enemy={Slime}
             bossLevel={true}
             enemyAmount={1}
-            // background={background.bossroom}
-            // audio={audio.bossroom}
+            background={enemy.background.bossroom}
+            audio={enemy.audio.bossroom}
             nextLevel="/harmony"
         />
     );
 };
 
-//Edited code
-// let allGenres;
-
-// const setGenres = genres => {
-//     allGenres = genres;
-// }
-
-// LevelLogic.getGenre().then(genres => setGenres(genres));
-
-// export const Home = () => {
-//     console.log(allGenres);
-//     // console.log(LevelLogic.levelObj(allGenres.homeGenre));
-//     return (
-//         <Canvas
-//             player={Slime}
-//             enemy={Dino}
-//             bossLevel={false}
-//             enemyAmount={0}
-//             // background={background.home}
-//             // audio={audio.home}
-//             nextLevel="/harmony/level1"
-//         />
-//     );
-// };
-
-// export const Level1 = () => {
-//     return (
-//         <Canvas
-//             player={Dino}
-//             enemy={Dino}
-//             bossLevel={false}
-//             enemyAmount={3}
-//             // background={enemy.background.level1}
-//             // audio={enemy.audio.level1}
-//             nextLevel="/harmony/level2"
-//         />
-//     );
-// };
-
-// export const Level2 = () => {
-//     return (
-//         <Canvas
-//             player={Dino}
-//             enemy={Dino}
-//             bossLevel={false}
-//             enemyAmount={5}
-//             // background={background.level2}
-//             // audio={audio.level2}
-//             nextLevel="/harmony/level3"
-//         />
-//     );
-// };
-
-// export const Level3 = () => {
-//     return (
-//         <Canvas
-//             player={Dino}
-//             enemy={Dino}
-//             bossLevel={false}
-//             enemyAmount={7}
-//             // background={background.level3}
-//             // audio={audio.level3}
-//             nextLevel="/harmony/bossroom"
-//         />
-//     );
-// };
-
-// export const BossRoom = () => {
-//     return (
-//         <Canvas
-//             player={Dino}
-//             enemy={Dino}
-//             bossLevel={true}
-//             enemyAmount={1}
-//             // background={background.bossroom}
-//             // audio={audio.bossroom}
-//             nextLevel="/harmony"
-//         />
-//     );
-// };
