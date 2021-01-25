@@ -46,7 +46,7 @@ export const Level1 = () => {
         const home = LevelLogic.levelObj(data.homeGenre);
         setGenre({enemy: enemy, home: home})
     };
-    if(!genre) return <h1>Loading....</h1>
+    if(!genre) return <h1 style={{color:"white"}} className="text-center">Loading....</h1>
 
     const { enemy, home } = genre;
     return (

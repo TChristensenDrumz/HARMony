@@ -15,6 +15,7 @@ import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import CreateAccount from "./pages/CreateAccount"
 import Character from "./components/CharacterSelect/Select"
+import GameOver from "./components/GameOver/GG"
 import { Home, Level1, Level2, Level3, BossRoom } from "./pages/Levels";
 
 
@@ -44,6 +45,9 @@ const App = () => {
           </Route>
           <Route exact path="/harmony/bossroom">
             <ProtectedRoute component={BossRoom} />
+          </Route>
+          <Route exact path="/harmony/gameover">
+            <ProtectedRoute component={GameOver} />
           </Route>
           <Route component={Landing} />
         </Switch>
