@@ -1,9 +1,12 @@
 //Dependencies
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { Redirect } from "react-router-dom";
+import LevelLogic from "../../utils/LevelLogic";
 
 //Styling
 import { Container, Row, Card } from 'react-bootstrap'
 import Sandwich from '../Sandwich/Sandwich'
+import "./Select.css";
 
 //Sprite gifs
 import Character2 from "../../game/assets/sprites/Character2/character2gif.gif"
@@ -13,6 +16,23 @@ import Character5 from "../../game/assets/sprites/Character5/character5gif.gif"
 import Character6 from "../../game/assets/sprites/Character6/character6gif.gif"
 
 export default function Select() {
+
+    const [redirect, setRedirect] = useState(false);
+
+    const handleImgClick = event => {
+        console.log(event.target.alt);
+        selectGenre(event.target.alt);
+    };
+
+    const handleTitleClick = event => {
+        console.log(event.target.innerHTML.toLowerCase());
+        selectGenre(event.target.innerHTML.toLowerCase());
+    };
+
+    const selectGenre = genre => {
+        LevelLogic.setGenre(genre)
+            .then(() => setRedirect(true));
+    };
     
     const black = {
         backgroundColor: "black",
@@ -24,43 +44,44 @@ export default function Select() {
             <Sandwich />
                 <Container style={black}>
                     <Row style={{height:"720px", width:"1200px"}} className="d-flex justify-content-center align-items-center text-center">
-                        <Card border="danger" style={{ width: '225px' }} className="mr-auto ml-auto">
-                            <Card.Img variant="top" src={Character6} style={black} />
+                        <Card style={{ width: '225px' }} className="mr-auto ml-auto character">
+                            <Card.Img variant="top" src={Character6} style={black} alt="classical" onClick={handleImgClick}/>
                             <Card.Body style={black}>
-                                <Card.Title>Classical</Card.Title> 
+                                <Card.Title onClick={handleTitleClick}>Classical</Card.Title> 
                             </Card.Body>
                         </Card>
 
-                        <Card border="dark" style={{ width: '225px' }} className="mr-auto ml-auto">
-                            <Card.Img variant="top" src={Character2} style={black} />
+                        <Card style={{ width: '225px' }} className="mr-auto ml-auto character">
+                            <Card.Img variant="top" src={Character2} style={black} alt="country" onClick={handleImgClick}/>
                             <Card.Body style={black}>
-                                <Card.Title>Country</Card.Title> 
+                                <Card.Title onClick={handleTitleClick}>Country</Card.Title> 
                             </Card.Body>
                         </Card>
 
-                        <Card border="dark" style={{ width: '225px' }} className="mr-auto ml-auto">
-                            <Card.Img variant="top" src={Character3} style={black} />
+                        <Card style={{ width: '225px' }} className="mr-auto ml-auto character">
+                            <Card.Img variant="top" src={Character3} style={black} alt="metal" onClick={handleImgClick}/>
                             <Card.Body style={black}>
-                                <Card.Title>Metal</Card.Title> 
+                                <Card.Title onClick={handleTitleClick}>Metal</Card.Title> 
                             </Card.Body>
                         </Card>
 
-                        <Card border="dark" style={{ width: '225px' }} className="mr-auto ml-auto">
-                            <Card.Img variant="top" src={Character4} style={black} />
+                        <Card style={{ width: '225px' }} className="mr-auto ml-auto character">
+                            <Card.Img variant="top" src={Character4} style={black} alt="pop" onClick={handleImgClick}/>
                             <Card.Body style={black}>
-                                <Card.Title>Pop</Card.Title> 
+                                <Card.Title onClick={handleTitleClick}>Pop</Card.Title> 
                             </Card.Body>
                         </Card>
 
-                        <Card border="dark" style={{ width: '225px' }} className="mr-auto ml-auto">
-                            <Card.Img variant="top" src={Character5} style={black} />
+                        <Card style={{ width: '225px' }} className="mr-auto ml-auto character">
+                            <Card.Img variant="top" src={Character5} style={black} alt="rap" onClick={handleImgClick}/>
                             <Card.Body style={black}>
-                                <Card.Title>Rap</Card.Title> 
+                                <Card.Title onClick={handleTitleClick}>Rap</Card.Title> 
                             </Card.Body>
                         </Card>
                     </Row>
                 </Container>    
             <Sandwich />
+            {redirect ? <Redirect to="/harmony" /> : <></>}
             </div>
     )
 }
