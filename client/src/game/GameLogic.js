@@ -194,13 +194,14 @@ updateCanvas() {
             let distanceY = canvasY - this.enemyY - this.hitboxY + 140
             let unitVector = Math.hypot(distanceX, distanceY)
             if(this.dead) {
+                
                 return;
             }
             else if(this.HP <= 0){
                 if(this.dying === 0){
                     this.currentFrame=0
                 }
-                beforeRoom++
+                
                 this.dying++
                 if(distanceX < 0){
                     this.enemyAnimation = animations[9]
@@ -208,6 +209,7 @@ updateCanvas() {
                     this.enemyAnimation = animations[8]
                 }
                 if(this.dying >= this.enemyAnimation.length){
+                    beforeRoom++
                     playerHealth+=20
                     this.dead = true;
                     if(distanceX > 0){
@@ -270,7 +272,7 @@ updateCanvas() {
      console.log(enemies)
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 10, 25, 125, 175, 4, 100, 100)
+        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 1000, 25, 125, 175, 4, 100, 100)
     }
 
     
@@ -583,7 +585,7 @@ updateCanvas() {
     }
     
     const master = () => {
-        
+        console.log(beforeRoom)
         if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 476 && canvasX <= 480) && canvasY <= -10) {
                 this.setState({...this.state, direction: "top"});
