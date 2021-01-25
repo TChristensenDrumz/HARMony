@@ -91,10 +91,10 @@ updateCanvas() {
     let bossLevel = this.props.bossLevel;
     //SETTING VRIABLES FOR RENDERING==========
     //scale of character
-    const scale = 1.5;
+    const scale = 2.5;
     //width and height of spritesheet frame
-    const width = 24;
-    const height = 24;
+    const width = 100;
+    const height = 100;
     //self explanatory
     const scaledWidth = scale * width;
     const scaledHeight = scale * height;
@@ -132,6 +132,7 @@ updateCanvas() {
     
     };
     //animation frames====================================
+    //PLAYER && BOSS
         const playerRightAnimate = frameRateSpoof([4,5,6,7,8,9,10,11]);
         const playerLeftAnimate =  frameRateSpoof([51,50,49,48,47,46,45,44]);
         const playerBaseRightAnimate = frameRateSpoof([0,1,2,3]);
@@ -143,7 +144,7 @@ updateCanvas() {
         const playerDeadRight = frameRateSpoof([24,25,26,27]);
         const playerDeadLeft = frameRateSpoof([31,30,29,28]);
 
-
+    //small ENEMY
 
         const rightAnimate = frameRateSpoof([4,5,6,7,8,9]);
         const leftAnimate =  frameRateSpoof([43,42,41,40,39,38]);
@@ -158,12 +159,12 @@ updateCanvas() {
     let animation = []
 
     class Enemy{
-        constructor(img, enemyX, enemyY, scale, enemyAnimation, HP,ATK, attackBuild, hitboxX, hitboxY, currentFrame, speed){
+        constructor(img, enemyX, enemyY, scale, enemyAnimation, HP, ATK, attackBuild, hitboxX, hitboxY, currentFrame, speed, width, height){
             this.enemyX = enemyX;
             this.enemyY = enemyY;
             this.img = img;
-            this.width = 24;
-            this.height = 24;
+            this.width = width;
+            this.height = height;
             this.scale = scale
             this.enemyAnimation = enemyAnimation;
             this.HP = HP;
@@ -194,11 +195,11 @@ updateCanvas() {
                 this.dead = true;
                 return
             }
-            let distanceX = canvasX - this.enemyX - this.hitboxX
-            let distanceY = canvasY - this.enemyY - this.hitboxY
+            let distanceX = canvasX - this.enemyX - this.hitboxX + 100
+            let distanceY = canvasY - this.enemyY - this.hitboxY + 140
             let unitVector = Math.hypot(distanceX, distanceY)
 
-            if(spacePressed && unitVector <= this.hitboxX){
+            if(spacePressed && unitVector <= 70){
                 this.attackBuild+=10
                 if(lastMove === 0 && distanceX < 0 ){
                     this.enemyAnimation = hurtAnimateLeft
@@ -209,7 +210,7 @@ updateCanvas() {
                 }
                 
             }else{
-                if(unitVector <= this.hitboxX){
+                if(unitVector <= 70){
                     if(distanceX < 0){
                         this.enemyAnimation = attackLeft
                     }else{
@@ -243,13 +244,13 @@ updateCanvas() {
     const enemies = [];
     let amount = this.props.enemyAmount;
     for (let i = 0; i < amount; i++) {
-        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1, [], 100, 10, 0, 0, 0, 0,2);
+        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 3, [], 100, 10, 0, 30, 70, 0, 2, 24, 24);
         enemies.push(enemy);
     };
      console.log(enemies)
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(imageObj2, 200, 300, 5, [], 1000, 50, 0, 35, 65, 0,4)
+        BOSS = new Enemy(player, 200, 300, 3, [], 1000, 25, 0, 125, 175, 0, 4, 100, 100)
     }
 
     
@@ -267,8 +268,17 @@ updateCanvas() {
     //basic animation function===================================
     //add in cycleLoop for each entity so they can have seperate animations
     function move(cycleLoop){
+        enemies.forEach(enemy => {
+            enemy.drawFrame2(enemy.enemyAnimation[enemy.currentFrame], 0, 0, 0)
+            enemy.currentFrame++
+            
+            if(enemy.currentFrame>= enemy.enemyAnimation.length){
+                enemy.currentFrame = 0;
+            }
+        
+        })
         if(bossLevel){
-            if(BOSS.enemyY + BOSS.hitboxY < canvasY){
+            if(BOSS.enemyY < canvasY){
                 BOSS.drawFrame2(BOSS.enemyAnimation[BOSS.currentFrame], 0, 0, 0);
                 
                 drawFrame(player, cycleLoop[currentLoopIndex], 0, 0, 0); 
@@ -286,15 +296,7 @@ updateCanvas() {
             drawFrame(player, cycleLoop[currentLoopIndex], 0, 0, 0);
         }
         
-        enemies.forEach(enemy => {
-            enemy.drawFrame2(enemy.enemyAnimation[enemy.currentFrame], 0, 0, 0)
-            enemy.currentFrame++
-            
-            if(enemy.currentFrame>= enemy.enemyAnimation.length){
-                enemy.currentFrame = 0;
-            }
         
-        })
         //adjusting for multiple animation lengths
         currentLoopIndex++;
         if (currentLoopIndex >= cycleLoop.length) {
@@ -308,7 +310,7 @@ updateCanvas() {
             
         //move right function
         function right(){
-            animation = rightAnimate
+            animation = playerRightAnimate
             lastMove=0
             canvasX += 2;
             if(upPressed){
@@ -321,7 +323,7 @@ updateCanvas() {
         }
         //move left function
         function left(){
-            animation = leftAnimate
+            animation = playerLeftAnimate
             lastMove = 1
             canvasX -= 2;
             if(upPressed){
@@ -334,9 +336,9 @@ updateCanvas() {
         //move down function
         function down(){
             if(lastMove===0){
-                animation = rightAnimate
+                animation = playerRightAnimate
             }else{
-                animation = leftAnimate
+                animation = playerLeftAnimate
             }
         
             canvasY += 2;
@@ -344,9 +346,9 @@ updateCanvas() {
         //move up function
         function up(){
             if(lastMove===0){
-                animation = rightAnimate
+                animation = playerRightAnimate
             }else{
-               animation = leftAnimate
+               animation = playerLeftAnimate
             }
             canvasY -= 2;
         }
@@ -428,11 +430,11 @@ updateCanvas() {
             }
             attackLength++
                 if(lastMove===0){
-                    animation = attackRight
+                    animation = playerAttackRight
                 }else{
-                    animation = attackLeft
+                    animation = playerAttackLeft
                 }
-                if(attackLength===30){
+                if(attackLength===80){
                     spacePressed = false
                     attackLength = 0
                 }
@@ -445,9 +447,9 @@ updateCanvas() {
         if(playerHurt === true && dying === 0){
             playerHurtLength++
             switch(lastMove){
-                case 0 : animation = hurtAnimateRight
+                case 0 : animation = playerHurtAnimateRight
                 break;
-                case 1 : animation =  hurtAnimateLeft
+                case 1 : animation =  playerHurtAnimateLeft
                 break;
             
             };
@@ -473,17 +475,17 @@ updateCanvas() {
     
                     if(canvasX >= 1124) {
     
-                        animation = rightAnimate
+                        animation = playerRightAnimate
                         canvasX -= 6;
                     //===================
                     }
                     else if(canvasY <= 40) {
-                        animation = rightAnimate
+                        animation = playerRightAnimate
                         canvasY += 6;
                         canvasX += 2;
                     }
                     else if(canvasY >= 640) {
-                        animation = rightAnimate
+                        animation = playerRightAnimate
                         canvasY -= 6;
                         canvasX += 2;
                     }
@@ -495,17 +497,17 @@ updateCanvas() {
     
                     if(canvasX <= 40){
     
-                        animation = leftAnimate
+                        animation = playerLeftAnimate
                         canvasX += 6;
                     //===================
                     }
                     else if(canvasY <= 40) {
-                        animation = leftAnimate
+                        animation = playerLeftAnimate
                         canvasY += 6;
                         canvasX -= 2;
                     }
                     else if(canvasY >= 640) {
-                        animation = leftAnimate
+                        animation = playerLeftAnimate
                         canvasY -= 6;
                         canvasX -= 2;
                     }
@@ -516,10 +518,10 @@ updateCanvas() {
                 case downPressed:
                     if(canvasY >= 640){
                         if(lastMove===0){
-                            animation = rightAnimate
+                            animation = playerRightAnimate
                             canvasY -= 6;
                         }else{
-                            animation = leftAnimate
+                            animation = playerLeftAnimate
                             canvasY -= 6;
                         }
                     }else{
@@ -529,10 +531,10 @@ updateCanvas() {
                 case upPressed:
                     if(canvasY <= 40){
                         if(lastMove===0){
-                            animation = rightAnimate
+                            animation = playerRightAnimate
                             canvasY += 6;
                         }else{
-                            animation = leftAnimate
+                            animation = playerLeftAnimate
                             canvasY += 6;
                         }
         
@@ -542,9 +544,9 @@ updateCanvas() {
                 break;
                 default:
                     if(lastMove===0){
-                       animation = baseRightAnimate
+                       animation = playerBaseRightAnimate
                     }else{
-                       animation = baseLeftAnimate
+                       animation = playerBaseLeftAnimate
                     };
                 }}
                 if(playerHealth <= 0){
@@ -586,6 +588,7 @@ updateCanvas() {
         if(escPressed){
             this.setState({isPaused: true})
         }else{
+            console.log(dying)
             if(dying >= 40){
                 if(lastMove === 0){
                     animation = [27]

@@ -2,13 +2,18 @@ import React from "react";
 import Canvas from "../game/GameLogic";
 import LevelLogic from "../utils/LevelLogic";
 import Dino from "../game/assets/sprites/DinoSprites-doux.png";
+import rapChar from "../game/assets/sprites/Character5/Character5.png"
+import metalChar from "../game/assets/sprites/Character3/Character3.png"
+import classicChar from "../game/assets/sprites/Character1/Character1.png"
+import countryChar from "../game/assets/sprites/Character2/Character2.png"
+import popChar from "../game/assets/sprites/Character4/Character4.png"
 
 // let { background, audio } = LevelLogic.enemyGenre();
 
 export const Home = () => {
     return (
         <Canvas
-            player={Dino}
+            player={rapChar}
             enemy={Dino}
             bossLevel={false}
             enemyAmount={0}
@@ -24,7 +29,7 @@ export const Level1 = () => {
     localStorage.setItem("currentLevel", JSON.stringify("0"));
     return (
         <Canvas
-            player={Dino}
+            player={countryChar}
             enemy={Dino}
             bossLevel={false}
             enemyAmount={3}
@@ -39,7 +44,7 @@ export const Level2 = () => {
     let { background, audio } = LevelLogic.enemyGenre();
     return (
         <Canvas
-            player={Dino}
+            player={popChar}
             enemy={Dino}
             bossLevel={false}
             enemyAmount={5}
@@ -54,7 +59,7 @@ export const Level3 = () => {
     let { background, audio } = LevelLogic.enemyGenre();
     return (
         <Canvas
-            player={Dino}
+            player={metalChar}
             enemy={Dino}
             bossLevel={false}
             enemyAmount={7}
@@ -69,7 +74,7 @@ export const BossRoom = () => {
     let { background, audio } = LevelLogic.enemyGenre();
     return (
         <Canvas
-            player={Dino}
+            player={classicChar}
             enemy={Dino}
             bossLevel={true}
             enemyAmount={1}
