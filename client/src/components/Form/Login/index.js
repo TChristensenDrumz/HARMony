@@ -10,7 +10,7 @@ function LoginForm(props) {
     });
 
     const [redirect, setRedirect] = useState({
-        change: false
+        url: "/login"
     });
 
     const handleSubmit = event => {
@@ -25,7 +25,15 @@ function LoginForm(props) {
                         return;
                     } else {
                         localStorage.setItem("token", JSON.stringify(res.data.token));
-                        setRedirect({ change: true });
+                        let token = JSON.parse(atob(res.data.token.split('.')[1]))
+                        API.getGenre({id: token.userId})
+                            .then(userInfo => {
+                                if (userInfo.data.genres.length === 0) {
+                                    setRedirect({url: "/character"});
+                                } else {
+                                    setRedirect({url: "/harmony"});
+                                };
+                            });
                     };
                 });
         };
@@ -48,7 +56,8 @@ function LoginForm(props) {
             </Button>
 
             <small className="form-text"><a href="/create" className="nes-text is-error text-decoration-none mt-4">New player? Sign up for an account here</a></small>
-            {redirect.change ? <Redirect to="/harmony" /> : <Redirect to="/login" />}
+            {/* {redirect.change ? <Redirect to="/harmony" /> : <Redirect to="/login" />} */}
+            <Redirect to={redirect.url} />
         </Form> 
     );
 };

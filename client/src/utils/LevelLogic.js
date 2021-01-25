@@ -1,12 +1,13 @@
 import mapsArr from "../game/assets/maps/allMaps";
 import tracksArr from "../game/assets/audio/allTracks";
+import spritesArr from "../game/assets/sprites/allSprites";
 import API from "../utils/API";
 import Token from "../utils/Token";
 
 export default {
 
-    setGenre: async function() {
-        let homeGenre = "classical";
+    setGenre: async function(genre) {
+        let homeGenre = genre;
         let genres = ["pop", "classical", "country", "metal", "rap"];
         if (genres.includes(homeGenre)) {
             genres.splice(genres.indexOf(homeGenre), 1);
@@ -62,31 +63,36 @@ export default {
             case "pop":
                 return {
                     background: mapsArr.pop,
-                    audio: tracksArr.pop
+                    audio: tracksArr.pop,
+                    player: spritesArr.pop
                 };
                 break;
             case "classical":
                 return {
                     background: mapsArr.classical,
-                    audio: tracksArr.classical
+                    audio: tracksArr.classical,
+                    player: spritesArr.classical
                 };
                 break;
             case "country":
                 return {
                     background: mapsArr.country,
-                    audio: tracksArr.country
+                    audio: tracksArr.country,
+                    player: spritesArr.country
                 };
                 break;
             case "metal":
                 return {
                     background: mapsArr.metal,
-                    audio: tracksArr.metal
+                    audio: tracksArr.metal,
+                    player: spritesArr.metal
                 };
                 break;
             case "rap":
                 return {
                     background: mapsArr.rap,
-                    audio: tracksArr.rap
+                    audio: tracksArr.rap,
+                    player: spritesArr.rap
                 };
                 break;
             default:
