@@ -6,17 +6,17 @@ import Token from "../utils/Token";
 
 export default {
 
+    genreList: function(homeGenre) {
+        let leftoverGenres = ["pop", "classical", "country", "metal", "rap"];
+        if (leftoverGenres.includes(homeGenre)) {
+            leftoverGenres.splice(leftoverGenres.indexOf(homeGenre), 1);
+        };
+        let randomEnemy = leftoverGenres[Math.floor(Math.random() * leftoverGenres.length)];
+        return {homeGenre, randomEnemy, leftoverGenres};
+    },
+
     setGenre: async function(homeGenre) {
-        let genres = ["pop", "classical", "country", "metal", "rap"];
-        if (genres.includes(homeGenre)) {
-            genres.splice(genres.indexOf(homeGenre), 1);
-        };
-        let randomEnemy = genres[Math.floor(Math.random() * genres.length)];
-        let genreObj = {
-            homeGenre: homeGenre,
-            randomEnemy: randomEnemy,
-            leftoverGenres: genres
-        };
+        let genreObj = this.genreList(homeGenre);
         let userId = {_id: Token.getId()};
         let data = {genreObj, userId};
         let res = await API.setGenres(data);
@@ -30,16 +30,7 @@ export default {
     },
 
     resetGenre: async function(homeGenre, id) {
-        let genres = ["pop", "classical", "country", "metal", "rap"];
-        if (genres.includes(homeGenre)) {
-            genres.splice(genres.indexOf(homeGenre), 1);
-        };
-        let randomEnemy = genres[Math.floor(Math.random() * genres.length)];
-        let genreObj = {
-            homeGenre: homeGenre,
-            randomEnemy: randomEnemy,
-            leftoverGenres: genres
-        };
+        let genreObj = this.genreList(homeGenre);
         let res = await API.updateGenre(id, genreObj);
         return res;
     },
@@ -52,11 +43,8 @@ export default {
             leftoverGenres = ["pop", "classical", "country", "metal", "rap"];
             leftoverGenres.splice(leftoverGenres.indexOf(homeGenre), 1);
         };
-        let newEnemy = leftoverGenres[Math.floor(Math.random() * leftoverGenres.length)];
-        let data = {
-            randomEnemy: newEnemy,
-            leftoverGenres: leftoverGenres
-        };
+        randomEnemy = leftoverGenres[Math.floor(Math.random() * leftoverGenres.length)];
+        let data = { randomEnemy, leftoverGenres };
         API.updateGenre(_id, data);
     },
 
