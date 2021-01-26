@@ -1,8 +1,7 @@
 //React
-import React,{ useState ,useEffect } from 'react';
+import React from 'react';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import useAsync from "./utils/Hooks"
 
 //Styling
 import "bootstrap/dist/css/bootstrap.min.css";
