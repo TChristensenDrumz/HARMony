@@ -29,12 +29,10 @@ export default function Select() {
     }, []);
 
     const handleImgClick = event => {
-        console.log(event.target.alt);
         selectGenre(event.target.alt);
     };
 
     const handleTitleClick = event => {
-        console.log(event.target.innerHTML.toLowerCase());
         selectGenre(event.target.innerHTML.toLowerCase());
     };
 

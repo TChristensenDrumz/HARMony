@@ -13,8 +13,9 @@ export default class Canvas extends Component {
 
     state = {
         roomChange: false,
-        direction: '',
-        gameOver: false
+        // direction: '',
+        gameOver: false,
+        newCharacter: false
     }
     
      //ANIMATION=========================================
@@ -603,26 +604,26 @@ updateCanvas() {
         if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
                 if(!bossLevel) {
-                    this.setState({...this.state, direction: "top"});
-                    localStorage.setItem("direction", JSON.stringify(this.state));
+                    // this.setState({...this.state, direction: "top"});
+                    localStorage.setItem("direction", JSON.stringify("top"));
                 }
                 this.setState({...this.state, roomChange: true});
             } else if ((canvasX >= 436 && canvasX <= 520) && canvasY >= 476) {
                 if(!bossLevel) {
-                    this.setState({...this.state, direction: "bottom"});
-                    localStorage.setItem("direction", JSON.stringify(this.state));
+                    // this.setState({...this.state, direction: "bottom"});
+                    localStorage.setItem("direction", JSON.stringify("bottom"));
                 }            
                 this.setState({...this.state, roomChange: true});
             } else if (canvasX >= 974 && (canvasY >= 190 && canvasY <= 274)) {
                 if(!bossLevel) {
-                    this.setState({...this.state, direction: "right"});
-                    localStorage.setItem("direction", JSON.stringify(this.state));
+                    // this.setState({...this.state, direction: "right"});
+                    localStorage.setItem("direction", JSON.stringify("right"));
                 }
                 this.setState({...this.state, roomChange: true});
             } else if (canvasX <= -28 && (canvasY >= 190 && canvasY <= 274)) {
                 if(!bossLevel) {
-                    this.setState({...this.state, direction: "left"});
-                    localStorage.setItem("direction", JSON.stringify(this.state));
+                    // this.setState({...this.state, direction: "left"});
+                    localStorage.setItem("direction", JSON.stringify("left"));
                 }
                 this.setState({...this.state, roomChange: true});
             }
@@ -637,7 +638,6 @@ updateCanvas() {
         if(escPressed){
             this.setState({isPaused: true})
         }else{
-            // console.log(dying)
             if(dying >= animation.length){
                 if(lastMove === 0){
                     animation = [27]
@@ -668,7 +668,16 @@ updateCanvas() {
 
        if (BOSS.dying === 40) {
             localStorage.removeItem("direction");
-            LevelLogic.resetEnemy();   
+            LevelLogic.getGenre()
+                .then(data => {
+                    if (data.leftoverGenres.length === 1) {
+                        setTimeout(() => {
+                            this.setState({...this.state, newCharacter: true });
+                        }, 2000);
+                    } else {
+                        LevelLogic.resetEnemy();
+                    }
+                })   
        }
     };
     
@@ -725,6 +734,7 @@ render() {
             style={styles.background}></canvas>
             {this.state.roomChange ? <Redirect to={this.props.nextLevel}/> : <></>}
             {this.state.gameOver ? <Redirect to="/harmony/gameover" /> : <></>}
+            {this.state.newCharacter ? <Redirect to="/harmony/winner" /> : <> </>}
         </div>
         
 
