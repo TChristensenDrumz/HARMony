@@ -280,12 +280,12 @@ updateCanvas() {
     const enemies = [];
     let amount = this.props.enemyAmount;
     for (let i = 0; i < amount; i++) {
-        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1.5, [], 100, 10, 30, 70, 2, 64, 64);
+        const enemy = new Enemy(imageObj2,  (Math.random()*1002) - 28, (Math.random()*486) - 10, 1.5, [], 100, 10, 30, 70, 2, 64, 64);
         enemies.push(enemy);
     };
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(imageObj3, 200, 300, 3, [], 10, 25, 125, 175, 4, 100, 100);
+        BOSS = new Enemy(imageObj3, 478, 232, 3, [], 10, 25, 125, 175, 4, 100, 100);
     };
 
     
