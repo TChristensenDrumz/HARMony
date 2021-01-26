@@ -603,21 +603,29 @@ updateCanvas() {
         if(beforeRoom === this.props.enemyAmount){
             console.log(beforeRoom)
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
-                this.setState({...this.state, direction: "top"});
-                localStorage.setItem("direction", JSON.stringify(this.state));
-               this.setState({...this.state, roomChange: true});
+                if(!bossLevel) {
+                    this.setState({...this.state, direction: "top"});
+                    localStorage.setItem("direction", JSON.stringify(this.state));
+                }
+                this.setState({...this.state, roomChange: true});
             } else if ((canvasX >= 436 && canvasX <= 520) && canvasY >= 476) {
-                this.setState({...this.state, direction: "bottom"});
-                localStorage.setItem("direction", JSON.stringify(this.state));
-               this.setState({...this.state, roomChange: true});
+                if(!bossLevel) {
+                    this.setState({...this.state, direction: "bottom"});
+                    localStorage.setItem("direction", JSON.stringify(this.state));
+                }            
+                this.setState({...this.state, roomChange: true});
             } else if (canvasX >= 974 && (canvasY >= 190 && canvasY <= 274)) {
-                this.setState({...this.state, direction: "right"});
-                localStorage.setItem("direction", JSON.stringify(this.state));
-               this.setState({...this.state, roomChange: true});
+                if(!bossLevel) {
+                    this.setState({...this.state, direction: "right"});
+                    localStorage.setItem("direction", JSON.stringify(this.state));
+                }
+                this.setState({...this.state, roomChange: true});
             } else if (canvasX <= -28 && (canvasY >= 190 && canvasY <= 274)) {
-                this.setState({...this.state, direction: "left"});
-                localStorage.setItem("direction", JSON.stringify(this.state));
-               this.setState({...this.state, roomChange: true});
+                if(!bossLevel) {
+                    this.setState({...this.state, direction: "left"});
+                    localStorage.setItem("direction", JSON.stringify(this.state));
+                }
+                this.setState({...this.state, roomChange: true});
             }
         }
         frameCount++;
@@ -661,7 +669,7 @@ updateCanvas() {
 
        if (BOSS.dying === 40) {
             localStorage.removeItem("direction");
-            LevelLogic.resetEnemy();
+            LevelLogic.resetEnemy();   
        }
     };
     
