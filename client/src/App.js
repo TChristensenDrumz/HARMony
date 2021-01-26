@@ -22,7 +22,7 @@ import Win from './components/GameOver/Win';
 const App = () => {
 
   return (
-    <div style={{height: "100vh", backgroundColor: "black"}}>
+    <div style={{height: "100vh", width: "100vw", backgroundColor: "black"}}>
     <Router>
         <Header />
         <Switch>

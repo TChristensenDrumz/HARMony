@@ -24,7 +24,7 @@ export default function Select() {
     useEffect(async () => {
         let existing = await LevelLogic.getGenre();
         if (existing) {
-            id = existing._id
+            id = existing._id;
         };
     }, []);
 
