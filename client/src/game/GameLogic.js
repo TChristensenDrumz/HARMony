@@ -577,7 +577,7 @@ updateCanvas() {
                         }
         
                     }else{
-                        up()
+                        up();
                     };
                 break;
                 default:

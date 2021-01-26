@@ -15,8 +15,7 @@ export const Home = () => {
         const obj = LevelLogic.levelObj(data.homeGenre);
         setGenre(obj)
     };
-    if(!genre) return <h1>Loading....</h1>
-
+    if(!genre) return <h1 style={{color:"white"}} className="text-center">Loading....</h1>
     const { background, audio, player } = genre;
 
     return (
@@ -76,8 +75,7 @@ export const Level2 = () => {
         const home = LevelLogic.levelObj(data.homeGenre);
         setGenre({enemy: enemy, home: home})
     };
-    if(!genre) return <h1>Loading....</h1>
-
+    if(!genre) return <h1 style={{color:"white"}} className="text-center">Loading....</h1>
     const { enemy, home } = genre;
     return (
         <Canvas
@@ -106,8 +104,7 @@ export const Level3 = () => {
         const home = LevelLogic.levelObj(data.homeGenre);
         setGenre({enemy: enemy, home: home})
     };
-    if(!genre) return <h1>Loading....</h1>
-
+    if(!genre) return <h1 style={{color:"white"}} className="text-center">Loading....</h1>
     const { enemy, home } = genre;
     return (
         <Canvas
@@ -136,8 +133,7 @@ export const BossRoom = () => {
         const home = LevelLogic.levelObj(data.homeGenre);
         setGenre({enemy: enemy, home: home})
     };
-    if(!genre) return <h1>Loading....</h1>
-
+    if(!genre) return <h1 style={{color:"white"}} className="text-center">Loading....</h1>
     const { enemy, home } = genre;
     return (
         <Canvas
