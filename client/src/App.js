@@ -1,8 +1,7 @@
 //React
-import React,{ useState ,useEffect } from 'react';
+import React from 'react';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import useAsync from "./utils/Hooks"
 
 //Styling
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,9 +14,9 @@ import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import CreateAccount from "./pages/CreateAccount"
 import Character from "./components/CharacterSelect/Select"
-import GameOver from "./components/GameOver/GG"
 import { Home, Level1, Level2, Level3, BossRoom } from "./pages/Levels";
 import GG from "./components/GameOver/GG";
+import Win from './components/GameOver/Win';
 
 
 const App = () => {
@@ -49,6 +48,9 @@ const App = () => {
           </Route>
           <Route exact path="/harmony/gameover">
             <ProtectedRoute component={GG} />
+          </Route>
+          <Route exact path="/harmony/winner">
+            <ProtectedRoute component={Win} />
           </Route>
           <Route component={Landing} />
         </Switch>

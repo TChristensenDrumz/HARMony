@@ -2,7 +2,7 @@ export default {
     checkDirection: function() {
         let direction = JSON.parse(localStorage.getItem("direction"));
         if (direction){
-            let x = direction.direction;
+            let x = direction;
             const hash = {
                 "top": {
                     canvasX: 478,
