@@ -20,7 +20,7 @@ export const Home = () => {
 
     return (
         <Canvas
-            player={player}
+            player={player.sprite}
             enemy={Slime}
             bossLevel={false}
             enemyAmount={0}
@@ -50,8 +50,8 @@ export const Level1 = () => {
     const { enemy, home } = genre;
     return (
         <Canvas
-            player={home.player}
-            enemy={Slime}
+            player={home.player.sprite}
+            enemy={enemy.player.slime}
             bossLevel={false}
             enemyAmount={3}
             background={enemy.background.level1}
@@ -79,8 +79,8 @@ export const Level2 = () => {
     const { enemy, home } = genre;
     return (
         <Canvas
-            player={home.player}
-            enemy={Slime}
+            player={home.player.sprite}
+            enemy={enemy.player.slime}
             bossLevel={false}
             enemyAmount={5}
             background={enemy.background.level2}
@@ -108,8 +108,8 @@ export const Level3 = () => {
     const { enemy, home } = genre;
     return (
         <Canvas
-            player={home.player}
-            enemy={Slime}
+            player={home.player.sprite}
+            enemy={enemy.player.slime}
             bossLevel={false}
             enemyAmount={7}
             background={enemy.background.level3}
@@ -137,9 +137,9 @@ export const BossRoom = () => {
     const { enemy, home } = genre;
     return (
         <Canvas
-            player={home.player}
-            boss={enemy.player}
-            enemy={Slime}
+            player={home.player.sprite}
+            boss={enemy.player.sprite}
+            enemy={enemy.player.slime}
             bossLevel={true}
             enemyAmount={0}
             background={enemy.background.bossroom}
