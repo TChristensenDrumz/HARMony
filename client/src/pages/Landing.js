@@ -3,6 +3,9 @@ import Token from "../utils/Token";
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Background from "../images/colors.gif";
 
+//Audio
+import Track from "../game/assets/audio/title/kitn.mp3"
+
 export default function Landing() {
     localStorage.removeItem("direction");
     let loggedIn = Token.authenticate();
@@ -36,6 +39,7 @@ export default function Landing() {
     }
     return (
         <div style={background}>
+            <audio src={Track} loop autoPlay/>
             <Container style={bodyStyle}>
                 <Row style={center}>
                     <Col>
