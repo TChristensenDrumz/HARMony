@@ -19,6 +19,8 @@ export default function Select() {
 
     const [redirect, setRedirect] = useState(false);
 
+    localStorage.removeItem("direction");
+
     let id;
 
     useEffect(async () => {
