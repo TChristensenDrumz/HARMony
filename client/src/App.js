@@ -18,8 +18,9 @@ import { Home, Level1, Level2, Level3, BossRoom } from "./pages/Levels";
 import GG from "./components/GameOver/GG";
 import Win from './components/GameOver/Win';
 
-
 const App = () => {
+
+  let playing = true;
 
   return (
     <div style={{height: "100vh", width: "100vw", backgroundColor: "black"}}>

@@ -13,7 +13,6 @@ export default class Canvas extends Component {
 
     state = {
         roomChange: false,
-        // direction: '',
         gameOver: false,
         newCharacter: false
     }
@@ -604,25 +603,21 @@ updateCanvas() {
         if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
                 if(!bossLevel) {
-                    // this.setState({...this.state, direction: "top"});
                     localStorage.setItem("direction", JSON.stringify("top"));
                 }
                 this.setState({...this.state, roomChange: true});
             } else if ((canvasX >= 436 && canvasX <= 520) && canvasY >= 476) {
                 if(!bossLevel) {
-                    // this.setState({...this.state, direction: "bottom"});
                     localStorage.setItem("direction", JSON.stringify("bottom"));
                 }            
                 this.setState({...this.state, roomChange: true});
             } else if (canvasX >= 974 && (canvasY >= 190 && canvasY <= 274)) {
                 if(!bossLevel) {
-                    // this.setState({...this.state, direction: "right"});
                     localStorage.setItem("direction", JSON.stringify("right"));
                 }
                 this.setState({...this.state, roomChange: true});
             } else if (canvasX <= -28 && (canvasY >= 190 && canvasY <= 274)) {
                 if(!bossLevel) {
-                    // this.setState({...this.state, direction: "left"});
                     localStorage.setItem("direction", JSON.stringify("left"));
                 }
                 this.setState({...this.state, roomChange: true});

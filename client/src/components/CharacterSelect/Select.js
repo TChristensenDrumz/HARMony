@@ -94,6 +94,6 @@ export default function Select() {
                 </Container>    
             <Sandwich />
             {redirect ? <Redirect to="/harmony" /> : <></>}
-            </div>
+        </div>
     )
 }
