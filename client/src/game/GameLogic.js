@@ -20,7 +20,6 @@ export default class Canvas extends Component {
      //ANIMATION=========================================
 componentDidMount() {
     this.updateCanvas();
-    localStorage.removeItem("direction");
 }
 
 updateCanvas() {
@@ -279,7 +278,7 @@ updateCanvas() {
     const enemies = [];
     let amount = this.props.enemyAmount;
     for (let i = 0; i < amount; i++) {
-        const enemy = new Enemy(imageObj2,  Math.random()*1100, Math.random()*620, 1.5, [], 100, 10, 30, 70, 2, 64, 64);
+        const enemy = new Enemy(imageObj2,  (Math.random()*934) + 40, (Math.random()*436) + 40, 1.5, [], 100, 10, 30, 70, 2, 64, 64);
         enemies.push(enemy);
     };
     let BOSS = {};
@@ -602,21 +601,25 @@ updateCanvas() {
     const master = () => {
         if(beforeRoom === this.props.enemyAmount){
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
+                localStorage.removeItem("direction");
                 if(!bossLevel) {
                     localStorage.setItem("direction", JSON.stringify("top"));
                 }
                 this.setState({...this.state, roomChange: true});
             } else if ((canvasX >= 436 && canvasX <= 520) && canvasY >= 476) {
+                localStorage.removeItem("direction");
                 if(!bossLevel) {
                     localStorage.setItem("direction", JSON.stringify("bottom"));
                 }            
                 this.setState({...this.state, roomChange: true});
             } else if (canvasX >= 974 && (canvasY >= 190 && canvasY <= 274)) {
+                localStorage.removeItem("direction");
                 if(!bossLevel) {
                     localStorage.setItem("direction", JSON.stringify("right"));
                 }
                 this.setState({...this.state, roomChange: true});
             } else if (canvasX <= -28 && (canvasY >= 190 && canvasY <= 274)) {
+                localStorage.removeItem("direction");
                 if(!bossLevel) {
                     localStorage.setItem("direction", JSON.stringify("left"));
                 }
@@ -662,7 +665,6 @@ updateCanvas() {
         }, 10);
 
        if (BOSS.dying === 40) {
-            localStorage.removeItem("direction");
             LevelLogic.getGenre()
                 .then(data => {
                     if (data.leftoverGenres.length === 1) {
