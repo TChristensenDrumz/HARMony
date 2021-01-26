@@ -662,7 +662,6 @@ updateCanvas() {
        if (BOSS.dying === 40) {
             localStorage.removeItem("direction");
             LevelLogic.resetEnemy();
-            beforeRoom -= 1;
        }
     };
     
