@@ -29,7 +29,7 @@ function Header() {
     const headerStyle = {
         height: "10vh",
         width: "100vw",
-        overflowX: "hidden",
+        overflow: "hidden",
         color: "white"
     };
 

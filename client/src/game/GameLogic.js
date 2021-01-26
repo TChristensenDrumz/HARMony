@@ -708,15 +708,15 @@ render() {
         },
         audio: {
             position: "absolute",
-            top: "-12px",
-            right: "8px",
-            transform: "scale(.7)"
+            top: "-10px",
+            right: "0",
+            transform: "scale(.6)"
         },
         song: {
             position: "absolute",
             color: "white",
             top: "7px",
-            right: "280px" 
+            right: "260px" 
         }
     }
 
