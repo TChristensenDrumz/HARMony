@@ -601,7 +601,6 @@ updateCanvas() {
     
     const master = () => {
         if(beforeRoom === this.props.enemyAmount){
-            console.log(beforeRoom)
             if ((canvasX >= 436 && canvasX <= 520) && canvasY <= -10) {
                 if(!bossLevel) {
                     this.setState({...this.state, direction: "top"});
