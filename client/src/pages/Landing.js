@@ -39,7 +39,11 @@ export default function Landing() {
             <Container style={bodyStyle}>
                 <Row style={center}>
                     <Col>
+<<<<<<< HEAD
                         <a className="nes-btn is-error text-center" style={a} href={loggedIn ? "/harmony" : "/login"}>Play</a>
+=======
+                        <a style={a} className="nes-btn is-error text-center" href={loggedIn ? "/harmony" : "/login"}>Play</a>
+>>>>>>> 96313bd7bd84f3826989b884811601daf4c4ba93
                     </Col>
                 </Row>
             </Container>
