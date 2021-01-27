@@ -279,7 +279,7 @@ updateCanvas() {
     const enemies = [];
     let amount = this.props.enemyAmount;
     for (let i = 0; i < amount; i++) {
-        const enemy = new Enemy(imageObj2,  Math.random()*954, Math.random()*456, 1.5, [], 100, 10, 30, 70, 2, 64, 64);
+        const enemy = new Enemy(imageObj2,  Math.random()*954, Math.random()*456, 1.5, [], 100 + (playerHealth / 10), playerHealth/20, 30, 70, 2, 64, 64);
         enemies.push(enemy);
     };
     let BOSS = {};
@@ -725,7 +725,7 @@ render() {
     return (
         <div style={styles.body} className="d-flex justify-content-center">
             <p style={styles.song}>{this.props.song}</p>
-            <audio src={this.props.audio} style={styles.audio} controls loop/>
+            <audio src={this.props.audio} style={styles.audio} controls loop autoPlay />
             {this.state.isPaused ? <Pause /> : <div/>}
             <Stats health={playerHealth} max={maxHealth}/>
             <canvas ref="canvas"
