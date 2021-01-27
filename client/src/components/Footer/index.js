@@ -7,7 +7,7 @@ function Footer() {
         height: "10vh",
         width: "100vw",
         margin: "0",
-        overflowX: "hidden",
+        overflow: "hidden",
         backgroundColor: "black"
     }
     return (

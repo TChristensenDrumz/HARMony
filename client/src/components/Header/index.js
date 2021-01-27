@@ -29,7 +29,7 @@ function Header() {
     const headerStyle = {
         height: "10vh",
         width: "100vw",
-        overflowX: "hidden",
+        overflow: "hidden",
         color: "white"
     };
 
@@ -45,7 +45,7 @@ function Header() {
                     <Navbar.Brand href="/" className="p-0 m-0"><span style={{color:"red"}}>HARM</span><span style={{color:"white"}}>øny</span></Navbar.Brand>
                 </div>
                 <div className="col-4 text-right">
-                    <Button variant = "link" className="nes-text is-error sm text-decoration-none p-0 m-0" onClick={clearStorage} href={status.loggedIn ? "/" : "/login"}>{status.loggedIn ? "Logout" : "Login"}</Button>
+                    <Button variant = "link" style={{color: "red"}}className="nes-text sm text-decoration-none p-0 m-0" onClick={clearStorage} href={status.loggedIn ? "/" : "/login"}>{status.loggedIn ? "Logout" : "Login"}</Button>
                 </div>
             </Navbar>
         </div>
