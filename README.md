@@ -40,15 +40,15 @@ npm start
 
 
 ## **Screenshot**
-![png](./client/assets/ss0.png)
-![png](./client/assets/ss1.png)
-![png](./client/assets/ss2.png)
-![png](./client/assets/ss3.png)
-![png](./client/assets/ss4.png)
-![png](./client/assets/ss5.png)
-![png](./client/assets/ss6.png)
-![png](./client/assets/ss7.png)
-![png](./client/assets/ss8.png)
+![png](./client/public/assets/images/ss0.png)
+![png](./client/public/assets/images/ss1.png)
+![png](./client/public/assets/images/ss2.png)
+![png](./client/public/assets/images/ss3.png)
+![png](./client/public/assets/images/ss4.png)
+![png](./client/public/assets/images/ss5.png)
+![png](./client/public/assets/images/ss6.png)
+![png](./client/public/assets/images/ss7.png)
+![png](./client/public/assets/images/ss8.png)
 
 
 ## **Contributing**
@@ -66,33 +66,53 @@ NES styling - https://nostalgic-css.github.io/NES.css/
 ## **Song Credits**
 
 Cafo by Animals As Leaders
+
 Remote Tumor Seeker by Archspire
+
 Ride the Lightning by Metallica
+
 Bring Back the Plague by Cattle Decapitation
+
 Ora Pro Nobis Lucifer by Behemoth
 
 The Gambler by Johnny Cash
+
 Red Solo Cup Toby Keith
+
 Jolene by Dolly Parton
+
 Jesus Take the Wheel by Carrie Underwood
+
 Proud to be an America by Lee Greenwood
 
 Couch Potato by MF Doom
+
 Ready or Not by The Fugees
+
 Jump by Kriss Kross
+
 Chang Hang Low by Jibbs
+
 Gold Digger by Kanye West & Jamie Foxx
 
 Pump Up the Jam by Technotronic
+
 Let's Get it Started by Black Eyed Peas
+
 MMM Bop by Hanson
+
 You & Me by Flume
+
 Mamma Mia by ABBA
 
 Sonata Pathétique by Beethoven
+
 Hot Cross Buns by Mhiel and Yannah
+
 Toccata and Fugue in D Minor by J.S. Bach
+
 Queen of the Night Aria by Mozart
+
 Caprice No. 24 by Paganini
 
 
@@ -104,4 +124,9 @@ This repository is covered under the MIT license.
 ## **Questions**
 Please contact with any questions or thoughts.
 
-Check out [my GitHub](https://github.com/AWSiegfried)
+Check out our Githubs!
+[Alex](https://github.com/AWSiegfried)
+[DJ](https://github.com/DJ620)
+[Nate](https://github.com/nartexyu)
+[Duncan](https://github.com/DTrombla)
+[Terrapin](https://github.com/TChristensenDrumz)
