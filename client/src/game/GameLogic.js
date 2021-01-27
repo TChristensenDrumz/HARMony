@@ -284,7 +284,7 @@ updateCanvas() {
     };
     let BOSS = {};
     if(bossLevel){
-        BOSS = new Enemy(imageObj3, 478, 232, 3, [], playerHealth * 5, playerHealth/10, 125, 175, 4, 100, 100);
+        BOSS = new Enemy(imageObj3, 478, 232, 3, [], playerHealth * 3, playerHealth/10, 125, 175, 4, 100, 100);
     };
 
     
