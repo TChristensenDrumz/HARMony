@@ -53,7 +53,7 @@ export const Level1 = () => {
             player={home.player.sprite}
             enemy={enemy.player.slime}
             bossLevel={false}
-            enemyAmount={3}
+            enemyAmount={Math.floor((Math.random() * 3) + 2)}
             background={enemy.background.level1}
             audio={enemy.audio.level1}
             song={enemy.audio.name.level1}
@@ -82,7 +82,7 @@ export const Level2 = () => {
             player={home.player.sprite}
             enemy={enemy.player.slime}
             bossLevel={false}
-            enemyAmount={5}
+            enemyAmount={Math.floor((Math.random() * 1) + 5)}
             background={enemy.background.level2}
             audio={enemy.audio.level2}
             song={enemy.audio.name.level2}
@@ -111,7 +111,7 @@ export const Level3 = () => {
             player={home.player.sprite}
             enemy={enemy.player.slime}
             bossLevel={false}
-            enemyAmount={7}
+            enemyAmount={Math.floor((Math.random() * 2) + 7)}
             background={enemy.background.level3}
             audio={enemy.audio.level3}
             song={enemy.audio.name.level3}
