@@ -278,7 +278,7 @@ updateCanvas() {
     const enemies = [];
     let amount = this.props.enemyAmount;
     for (let i = 0; i < amount; i++) {
-        const enemy = new Enemy(imageObj2,  Math.random()*954, Math.random()*456, 1.5, [], 100 + (playerHealth / 10), playerHealth/20, 30, 70, 2, 64, 64);
+        const enemy = new Enemy(imageObj2,  Math.random()*954, Math.random()*456, playerHealth/100, [], 100 + (maxHealth / 10), playerHealth/20, (maxHealth / 100) * 20, (maxHealth / 100) * 45, 2, 64, 64);
 
         enemies.push(enemy);
     };
